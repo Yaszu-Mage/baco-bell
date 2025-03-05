@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://drgvoaufs322i"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_68j4o"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_eib84"]
+
+[node name="cuber" type="CharacterBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_68j4o")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_eib84")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
