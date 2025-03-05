@@ -8,9 +8,12 @@ var is_sliding = false
 var slide_speed = 2.0
 var slide_stamina = 100
 var slide_duration = 10
+
 var is_wall_running = false
 var slide_exponent = 0.1
 var can_double_jump = true
+var rotating_now = false
+@onready var cam_rot = $SpringArm3D
 var wall_normal
 @onready var floor_ray = $RayCast3D
 var fall = Vector3() 
@@ -36,7 +39,26 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed("ui_accept") and !is_on_wall() and !is_on_floor() and can_double_jump:
 			velocity.y = JUMP_VELOCITY
 			can_double_jump = false
-
+		if Input.is_action_pressed("left"):
+			if !rotating_now:
+				print("trying to rot")
+				rotating_now = true
+				var new_value = self.rotation.y + 0.5
+				var tween = create_tween()
+				tween.tween_property(self,"rotation",Vector3(0,new_value,0),0.1)
+				await tween.finished
+				rotating_now = false
+		if Input.is_action_pressed("right"):
+			if !rotating_now:
+				print("trying to rot")
+				rotating_now = true
+				var new_value = self.rotation.y - 0.5
+				var tween = create_tween()
+				tween.tween_property(self,"rotation",Vector3(0,new_value,0),0.1)
+				await tween.finished
+				rotating_now = false
+		if !Input.is_action_pressed("left") and !Input.is_action_pressed("right"):
+			rotating_now = false
 		# Get the input direction and handle the movement/deceleration.
 			# As good practice, you should replace UI actions with custom gameplay actions	.
 		var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -45,14 +67,14 @@ func _physics_process(delta: float) -> void:
 			wall_normal = get_slide_collision(0)
 			if wall_normal.get_normal().x != 0:
 				if wall_normal.get_normal().x > 0:
-					direction.z = -direction.z * -wall_normal.get_normal().x * SPEED
+					direction.z = -direction.z * -wall_normal.get_normal().x * (SPEED -0.5)
 				if wall_normal.get_normal().x < 0:
-					direction.z = direction.z * -wall_normal.get_normal().x * SPEED
+					direction.z = direction.z * -wall_normal.get_normal().x * (SPEED -0.5)
 			if wall_normal.get_normal().z != 0:
 				if wall_normal.get_normal().z > 0:
-					direction.x = -direction.x * -wall_normal.get_normal().z * SPEED
+					direction.x = -direction.x * -wall_normal.get_normal().z * (SPEED -0.5)
 				if wall_normal.get_normal().x < 0:
-					direction.x = direction.x * -wall_normal.get_normal().z * SPEED
+					direction.x = direction.x * -wall_normal.get_normal().z * (SPEED -0.5)
 			await get_tree().create_timer(0.2).timeout
 			is_wall_running = true
 		elif Input.is_action_just_released("ui_accept") and is_wall_running and is_on_wall():
@@ -86,10 +108,12 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
 		
-		rpc("remote_set_position", global_position)
+		rpc("remote_set_position", velocity,global_position)
 		move_and_slide()
 
 
 @rpc("unreliable")
-func remote_set_position(authority_position):
+func remote_set_position(authority_velocity,authority_position):
+	velocity = authority_velocity
 	global_position = authority_position
+	move_and_slide()
