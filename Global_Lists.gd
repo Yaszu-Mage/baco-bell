@@ -6,7 +6,7 @@ var abilities = {
 		"Continuous": false, # if it takes multiple turns
 	},
 	"Fireball":{
-		"Type": "attack",
+		"Type": "Attack",
 		"Value": 7,
 		"Continuous": false
 	},
@@ -14,6 +14,7 @@ var abilities = {
 enum environments {
 	the_void,
 }
+enum ability_types {attack,healing,defend}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

@@ -3,7 +3,8 @@ var mouse_in = false
 @onready var parent = get_parent()
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and mouse_in and parent.can_click:
-		get_parent().get_parent().get_parent().get_parent().clicked_button = true
+		get_parent().clicked.emit()
+		get_parent().get_parent().get_parent().get_parent().clicked_button.emit()
 
 
 

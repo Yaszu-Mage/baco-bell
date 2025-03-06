@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-
+var health = 100
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 var can_wall_jump = true

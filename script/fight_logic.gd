@@ -14,7 +14,7 @@ var environment = GlobalLists.environments.the_void
 var turnsize
 var world
 var clicked : Node
-var clicked_button = false
+signal clicked_button
 signal player_went
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -53,7 +53,8 @@ func turns():
 	if is_player(goer):
 		var player = player_grid.get_node(goer[0])
 		player.go.emit()
-		await player_went
+		await clicked_button
+	
 	
 func is_player(turn):
 	if players.find(turn):
@@ -69,6 +70,20 @@ func increase_turn():
 
 func run_event(player,nameval):
 	print(player.name,nameval)
+	player.clicked.emit()
+	player.can_click = false
+	player.ability_selected = false
+	
+	var used = GlobalLists.abilities.get(nameval)
+	print(used)
+	var type = used["Type"]
+	var value = used["Value"]
+	print(type)
+	match type:
+		"Attack":
+			clicked.parent.health -= value
+	## TODO Play Animation
+	clicked = null
 	
 	
 func get_enemies():
