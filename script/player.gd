@@ -94,7 +94,7 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_pressed("slide"):
 			if slide_exponent < 0:
 				velocity = direction * pow(2,1 / slide_exponent) * SPEED * 2
-				slide_exponent += 0.1
+				slide_exponent += 1
 				move_and_slide()
 			else:
 				velocity.x = move_toward(velocity.x, 0, SPEED)

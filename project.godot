@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 GlobalLists="*res://Global_Lists.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [input]
 
 ui_left={

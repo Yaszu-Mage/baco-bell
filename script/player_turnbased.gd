@@ -8,7 +8,7 @@ var targets = []
 @onready var grid = $Control/PanelContainer/HBoxContainer/GridContainer
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	go.connect(my_turn())
+	go.connect(my_turn)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

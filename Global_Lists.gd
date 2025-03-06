@@ -11,6 +11,9 @@ var abilities = {
 		"Continuous": false
 	},
 }
+enum environments {
+	the_void,
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

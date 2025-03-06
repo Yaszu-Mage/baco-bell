@@ -4,3 +4,28 @@
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_vv44o")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Players" type="GridContainer" parent="Control"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 606.0
+offset_right = 540.0
+offset_bottom = 646.0
+columns = 4
+
+[node name="Enemies" type="GridContainer" parent="Control"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 5.0
+offset_right = 540.0
+offset_bottom = 45.0
+columns = 4
+
+[node name="Camera2D" type="Camera2D" parent="Control"]
+position = Vector2(576, 326)

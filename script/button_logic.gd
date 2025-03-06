@@ -10,11 +10,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func set_name_val(nameval):
-	$VBoxContainer/Button.text = nameval
+func set_name_val(name_val : String):
+	$VBoxContainer/Button.text = name_val
+	nameval = name_val
 
 
 func _on_button_pressed() -> void:
-	var parent = get_parent().get_parent().get_parent().get_parent().get_parent().get_parent()
+	var parent = get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().get_parent()
 	var player = get_parent().get_parent().get_parent().get_parent().get_parent()
 	parent.run_event(player,nameval)

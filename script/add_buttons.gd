@@ -11,12 +11,16 @@ func _process(delta: float) -> void:
 	pass
 
 func add():
-	var column = int(buttons.size() / 3)
+	var column = int(buttons.size())
+	if buttons.size() > 3:
+		column = buttons.size() / 3
 	columns = column
+	for x in self.get_children():
+		remove_child(x)
 	for x in buttons:
 		var instance = button.instantiate()
-		instance.set_name_val(buttons)
-		instance.button.pressed.connect()
+		instance.set_name_val(x)
+		add_child(instance)
 
 func send_action_up():
 	pass
