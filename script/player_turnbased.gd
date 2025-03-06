@@ -1,5 +1,6 @@
 extends Node3D
 signal go
+var can_click = false
 var fightbutton = ["Name","Fireball"]
 var actbutton = []
 var items = []
@@ -16,7 +17,7 @@ func _process(delta: float) -> void:
 	pass
 
 func my_turn():
-	pass
+	can_click = true
 
 func free_mouse():
 	if is_multiplayer_authority():

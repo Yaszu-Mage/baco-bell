@@ -26,6 +26,6 @@ text = "Host"
 layout_mode = 2
 text = "Join"
 
-[connection signal="pressed" from="Menu/GridContainer/Host" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Menu/GridContainer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Menu/GridContainer/Host" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Menu/GridContainer/Join" to="." method="_on_join_pressed"]

@@ -18,6 +18,7 @@ var wall_normal
 @onready var floor_ray = $RayCast3D
 var fall = Vector3() 
 var waller = false
+var clicked = false
 func _ready() -> void:
 	wall_min_slide_angle = 90
 	name = str(get_multiplayer_authority())

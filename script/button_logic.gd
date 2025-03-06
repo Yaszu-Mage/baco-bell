@@ -18,4 +18,5 @@ func set_name_val(name_val : String):
 func _on_button_pressed() -> void:
 	var parent = get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().get_parent()
 	var player = get_parent().get_parent().get_parent().get_parent().get_parent()
+	
 	parent.run_event(player,nameval)
