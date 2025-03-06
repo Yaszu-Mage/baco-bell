@@ -1,7 +1,7 @@
 extends Node3D
 var players = ["baller"] ## contains players
 var player_instances = [] # contains player INSTANCES 
-var enemies = [] # contains enemies
+var enemies = ["ballsack"] # contains enemies
 var enemy_instances = [] # contains enemy INSTANCES
 var all_intances = []
 var combatants = [] # contains all combatants
@@ -34,6 +34,12 @@ func _ready() -> void:
 		instance.global_position = world.get_node("player_" + str(x + 1)).global_position
 	for x in enemies.size():
 		combatants.append(enemies[x])
+		var instance = load("res://scenes/enemy_turn_base.tscn").instantiate()
+		instance.name = enemies[x]
+		enemy_grid.add_child(instance)
+		enemy_instances.append(instance)
+		all_intances.append(instance)
+		instance.global_position = world.get_node("enemy_" + str(x + 1)).global_position
 	for x in combatants:
 		var init = randi_range(1,20)
 		initiative.append([x,init])
@@ -50,23 +56,31 @@ func sort_ascending(a, b):
 func turns():
 	turnsize = initiative.size()
 	var goer = initiative[turn]
-	if is_player(goer):
+	if is_player(goer[0]):
 		var player = player_grid.get_node(goer[0])
 		player.go.emit()
 		await clicked_button
+	else:
+		var enemy = enemy_grid.get_child(enemy_grid.get_children().find(goer[0]))
+		enemy.go.emit()
+	await clicked_button
+	increase_turn()
+	turns()
 	
 	
 func is_player(turn):
-	if players.find(turn):
+	if players.find(turn) >= 1:
 		return true
 	else:
 		return false
 
 func increase_turn():
+	turnsize = initiative.size() - 1
 	if turn + 1 > turnsize:
 		turn = 0
 	else:
 		turn += 1
+	print(turn)
 
 func run_event(player,nameval):
 	print(player.name,nameval)
