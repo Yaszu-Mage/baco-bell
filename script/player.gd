@@ -42,7 +42,6 @@ func _physics_process(delta: float) -> void:
 			can_double_jump = false
 		if Input.is_action_pressed("left"):
 			if !rotating_now:
-				print("trying to rot")
 				rotating_now = true
 				var new_value = self.rotation.y + 0.5
 				var tween = create_tween()
@@ -51,7 +50,6 @@ func _physics_process(delta: float) -> void:
 				rotating_now = false
 		if Input.is_action_pressed("right"):
 			if !rotating_now:
-				print("trying to rot")
 				rotating_now = true
 				var new_value = self.rotation.y - 0.5
 				var tween = create_tween()
