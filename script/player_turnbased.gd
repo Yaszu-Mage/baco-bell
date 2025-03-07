@@ -34,3 +34,8 @@ func free_mouse():
 func _on_fight_pressed() -> void:
 	grid.buttons = fightbutton
 	grid.add()
+	
+	
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("left"):
+		breakpoint

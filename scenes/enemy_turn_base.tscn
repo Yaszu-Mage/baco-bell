@@ -5,22 +5,32 @@
 [sub_resource type="GDScript" id="GDScript_54vmu"]
 script/source = "extends Area3D
 var mouse_in = false
-@onready var parent = get_parent()
+@onready var parent = get_parent().get_parent().get_parent().get_parent()
+@onready var real_parent = get_parent()
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and mouse_in and parent.can_click:
 		get_parent().clicked.emit()
-		get_parent().get_parent().get_parent().get_parent().clicked_button.emit()
+		get_parent().get_parent().get_parent().get_parent().clicked_button(self)
 
 
 
 func _on_mouse_entered() -> void:
 	mouse_in = true
-	get_parent().get_parent().get_parent().get_parent().clicked = self
+	print(parent.can_click,\" \",parent.turn)
+	if parent.can_click:
+		var mesh : MeshInstance3D = get_node(\"mesh/outline\")
+		var material = mesh.get_surface_override_material(0)
+		material.albedo_color = Color(255,255,0)
+		mesh.set_surface_override_material(0,material)
 
 
 func _on_mouse_exited() -> void:
 	mouse_in = false
-	get_parent().get_parent().get_parent().get_parent().clicked = null
+	if parent.can_click:
+		var mesh : MeshInstance3D = get_node(\"mesh/outline\")
+		var material = mesh.get_surface_override_material(0)
+		material.albedo_color = Color(0,0,0)
+		mesh.set_surface_override_material(0,material)
 "
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qrfn4"]

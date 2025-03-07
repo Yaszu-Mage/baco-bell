@@ -23,6 +23,7 @@ func my_turn():
 		var chance = randi_range(0,10)
 		if chance > 5:
 			get_parent().get_parent()
+	get_parent().get_parent().get_parent().next_turn.emit()
 
 
 func _on_area_3d_mouse_entered() -> void:
