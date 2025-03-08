@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=4 uid="uid://b3f6pdogi8rkw"]
+[gd_scene load_steps=8 format=4 uid="uid://b3f6pdogi8rkw"]
 
 [ext_resource type="Script" uid="uid://dgdsvgnc4wefk" path="res://script/enemy_turn_base.gd" id="1_qrfn4"]
+[ext_resource type="Texture2D" uid="uid://rv8g43tkf2if" path="res://icon.svg" id="2_qrfn4"]
 
 [sub_resource type="GDScript" id="GDScript_54vmu"]
 script/source = "extends Area3D
@@ -10,7 +11,7 @@ var mouse_in = false
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and mouse_in and parent.can_click:
 		get_parent().clicked.emit()
-		get_parent().get_parent().get_parent().get_parent().clicked_button(self)
+		get_parent().get_parent().get_parent().get_parent().set_clicked(self)
 
 
 
@@ -69,6 +70,42 @@ surface_material_override/0 = SubResource("StandardMaterial3D_lqwjk")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CapsuleShape3D_qrfn4")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 989.0
+offset_top = 8.0
+offset_right = 1029.0
+offset_bottom = 48.0
+scale = Vector2(0.6, 0.6)
+
+[node name="PanelContainer" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/PanelContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_qrfn4")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="GridContainer" type="GridContainer" parent="Control/PanelContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="TextureProgressBar" type="ProgressBar" parent="Control/PanelContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+value = 100.0
+
+[node name="TextureProgressBar2" type="ProgressBar" parent="Control/PanelContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
 
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_entered" from="Area3D" to="Area3D" method="_on_mouse_entered"]

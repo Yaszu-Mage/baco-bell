@@ -46,6 +46,7 @@ func _ready() -> void:
 		var init = randi_range(1,20)
 		initiative.append([x,init])
 	initiative.sort_custom(sort_ascending)
+	print(initiative)
 	next_turn.connect(next)
 	turns()
 	
@@ -62,14 +63,17 @@ func turns():
 	var goer = initiative[turn]
 	if is_player(goer[0]):
 		var player = player_grid.get_node(goer[0])
+		player.turn = true
 		player.go.emit()
 		can_click = true
 	else:
+		print(enemy_grid.get_children().find(goer[0]))
 		var enemy = enemy_grid.get_child(enemy_grid.get_children().find(goer[0]))
 		enemy.go.emit()
 	
 func set_clicked(nodder :Node):
 	clicked = nodder
+	clicked_button.emit()
 func is_player(turn):
 	for x in players.size():
 		print(players[x-1], " ", turn[0])
@@ -89,15 +93,16 @@ func run_event(player,nameval):
 	player.clicked.emit()
 	player.can_click = false
 	player.ability_selected = false
-	
+	player.turn = false
 	var used = GlobalLists.abilities.get(nameval)
 	print(used)
 	var type = used["Type"]
 	var value = used["Value"]
 	print(type)
+	print(clicked)
 	match type:
 		"Attack":
-			clicked.parent.health -= value
+			clicked.get_parent().health -= value
 	## TODO Play Animation
 	clicked = null
 	

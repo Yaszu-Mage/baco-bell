@@ -16,7 +16,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	$Control/PanelContainer/VBoxContainer/GridContainer/TextureProgressBar.value = health
 
 func my_turn():
 	if health > 50:

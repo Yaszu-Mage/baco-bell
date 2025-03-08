@@ -1,10 +1,9 @@
-[gd_scene load_steps=17 format=4 uid="uid://c32wf6x2j5ngi"]
+[gd_scene load_steps=16 format=4 uid="uid://c32wf6x2j5ngi"]
 
 [ext_resource type="Script" uid="uid://dxya3vjeoijq0" path="res://script/player_turnbased.gd" id="1_piegm"]
 [ext_resource type="Texture2D" uid="uid://rv8g43tkf2if" path="res://icon.svg" id="2_rmdas"]
 [ext_resource type="Script" uid="uid://b4cuukfspcxv1" path="res://script/add_buttons.gd" id="3_hp2gq"]
 [ext_resource type="Texture2D" uid="uid://cm2g2j2n2jln3" path="res://assets/images/IMG_2823.PNG" id="4_moesn"]
-[ext_resource type="PackedScene" uid="uid://dnutmywyv78te" path="res://scenes/option_button.tscn" id="4_msy4j"]
 [ext_resource type="Texture2D" uid="uid://wnwwubfjpt16" path="res://assets/images/IMG_2824.PNG" id="5_4wipb"]
 [ext_resource type="Texture2D" uid="uid://nus7c57h5kkq" path="res://assets/images/IMG_2825.PNG" id="6_r3p78"]
 [ext_resource type="Texture2D" uid="uid://bdk7cmv1w6od5" path="res://assets/images/IMG_2826.PNG" id="7_h31kv"]
@@ -60,6 +59,15 @@ albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2w76u"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83g2q"]
+bg_color = Color(0.2484, 0.2484, 0.2484, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xruty"]
 bg_color = Color(2.21, 0, 0, 1)
 border_width_left = 8
@@ -86,9 +94,6 @@ corner_radius_top_right = 32
 corner_radius_bottom_right = 32
 corner_radius_bottom_left = 32
 
-[sub_resource type="Theme" id="Theme_2wewr"]
-MarginContainer/constants/margin_top = 10
-
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_piegm")
 
@@ -109,14 +114,17 @@ shape = SubResource("CapsuleShape3D_2w76u")
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(0.8, 0.8)
+offset_left = 11.0
+offset_top = 346.0
+offset_right = 51.0
+offset_bottom = 386.0
+scale = Vector2(0.6, 0.6)
 
 [node name="PanelContainer" type="PanelContainer" parent="Control"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_83g2q")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer"]
 layout_mode = 2
@@ -126,6 +134,10 @@ custom_minimum_size = Vector2(8, 0)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VSplitContainer4" type="VSplitContainer" parent="Control/PanelContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 
 [node name="VSplitContainer" type="VSplitContainer" parent="Control/PanelContainer/HBoxContainer/VBoxContainer"]
@@ -170,14 +182,14 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Health" type="ProgressBar" parent="Control/PanelContainer/HBoxContainer/VBoxContainer/VSplitContainer/Buttons"]
-custom_minimum_size = Vector2(0, 32)
+custom_minimum_size = Vector2(128, 32)
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_xruty")
 value = 100.0
 show_percentage = false
 
 [node name="Mana" type="ProgressBar" parent="Control/PanelContainer/HBoxContainer/VBoxContainer/VSplitContainer/Buttons"]
-custom_minimum_size = Vector2(0, 32)
+custom_minimum_size = Vector2(128, 32)
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_e63hy")
 value = 100.0
@@ -187,34 +199,22 @@ show_percentage = false
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 
+[node name="ProgressBar" type="ProgressBar" parent="Control/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+value = 100.0
+show_percentage = false
+
+[node name="VSplitContainer3" type="VSplitContainer" parent="Control/PanelContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+
 [node name="GridContainer" type="GridContainer" parent="Control/PanelContainer/HBoxContainer"]
 layout_mode = 2
 script = ExtResource("3_hp2gq")
 
-[node name="MarginContainer" parent="Control/PanelContainer/HBoxContainer/GridContainer" instance=ExtResource("4_msy4j")]
+[node name="VSplitContainer2" type="VSplitContainer" parent="Control/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(8, 0)
 layout_mode = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="Control/PanelContainer/HBoxContainer/GridContainer"]
-layout_mode = 2
-theme = SubResource("Theme_2wewr")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/HBoxContainer/GridContainer/MarginContainer2"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="Control/PanelContainer/HBoxContainer/GridContainer/MarginContainer2/VBoxContainer"]
-layout_mode = 2
-text = "Attack1"
-
-[node name="MarginContainer3" type="MarginContainer" parent="Control/PanelContainer/HBoxContainer/GridContainer"]
-layout_mode = 2
-theme = SubResource("Theme_2wewr")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/HBoxContainer/GridContainer/MarginContainer3"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="Control/PanelContainer/HBoxContainer/GridContainer/MarginContainer3/VBoxContainer"]
-layout_mode = 2
-text = "Attack1"
 
 [connection signal="mouse_entered" from="Area3D" to="Area3D" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Area3D" to="Area3D" method="_on_mouse_exited"]

@@ -15,8 +15,10 @@ func set_name_val(name_val : String):
 
 
 func _on_button_pressed() -> void:
+	
 	var parent = get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().get_parent()
 	var player = get_parent().get_parent().get_parent().get_parent().get_parent()
-	player.ability_selected = true
-	await get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().clicked_button
-	parent.run_event(player,nameval)
+	if player.turn:
+		player.ability_selected = true
+		await get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().clicked_button
+		parent.run_event(player,nameval)

@@ -6,6 +6,7 @@ var actbutton = []
 var items = []
 var flee = []
 var targets = []
+var turn = false
 var ability_selected = false
 var health = 100
 signal clicked
@@ -29,6 +30,7 @@ func toggle():
 func free_mouse():
 	if is_multiplayer_authority():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		
 
 
 func _on_fight_pressed() -> void:

@@ -1,10 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://drgvoaufs322i"]
+[gd_scene load_steps=7 format=3 uid="uid://drgvoaufs322i"]
+
+[ext_resource type="Script" uid="uid://b71tyrxyqm7jf" path="res://script/cuber.gd" id="1_eib84"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_68j4o"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_eib84"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_68j4o"]
+radius = 0.780981
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_eib84"]
+radius = 2.14702
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_eib84"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="cuber" type="CharacterBody3D"]
+script = ExtResource("1_eib84")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_68j4o")
@@ -13,3 +27,20 @@ shape = SubResource("BoxShape3D_68j4o")
 mesh = SubResource("BoxMesh_eib84")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="start_fight" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="start_fight"]
+shape = SubResource("SphereShape3D_68j4o")
+
+[node name="I can see you" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="I can see you"]
+shape = SubResource("SphereShape3D_eib84")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_eib84")
+
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
+[connection signal="body_entered" from="I can see you" to="." method="_on_i_can_see_you_body_entered"]
+[connection signal="body_exited" from="I can see you" to="." method="_on_i_can_see_you_body_exited"]
