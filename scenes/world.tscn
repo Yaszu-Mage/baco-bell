@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=4 uid="uid://dg8by3s6h6mrh"]
+[gd_scene load_steps=13 format=4 uid="uid://dg8by3s6h6mrh"]
 
+[ext_resource type="Script" uid="uid://g58gqvmt3cay" path="res://script/world_void.gd" id="1_k0juu"]
 [ext_resource type="ArrayMesh" uid="uid://c4cigyfwqbbla" path="res://assets/model/map.obj" id="1_nnsk1"]
 [ext_resource type="PackedScene" uid="uid://djf6i1t13v5tq" path="res://scenes/enemy_base.tscn" id="2_rwgxs"]
 [ext_resource type="Script" uid="uid://d2ldvls4abn84" path="res://script/world_boundry.gd" id="3_4wyf3"]
@@ -42,7 +43,8 @@ data = PackedVector3Array(2.2403, 0.4055, 2.2403, -2.2403, 0.4055, 2.2403, 2.240
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_rwgxs"]
 
-[node name="Node3D" type="Node3D"]
+[node name="world" type="Node3D"]
+script = ExtResource("1_k0juu")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://de8w3x5hpj6x"]
+[gd_scene load_steps=6 format=3 uid="uid://de8w3x5hpj6x"]
 
 [ext_resource type="Script" uid="uid://cci7i4x2sxe7d" path="res://script/player.gd" id="1_053sa"]
 [ext_resource type="Texture2D" uid="uid://b0b67538ni2of" path="res://assets/images/arrow.png" id="2_4alws"]
+[ext_resource type="Texture2D" uid="uid://dnxns5qpiqj8r" path="res://assets/images/void_titlecard.png" id="3_qhqgy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_63nt8"]
 
@@ -33,3 +34,113 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.157642, 5.72757)
 [node name="RayCast3D" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.01132, 0)
 target_position = Vector3(0, -1.5, 0)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+offset_left = -163.0
+offset_top = -136.0
+offset_right = 2343.0
+offset_bottom = 1280.0
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 614.0
+offset_top = 340.0
+offset_right = 870.0
+offset_bottom = 596.0
+texture = ExtResource("3_qhqgy")
+
+[node name="Camera2D" type="Camera2D" parent="ColorRect"]
+position = Vector2(739, 460)
+
+[node name="VBoxContainer" type="GridContainer" parent="."]
+offset_left = -573.0
+offset_top = -319.0
+offset_right = -62.0
+offset_bottom = 56.0
+theme_override_constants/h_separation = 146
+columns = 8
+
+[node name="Menu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1160.0
+offset_bottom = 649.0
+
+[node name="Buttons" type="PanelContainer" parent="Menu"]
+custom_minimum_size = Vector2(128, 256)
+layout_mode = 2
+offset_left = 502.0
+offset_top = 209.0
+offset_right = 656.0
+offset_bottom = 465.0
+
+[node name="GridContainer" type="GridContainer" parent="Menu/Buttons"]
+layout_mode = 2
+theme_override_constants/h_separation = 42
+theme_override_constants/v_separation = 32
+columns = 3
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="Menu/Buttons/GridContainer"]
+layout_mode = 2
+
+[node name="HSplitContainer3" type="HSplitContainer" parent="Menu/Buttons/GridContainer"]
+layout_mode = 2
+
+[node name="HSplitContainer4" type="HSplitContainer" parent="Menu/Buttons/GridContainer"]
+layout_mode = 2
+
+[node name="HSplitContainer5" type="HSplitContainer" parent="Menu/Buttons/GridContainer"]
+layout_mode = 2
+
+[node name="Party" type="Button" parent="Menu/Buttons/GridContainer"]
+layout_mode = 2
+text = "Party"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Menu/Buttons/GridContainer"]
+layout_mode = 2
+
+[node name="HSplitContainer6" type="HSplitContainer" parent="Menu/Buttons/GridContainer"]
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="Menu/Buttons/GridContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="HSplitContainer7" type="HSplitContainer" parent="Menu/Buttons/GridContainer"]
+layout_mode = 2
+
+[node name="HSplitContainer8" type="HSplitContainer" parent="Menu/Buttons/GridContainer"]
+layout_mode = 2
+
+[node name="Quit" type="Button" parent="Menu/Buttons/GridContainer"]
+layout_mode = 2
+text = "Exit"
+
+[node name="List of Players" type="PanelContainer" parent="Menu"]
+visible = false
+layout_mode = 0
+offset_left = 447.0
+offset_top = 212.0
+offset_right = 694.0
+offset_bottom = 483.0
+
+[node name="GridContainer" type="GridContainer" parent="Menu/List of Players"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Menu/List of Players/GridContainer"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+text = "List of Players"
+
+[node name="ItemList" type="ItemList" parent="Menu/List of Players/GridContainer"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[connection signal="pressed" from="Menu/Buttons/GridContainer/Party" to="." method="_on_party_pressed"]
+[connection signal="pressed" from="Menu/Buttons/GridContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="item_selected" from="Menu/List of Players/GridContainer/ItemList" to="." method="_on_item_list_item_selected"]

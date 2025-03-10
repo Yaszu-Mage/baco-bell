@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://bgjqxlrky4y8n"]
+[gd_scene load_steps=3 format=3 uid="uid://bgjqxlrky4y8n"]
 
 [ext_resource type="Script" uid="uid://ps0smiy3ppyx" path="res://script/multiplayer.gd" id="1_w4jws"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3lg42"]
+properties/0/path = NodePath(".:username_sync")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:instances")
+properties/1/spawn = true
+properties/1/replication_mode = 2
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_w4jws")
@@ -18,6 +26,11 @@ offset_top = 57.0
 offset_right = 85.0
 offset_bottom = 123.0
 
+[node name="TextEdit" type="TextEdit" parent="Menu/GridContainer"]
+custom_minimum_size = Vector2(128, 35)
+layout_mode = 2
+placeholder_text = "Username"
+
 [node name="Host" type="Button" parent="Menu/GridContainer"]
 layout_mode = 2
 text = "Host"
@@ -25,6 +38,9 @@ text = "Host"
 [node name="Join" type="Button" parent="Menu/GridContainer"]
 layout_mode = 2
 text = "Join"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_3lg42")
 
 [connection signal="pressed" from="Menu/GridContainer/Host" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Menu/GridContainer/Host" to="." method="_on_host_pressed"]

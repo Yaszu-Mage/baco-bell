@@ -73,3 +73,15 @@ func wander():
 		await agent.target_reached
 		agent.target_position = original
 	wander()
+
+
+func _on_visible() -> void:
+	if is_multiplayer_authority():
+		print(visible)
+		visible = true
+
+
+func _on_invisible() -> void:
+	if is_multiplayer_authority():
+		print(visible)
+		visible = false
