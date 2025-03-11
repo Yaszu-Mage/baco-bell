@@ -4,10 +4,14 @@ var health = 100
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 var can_wall_jump = true
+@onready var list = $"Menu/List of Players"
 var is_sliding = false
 var slide_speed = 2.0
 var slide_stamina = 100
 var slide_duration = 10
+@onready var little_guy = $lil_guy_rig
+var request
+@export var username = ""
 @onready var menu = $Menu
 var accepted = false
 var party_marker : Node = null
@@ -16,7 +20,7 @@ var is_wall_running = false
 var slide_exponent = 0.1
 var can_double_jump = true
 var rotating_now = false
-var party = []
+@export var party = []
 var is_in_party = false
 @onready var cam_rot = $SpringArm3D
 var wall_normal
@@ -67,6 +71,7 @@ func _physics_process(delta: float) -> void:
 			velocity.y = JUMP_VELOCITY
 		if Input.is_action_just_pressed("ui_accept") and !is_on_wall() and !is_on_floor() and can_double_jump:
 			velocity.y = JUMP_VELOCITY
+			little_guy.play_animation("Flip")
 			can_double_jump = false
 		if Input.is_action_pressed("left") and !menu.visible:
 			if !rotating_now:
@@ -139,7 +144,12 @@ func _physics_process(delta: float) -> void:
 			if camera.fov == 95:
 				var tween = create_tween()
 				tween.tween_property(camera,"fov",75,0.1)
-		if direction and !menu.visible :
+		if is_on_floor() and direction:
+			little_guy.play_animation("Walking")
+		elif is_on_floor() and !direction:
+			little_guy.play_animation("Idle")
+			
+		if direction and !menu.visible:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
 			last_direction = direction
@@ -157,38 +167,84 @@ func remote_set_position(authority_velocity,authority_position):
 	global_position = authority_position
 	move_and_slide()
 
+
+@rpc("unreliable")
+func remote_set_username(authority_name):
+	username = authority_name
 func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
 		if Input.is_action_just_pressed("menu"):
 			menu.visible = not menu.visible
+			if list.visible:
+				list.visible = not list.visible
+			
 
 func _process(delta: float) -> void:
+	if is_multiplayer_authority():
+		rpc("remote_set_username",username)
+		username = GlobalLists.username
+		var listpos = GlobalLists.usernames.get(name)
+		if listpos != username:
+			GlobalLists.usernames.set(name,username)
 	if is_in_party and party_marker == null:
 		var instance = load("res://scenes/player_party.tscn").instantiate()
+		for c in $VBoxContainer.get_children():
+			$VBoxContainer.remove_child(c)
 		$VBoxContainer.add_child(instance)
 		instance.islocal = true
 	if $"Menu/List of Players".visible:
 		$"Menu/List of Players/GridContainer/ItemList".clear()
-		for e in GlobalLists.players:
-			$"Menu/List of Players/GridContainer/ItemList".add_item(GlobalLists.usernames.get(e))
+		var parent = get_parent()
+		for n in parent.get_children():
+			if n.is_in_group("player"):
+				$"Menu/List of Players/GridContainer/ItemList".add_item(n.username)
 		
 
 
 func _on_party_pressed() -> void:
 	$"Menu/List of Players".visible = not $"Menu/List of Players".visible
 
-func send_request(id):
-	pass
+@rpc("any_peer")
+func send_request(id,target):
+	if username != id and target == username and is_multiplayer_authority():
+		$Notification/VBoxContainer/RichTextLabel.text = id + " has invited you to their party!"
+		request = id
+		$AnimationPlayer.play("notification_on")
+		await get_tree().create_timer(30).timeout
+		$AnimationPlayer.play_backwards("notification_on")
 func _on_item_list_item_selected(index: int) -> void:
 	var list = $"Menu/List of Players/GridContainer/ItemList"
-	var user = list.get_item_at_position(index)
-	var id = GlobalLists.usernames.find_key(user)
-	var player = GlobalLists.instances.get(id)
-	player.send_request(GlobalLists.usernames.get(GlobalLists.players[0]))
+	var user = list.get_item_text(index)
+	var parent = get_parent()
+	var player = null
+	for n in parent.get_children():
+		if n.is_in_group("player"):
+			if n.username == user:
+				player = n
+				print(n.username)
+	if player != null:
+		print(username,player.username)
+		
+		player.get_request(username,player.username)
 	await get_tree().create_timer(30.0).timeout
 	if accepted:
+		is_in_party = true
 		party.append(player)
-
+func get_request(use,playuse):
+	rpc("send_request",use,playuse)
 
 func _on_quit_pressed() -> void:
 	get_tree().quit(0)
+
+
+func _on_button_pressed() -> void:
+	var parent = get_parent()
+	for n in parent.get_children():
+		if n.is_in_group("player"):
+			if n.username == request:
+				n.rpc("accept")
+				party = n.party
+
+@rpc("any_peer")
+func accept():
+	accepted = true

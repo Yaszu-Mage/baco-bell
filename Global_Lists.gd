@@ -16,6 +16,7 @@ enum environments {
 }
 enum ability_types {attack,healing,defend}
 var players = []
+var username = ""
 var usernames = {}
 var instances = {}
 # Called when the node enters the scene tree for the first time.
@@ -23,6 +24,14 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
+@rpc("any_peer")
+func sync_vars(play,user,instan):
+	if multiplayer.is_server():
+		players = play
+		usernames = user
+		instances = instan
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if is_multiplayer_authority():
+		rpc("sync_vars",players,usernames,instances)

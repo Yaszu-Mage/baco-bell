@@ -1,12 +1,86 @@
-[gd_scene load_steps=6 format=3 uid="uid://de8w3x5hpj6x"]
+[gd_scene load_steps=10 format=3 uid="uid://de8w3x5hpj6x"]
 
 [ext_resource type="Script" uid="uid://cci7i4x2sxe7d" path="res://script/player.gd" id="1_053sa"]
 [ext_resource type="Texture2D" uid="uid://b0b67538ni2of" path="res://assets/images/arrow.png" id="2_4alws"]
+[ext_resource type="PackedScene" uid="uid://dxln0smww0hkn" path="res://scenes/lil_gut.tscn" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://dnxns5qpiqj8r" path="res://assets/images/void_titlecard.png" id="3_qhqgy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_63nt8"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_jy5kp"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qhqgy"]
+properties/0/path = NodePath(".:username")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:scale")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:party")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[sub_resource type="Animation" id="Animation_qhqgy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Notification:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(951, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Notification:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_dqkch"]
+resource_name = "notification_on"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Notification:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.266667, 0.566667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(951, 2), Vector2(1163, 2), Vector2(1051, 2), Vector2(949, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Notification:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qlg0r"]
+_data = {
+&"RESET": SubResource("Animation_qhqgy"),
+&"notification_on": SubResource("Animation_dqkch")
+}
 
 [node name="player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_053sa")
@@ -14,8 +88,8 @@ script = ExtResource("1_053sa")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_63nt8")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_jy5kp")
+[node name="lil_guy_rig" parent="." instance=ExtResource("2_dqkch")]
+transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 0, -0.224431, 0)
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 1.5, 0)
@@ -141,6 +215,48 @@ text = "List of Players"
 custom_minimum_size = Vector2(256, 256)
 layout_mode = 2
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qhqgy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qlg0r")
+}
+
+[node name="Notification" type="PanelContainer" parent="."]
+visible = false
+offset_left = 951.0
+offset_top = 2.0
+offset_right = 1151.0
+offset_bottom = 390.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Notification"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Notification/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "The Redeemer has invited you to their party!"
+fit_content = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Notification/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 92
+
+[node name="Button" type="Button" parent="Notification/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Accept"
+
+[node name="Button2" type="Button" parent="Notification/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Deny"
+
+[node name="Time_Left" type="ProgressBar" parent="Notification/VBoxContainer"]
+layout_mode = 2
+value = 100.0
+show_percentage = false
+
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Party" to="." method="_on_party_pressed"]
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="item_selected" from="Menu/List of Players/GridContainer/ItemList" to="." method="_on_item_list_item_selected"]
+[connection signal="pressed" from="Notification/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
