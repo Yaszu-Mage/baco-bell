@@ -1,10 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://de8w3x5hpj6x"]
+[gd_scene load_steps=19 format=3 uid="uid://de8w3x5hpj6x"]
 
 [ext_resource type="Script" uid="uid://cci7i4x2sxe7d" path="res://script/player.gd" id="1_053sa"]
 [ext_resource type="Texture2D" uid="uid://b0b67538ni2of" path="res://assets/images/arrow.png" id="2_4alws"]
 [ext_resource type="PackedScene" uid="uid://dxln0smww0hkn" path="res://scenes/lil_gut.tscn" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://dnxns5qpiqj8r" path="res://assets/images/void_titlecard.png" id="3_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://basdylifwg2g2" path="res://scenes/running_particles.tscn" id="5_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://sfwd7qo5nakr" path="res://assets/images/mike_image.PNG" id="6_tuyoq"]
+[ext_resource type="Texture2D" uid="uid://cm2g2j2n2jln3" path="res://assets/images/fight.PNG" id="7_y4r1p"]
+[ext_resource type="Texture2D" uid="uid://bdk7cmv1w6od5" path="res://assets/images/act.PNG" id="8_d2wvv"]
+[ext_resource type="Texture2D" uid="uid://wnwwubfjpt16" path="res://assets/images/team.PNG" id="9_3v2ag"]
+[ext_resource type="Texture2D" uid="uid://nus7c57h5kkq" path="res://assets/images/item.PNG" id="10_jej6c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qlg0r"]
 size = Vector3(1, 1.36108, 1)
@@ -86,6 +91,19 @@ _data = {
 &"RESET": SubResource("Animation_qhqgy"),
 &"notification_on": SubResource("Animation_dqkch")
 }
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1ej7"]
+bg_color = Color(0.180005, 0.180005, 0.180005, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.0253638, 0.0253638, 0.0253638, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oprun"]
+bg_color = Color(0.190762, 0.190762, 0.190762, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a8ls1"]
 
 [node name="player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_053sa")
@@ -275,7 +293,72 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.157642, 5.72757)
 light_color = Color(6.16074e-06, 0.586073, 0.783943, 1)
 light_energy = 0.2
 
+[node name="turn_based_player" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 2186.0
+offset_bottom = 2011.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PanelContainer" type="PanelContainer" parent="turn_based_player"]
+layout_mode = 0
+offset_right = 367.0
+offset_bottom = 169.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_f1ej7")
+
+[node name="PanelContainer" type="PanelContainer" parent="turn_based_player/PanelContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_oprun")
+
+[node name="TextureRect" type="TextureRect" parent="turn_based_player/PanelContainer/PanelContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_tuyoq")
+expand_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="turn_based_player/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 128
+
+[node name="ItemList" type="ItemList" parent="turn_based_player/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_a8ls1")
+allow_search = false
+auto_width = true
+item_count = 4
+max_columns = 2
+icon_mode = 0
+fixed_icon_size = Vector2i(64, 64)
+item_0/icon = ExtResource("7_y4r1p")
+item_0/selectable = false
+item_1/icon = ExtResource("8_d2wvv")
+item_2/icon = ExtResource("9_3v2ag")
+item_3/icon = ExtResource("10_jej6c")
+
+[node name="ItemList2" type="ItemList" parent="turn_based_player/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_a8ls1")
+allow_search = false
+auto_width = true
+item_count = 4
+max_columns = 2
+icon_mode = 0
+fixed_icon_size = Vector2i(64, 64)
+item_0/icon = ExtResource("7_y4r1p")
+item_0/selectable = false
+item_1/icon = ExtResource("8_d2wvv")
+item_2/icon = ExtResource("9_3v2ag")
+item_3/icon = ExtResource("10_jej6c")
+
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Party" to="." method="_on_party_pressed"]
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="item_selected" from="Menu/List of Players/GridContainer/ItemList" to="." method="_on_item_list_item_selected"]
 [connection signal="pressed" from="Notification/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="item_clicked" from="turn_based_player/PanelContainer/HBoxContainer/ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="item_clicked" from="turn_based_player/PanelContainer/HBoxContainer/ItemList2" to="." method="_on_item_list_2_item_clicked"]

@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://dxya3vjeoijq0" path="res://script/player_turnbased.gd" id="1_piegm"]
 [ext_resource type="Texture2D" uid="uid://rv8g43tkf2if" path="res://icon.svg" id="2_rmdas"]
 [ext_resource type="Script" uid="uid://b4cuukfspcxv1" path="res://script/add_buttons.gd" id="3_hp2gq"]
-[ext_resource type="Texture2D" uid="uid://cm2g2j2n2jln3" path="res://assets/images/IMG_2823.PNG" id="4_moesn"]
-[ext_resource type="Texture2D" uid="uid://wnwwubfjpt16" path="res://assets/images/IMG_2824.PNG" id="5_4wipb"]
-[ext_resource type="Texture2D" uid="uid://nus7c57h5kkq" path="res://assets/images/IMG_2825.PNG" id="6_r3p78"]
-[ext_resource type="Texture2D" uid="uid://bdk7cmv1w6od5" path="res://assets/images/IMG_2826.PNG" id="7_h31kv"]
+[ext_resource type="Texture2D" uid="uid://cm2g2j2n2jln3" path="res://assets/images/fight.PNG" id="4_moesn"]
+[ext_resource type="Texture2D" uid="uid://wnwwubfjpt16" path="res://assets/images/team.PNG" id="5_4wipb"]
+[ext_resource type="Texture2D" uid="uid://nus7c57h5kkq" path="res://assets/images/item.PNG" id="6_r3p78"]
+[ext_resource type="Texture2D" uid="uid://bdk7cmv1w6od5" path="res://assets/images/act.PNG" id="7_h31kv"]
 
 [sub_resource type="GDScript" id="GDScript_2w76u"]
 script/source = "extends Area3D

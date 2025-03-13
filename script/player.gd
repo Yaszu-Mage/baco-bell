@@ -15,6 +15,7 @@ var request
 @onready var menu = $Menu
 var accepted = false
 var party_marker : Node = null
+var can_move = true
 var wall_limit = 3
 var is_wall_running = false
 var slide_exponent = 0.1
@@ -48,6 +49,7 @@ func _ready() -> void:
 		await get_tree().create_timer(0.5).timeout
 		var world = get_parent().get_node("world")
 		var world_enum = world.world
+		get_actions(["Cashier","Fight"])
 		match world_enum:
 			world_type.the_void:
 				var new_tween = create_tween()
@@ -134,7 +136,7 @@ func _physics_process(delta: float) -> void:
 			$GPUParticles3D.emitting = false
 		var target_angle = Vector3.BACK.signed_angle_to(last_raw_dir,Vector3.UP)
 		move_direction = move_direction.normalized()
-		if direction and !menu.visible:
+		if direction and !menu.visible and can_move:
 			velocity = velocity.move_toward(move_direction * SPEED,delta * 20)
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
@@ -143,9 +145,9 @@ func _physics_process(delta: float) -> void:
 			last_raw_dir = move_direction
 		little_guy.global_rotation.y = target_angle
 				# Handle jump.
-		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		if Input.is_action_just_pressed("ui_accept") and is_on_floor() and can_move:
 			velocity.y = JUMP_VELOCITY
-		if Input.is_action_just_pressed("ui_accept") and !is_on_wall() and !is_on_floor() and can_double_jump:
+		if Input.is_action_just_pressed("ui_accept") and !is_on_wall() and !is_on_floor() and can_double_jump and can_move:
 			velocity.y = JUMP_VELOCITY
 			little_guy.play_animation("Flip")
 			rpc("sync_anim","Flip")
@@ -262,3 +264,62 @@ func _unhandled_input(event: InputEvent) -> void:
 		# Prevent the camera from rotating too far up or down.
 		_camera_pivot.rotation.x = clampf(_camera_pivot.rotation.x, -tilt_limit, tilt_limit)
 		_camera_pivot.rotation.y += -event.relative.x * mouse_sensitivity
+
+
+# Turn Based Starts Here, prepare thyself
+
+@onready var portrait = $turn_based_player/PanelContainer/PanelContainer/TextureRect
+@onready var list_one = $turn_based_player/PanelContainer/HBoxContainer/ItemList
+@onready var list_two = $turn_based_player/PanelContainer/HBoxContainer/ItemList2
+var fight_button = preload("res://assets/images/fight.PNG")
+var act_button = preload("res://assets/images/act.PNG")
+var item_button = preload("res://assets/images/item.PNG")
+var team_button = preload("res://assets/images/team.PNG")
+var buttons = {
+	"fight": preload("res://assets/images/fight.PNG"),
+	"act": preload("res://assets/images/act.PNG"),
+	"item": preload("res://assets/images/item.PNG"),
+	"team": preload("res://assets/images/team.PNG"),
+	"Count_Up": preload("res://assets/images/act.PNG")
+}
+var uses = []
+enum classes {
+	Cashier,
+	Electrician
+}
+var self_class = classes.Cashier
+func set_class(profession : classes):
+	self_class = profession
+# Path is formatted like, [Class,Type,Name]
+# So Count up is stored [Cashier,Fight,Count_Up]
+# If you just want to access generally the fight class for Cashier use the path, [Cashier,Fight]
+func get_actions(path : Array):
+	var zero_path = path[0]
+	var class_root : Dictionary = GlobalLists.abilities.get(zero_path)
+	var one_path = path[1]
+	var type_root : Dictionary = class_root.get(one_path)
+	var list_one_amount = 0
+	var list_two_amount = 0
+	list_one.clear()
+	list_two.clear()
+	for value in type_root.values():
+		var ability_name = type_root.find_key(value)
+		if list_one_amount < 4:
+			list_one_amount += 1
+			print(uses.find(ability_name))
+			if uses.find(ability_name) == -1:
+				uses.append(ability_name)
+				uses.append(20)
+			var selectable = true
+			if uses.get(uses.find(ability_name) + 1) == 0:
+				selectable = false
+			list_one.add_item(str(uses.get(uses.find(ability_name) + 1)),buttons.get(ability_name),false)
+	
+	
+# Max Per list is 4 buttons
+func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
+	pass # Replace with function body.
+
+
+func _on_item_list_2_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
+	pass # Replace with function body.

@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://8erkx7tl56vb"
 path.s3tc="res://.godot/imported/lil_guy_rig_lil_chest.png-133e6446376b1afd47ed507e5540258b.s3tc.ctex"
+path.etc2="res://.godot/imported/lil_guy_rig_lil_chest.png-133e6446376b1afd47ed507e5540258b.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/model/lil_guy_rig_lil_chest.png"
-dest_files=["res://.godot/imported/lil_guy_rig_lil_chest.png-133e6446376b1afd47ed507e5540258b.s3tc.ctex"]
+dest_files=["res://.godot/imported/lil_guy_rig_lil_chest.png-133e6446376b1afd47ed507e5540258b.s3tc.ctex", "res://.godot/imported/lil_guy_rig_lil_chest.png-133e6446376b1afd47ed507e5540258b.etc2.ctex"]
 
 [params]
 

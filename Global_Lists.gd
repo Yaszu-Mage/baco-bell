@@ -1,7 +1,7 @@
 extends Node
 var abilities = {
 	"Name":{
-		"Type": "type_value", # can be attack, healing, or defend
+		"Type": "type_value", # can be attack, healing,utility, or defend
 		"Value": 1, # integer that it changes something by
 		"Continuous": false, # if it takes multiple turns
 	},
@@ -10,6 +10,16 @@ var abilities = {
 		"Value": 7,
 		"Continuous": false
 	},
+	# Classes are formatted like:
+	"Cashier":{
+		"Fight": {
+		"Count_Up": {
+			"Type": "utility",
+			"Value" : 0,
+			"Continuous" : false
+		},
+		}
+	}
 }
 enum environments {
 	the_void,
