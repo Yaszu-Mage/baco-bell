@@ -1,0 +1,434 @@
+{
+	"connections": [
+		{
+			"from": "splatter",
+			"from_port": 0,
+			"to": "scale",
+			"to_port": 0
+		},
+		{
+			"from": "scale",
+			"from_port": 0,
+			"to": "colorize",
+			"to_port": 0
+		},
+		{
+			"from": "splatter",
+			"from_port": 0,
+			"to": "blend2",
+			"to_port": 0
+		},
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "blend2",
+			"to_port": 1
+		},
+		{
+			"from": "translate",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "translate",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 3
+		},
+		{
+			"from": "colorize_3",
+			"from_port": 0,
+			"to": "shape",
+			"to_port": 0
+		},
+		{
+			"from": "blend2",
+			"from_port": 0,
+			"to": "translate",
+			"to_port": 0
+		},
+		{
+			"from": "shape_3",
+			"from_port": 0,
+			"to": "colorize_3",
+			"to_port": 0
+		},
+		{
+			"from": "sine_wave",
+			"from_port": 0,
+			"to": "shape_3",
+			"to_port": 1
+		},
+		{
+			"from": "sine_wave",
+			"from_port": 0,
+			"to": "shape_3",
+			"to_port": 0
+		},
+		{
+			"from": "sine_wave",
+			"from_port": 0,
+			"to": "shape",
+			"to_port": 1
+		},
+		{
+			"from": "shape",
+			"from_port": 0,
+			"to": "scale_2",
+			"to_port": 0
+		},
+		{
+			"from": "scale_2",
+			"from_port": 0,
+			"to": "splatter",
+			"to_port": 0
+		}
+	],
+	"label": "Graph",
+	"longdesc": "",
+	"name": "@Node@479",
+	"node_position": {
+		"x": 0.0,
+		"y": 0.0
+	},
+	"nodes": [
+		{
+			"export_paths": {
+
+			},
+			"name": "Material",
+			"node_position": {
+				"x": 620.0,
+				"y": 40.0
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1.0,
+					"b": 1.0,
+					"g": 1.0,
+					"r": 1.0,
+					"type": "Color"
+				},
+				"ao": 1.0,
+				"depth_scale": 0.5,
+				"emission_energy": 1.0,
+				"flags_transparent": true,
+				"metallic": 0.0,
+				"normal": 1.0,
+				"roughness": 1.0
+			},
+			"seed_int": 0,
+			"type": "material_dynamic"
+		},
+		{
+			"name": "shape",
+			"node_position": {
+				"x": -740.0,
+				"y": 200.0
+			},
+			"parameters": {
+				"edge": 0.26,
+				"radius": 0.1,
+				"shape": 2,
+				"sides": 5.0
+			},
+			"seed_int": 0,
+			"type": "shape"
+		},
+		{
+			"name": "splatter",
+			"node_position": {
+				"x": -400.0,
+				"y": 220.0
+			},
+			"parameters": {
+				"count": 25.0,
+				"inputs": 0.0,
+				"rotate": 71.9,
+				"scale": 0.32,
+				"scale_x": 1.0,
+				"scale_y": 1.0,
+				"value": 0.82,
+				"variations": false
+			},
+			"seed_int": 0,
+			"type": "splatter"
+		},
+		{
+			"name": "colorize",
+			"node_position": {
+				"x": -140.0,
+				"y": 440.0
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 0,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.0,
+							"g": 0.0,
+							"pos": 0,
+							"r": 0.0
+						},
+						{
+							"a": 1.0,
+							"b": 0.0,
+							"g": 0.0,
+							"pos": 0.509806118779073,
+							"r": 0.0
+						},
+						{
+							"a": 1.0,
+							"b": 0.224165558815002,
+							"g": 0.0,
+							"pos": 0.509826118779073,
+							"r": 0.7890625
+						},
+						{
+							"a": 1.0,
+							"b": 0.224165558815002,
+							"g": 0.0,
+							"pos": 0.695696898929509,
+							"r": 0.7890625
+						},
+						{
+							"a": 1.0,
+							"b": 0.0,
+							"g": 0.84375,
+							"pos": 0.695716898929509,
+							"r": 1.0
+						},
+						{
+							"a": 1.0,
+							"b": 0.0,
+							"g": 0.84375,
+							"pos": 0.863635830227219,
+							"r": 1.0
+						},
+						{
+							"a": 1.0,
+							"b": 0.0,
+							"g": 0.5390625,
+							"pos": 0.863655830227218,
+							"r": 1.0
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"generic_size": 1,
+			"name": "scale",
+			"node_position": {
+				"x": -440.0,
+				"y": 500.0
+			},
+			"parameters": {
+				"cx": 0.0,
+				"cy": 0.0,
+				"scale_x": 0.5,
+				"scale_y": 0.5
+			},
+			"seed_int": 0,
+			"type": "scale"
+		},
+		{
+			"generic_size": 1,
+			"name": "blend2",
+			"node_position": {
+				"x": -280.0,
+				"y": 80.0
+			},
+			"parameters": {
+				"amount1": 0.74,
+				"blend_type1": 4
+			},
+			"seed_int": 0,
+			"type": "blend2"
+		},
+		{
+			"generic_size": 1,
+			"name": "translate",
+			"node_position": {
+				"x": 320.0,
+				"y": 160.0
+			},
+			"parameters": {
+				"translate_x": "$time*0.02",
+				"translate_y": 0.0
+			},
+			"seed_int": 0,
+			"type": "translate"
+		},
+		{
+			"name": "sine_wave",
+			"node_position": {
+				"x": -1320.0,
+				"y": 220.0
+			},
+			"parameters": {
+				"amplitude": 0.15,
+				"frequency": 16.0,
+				"phase": "$time"
+			},
+			"seed_int": 0,
+			"type": "sine_wave"
+		},
+		{
+			"name": "colorize_3",
+			"node_position": {
+				"x": -880.0,
+				"y": 220.0
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 0,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.0,
+							"g": 0.0,
+							"pos": 0,
+							"r": 0.0
+						},
+						{
+							"a": 1.0,
+							"b": 0.0,
+							"g": 0.0,
+							"pos": 0.99999,
+							"r": 0.0
+						},
+						{
+							"a": 1.0,
+							"b": 1.0,
+							"g": 1.0,
+							"pos": 1.00001,
+							"r": 1.0
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		},
+		{
+			"name": "shape_3",
+			"node_position": {
+				"x": -1060.0,
+				"y": 160.0
+			},
+			"parameters": {
+				"edge": 0.26,
+				"radius": 0.1,
+				"shape": 2.0,
+				"sides": 5.0
+			},
+			"seed_int": 0,
+			"type": "shape"
+		},
+		{
+			"generic_size": 1,
+			"name": "scale_2",
+			"node_position": {
+				"x": -585.117370605469,
+				"y": 354.870422363281
+			},
+			"parameters": {
+				"cx": 0.0,
+				"cy": 0.0,
+				"scale_x": "sin($time)*0.9",
+				"scale_y": "sin($time)*0.9"
+			},
+			"seed_int": 0,
+			"shader_model": {
+				"code": "",
+				"global": "vec2 scale(vec2 uv, vec2 center, vec2 scale) {\n\tuv -= center;\n\tuv /= scale;\n\tuv += center;\n\treturn uv;\n}",
+				"inputs": [
+					{
+						"default": "vec4($uv, 0.0, 1.0)",
+						"label": "",
+						"longdesc": "An input image",
+						"name": "i#",
+						"shortdesc": "Input#",
+						"type": "rgba"
+					}
+				],
+				"instance": "",
+				"longdesc": "Scales its input",
+				"name": "Scale",
+				"outputs": [
+					{
+						"longdesc": "Shows a scaled image",
+						"rgba": "$i#(scale($uv, vec2(0.5+$cx, 0.5+$cy), vec2($scale_x, $scale_y)))",
+						"shortdesc": "Output#",
+						"type": "rgba"
+					}
+				],
+				"parameters": [
+					{
+						"control": "P1.x",
+						"default": 0.0,
+						"label": "Center X",
+						"longdesc": "The position of the scale center",
+						"max": 1.0,
+						"min": -1.0,
+						"name": "cx",
+						"shortdesc": "Center.x",
+						"step": 0.005,
+						"type": "float"
+					},
+					{
+						"control": "P1.y",
+						"default": 0.0,
+						"label": "Center Y",
+						"longdesc": "The poisition of the scale center",
+						"max": 1.0,
+						"min": -1.0,
+						"name": "cy",
+						"shortdesc": "Center.y",
+						"step": 0.005,
+						"type": "float"
+					},
+					{
+						"control": "Scale1.x",
+						"default": 1.0,
+						"label": "Scale X",
+						"longdesc": "The scale amount along the X axis",
+						"max": 50.0,
+						"min": 0.0,
+						"name": "scale_x",
+						"shortdesc": "Scale.x",
+						"step": 0.005,
+						"type": "float"
+					},
+					{
+						"control": "Scale1.y",
+						"default": 1.0,
+						"label": "Scale Y",
+						"longdesc": "The scale amount along the Y axis",
+						"max": 50.0,
+						"min": 0.0,
+						"name": "scale_y",
+						"shortdesc": "Scale.y",
+						"step": 0.005,
+						"type": "float"
+					}
+				],
+				"shortdesc": "Scale"
+			},
+			"type": "shader"
+		}
+	],
+	"parameters": {
+
+	},
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}

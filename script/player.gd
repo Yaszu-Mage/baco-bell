@@ -22,9 +22,10 @@ var can_double_jump = true
 var rotating_now = false
 @export var party = []
 var is_in_party = false
-@onready var cam_rot = $SpringArm3D
+@onready var cam_rot = $cam_pivot/SpringArm3D
+@onready var _camera_pivot = $cam_pivot
 var wall_normal
-@onready var camera = $SpringArm3D/Camera3D
+@onready var camera = $cam_pivot/SpringArm3D/Camera3D
 @onready var floor_ray = $RayCast3D
 var fall = Vector3() 
 var waller = false
@@ -36,6 +37,7 @@ enum world_type {
 @onready var title_card = $ColorRect/TextureRect
 @onready var fade = $ColorRect
 func _ready() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	wall_min_slide_angle = 90
 	name = str(get_multiplayer_authority())
 	var tween = create_tween()
@@ -57,7 +59,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		$Sprite3D.visible = true
-		$SpringArm3D/Camera3D.current = true
+		camera.current = true
 		# Add the gravity.
 		
 		if not is_on_floor() and !is_wall_running:
@@ -73,6 +75,7 @@ func _physics_process(delta: float) -> void:
 			velocity.y = JUMP_VELOCITY
 			little_guy.play_animation("Flip")
 			can_double_jump = false
+		
 		if Input.is_action_pressed("left") and !menu.visible:
 			if !rotating_now:
 				rotating_now = true
@@ -146,9 +149,10 @@ func _physics_process(delta: float) -> void:
 				tween.tween_property(camera,"fov",75,0.1)
 		if is_on_floor() and direction:
 			little_guy.play_animation("Walking")
+			$GPUParticles3D.emitting = true
 		elif is_on_floor() and !direction:
 			little_guy.play_animation("Idle")
-			
+			$GPUParticles3D.emitting = false
 		if direction and !menu.visible:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
@@ -175,12 +179,17 @@ func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
 		if Input.is_action_just_pressed("menu"):
 			menu.visible = not menu.visible
+			if !menu.visible:
+				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			else:
+				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			if list.visible:
 				list.visible = not list.visible
 			
 
 func _process(delta: float) -> void:
 	if is_multiplayer_authority():
+		_camera_pivot.global_position = self.global_position
 		rpc("remote_set_username",username)
 		username = GlobalLists.username
 		var listpos = GlobalLists.usernames.get(name)
@@ -248,3 +257,15 @@ func _on_button_pressed() -> void:
 @rpc("any_peer")
 func accept():
 	accepted = true
+
+@export_range(0.0, 1.0) var mouse_sensitivity = 0.01
+@export var tilt_limit = deg_to_rad(75)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion and is_multiplayer_authority():
+		_camera_pivot.rotation.x -= event.relative.y * mouse_sensitivity
+		# Prevent the camera from rotating too far up or down.
+		_camera_pivot.rotation.x = clampf(_camera_pivot.rotation.x, -tilt_limit, tilt_limit)
+		_camera_pivot.rotation.y += -event.relative.x * mouse_sensitivity
+		self.rotate_y(-event.relative.x * mouse_sensitivity)
