@@ -13,7 +13,7 @@ jobs:
     name: Windows Export
     runs-on: ubuntu-22.04  # Use 22.04 with godot 4
     container:
-      image: barichello/godot-ci:4.4
+      image: barichello/godot-ci:4.3
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
     name: Linux Export
     runs-on: ubuntu-22.04  # Use 22.04 with godot 4
     container:
-      image: barichello/godot-ci:4.4
+      image: barichello/godot-ci:4.3
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -67,7 +67,7 @@ jobs:
     name: Web Export
     runs-on: ubuntu-22.04  # Use 22.04 with godot 4
     container:
-      image: barichello/godot-ci:4.4
+      image: barichello/godot-ci:4.3
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -82,7 +82,6 @@ jobs:
           mkdir -v -p build/web
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
-          godot --headless -verbose -e
           godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/index.html"
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
@@ -102,7 +101,7 @@ jobs:
     name: Mac Export
     runs-on: ubuntu-22.04  # Use 22.04 with godot 4
     container:
-      image: barichello/godot-ci:4.4
+      image: barichello/godot-ci:4.3
     steps:
       - name: Checkout
         uses: actions/checkout@v4
