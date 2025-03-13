@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 var health = 100
 const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+const JUMP_VELOCITY = 22.5
 var can_wall_jump = true
 @onready var list = $"Menu/List of Players"
 var is_sliding = false
@@ -22,6 +22,7 @@ var can_double_jump = true
 var rotating_now = false
 @export var party = []
 var is_in_party = false
+var last_raw_dir : Vector3
 @onready var cam_rot = $cam_pivot/SpringArm3D
 @onready var _camera_pivot = $cam_pivot
 var wall_normal
@@ -62,19 +63,10 @@ func _physics_process(delta: float) -> void:
 		camera.current = true
 		# Add the gravity.
 		
-		if not is_on_floor() and !is_wall_running:
-			velocity += get_gravity() * delta
 		if is_on_floor():
 			can_wall_jump = true
 			can_double_jump = true
 			wall_limit = 3
-		# Handle jump.
-		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
-		if Input.is_action_just_pressed("ui_accept") and !is_on_wall() and !is_on_floor() and can_double_jump:
-			velocity.y = JUMP_VELOCITY
-			little_guy.play_animation("Flip")
-			can_double_jump = false
 		
 		if Input.is_action_pressed("left") and !menu.visible:
 			if !rotating_now:
@@ -98,20 +90,24 @@ func _physics_process(delta: float) -> void:
 			# As good practice, you should replace UI actions with custom gameplay actions	.
 		var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 		var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		
+		var forward = camera.global_basis.z
+		var right = camera.global_basis.x
+		var move_direction = forward * input_dir.y + right * input_dir.x
 		if is_on_wall_only() and Input.is_action_pressed("ui_accept") and !floor_ray.is_colliding() and !Input.is_action_pressed("slide") and wall_limit > 0:
 			var tween = create_tween()
 			tween.tween_property(camera,"fov",90,1)
 			wall_normal = get_slide_collision(0)
 			if wall_normal.get_normal().x != 0:
 				if wall_normal.get_normal().x > 0:
-					direction.z = -direction.z * -wall_normal.get_normal().x * (SPEED)
+					move_direction.z = -move_direction.z * -wall_normal.get_normal().x * (SPEED)
 				if wall_normal.get_normal().x < 0:
-					direction.z = direction.z * -wall_normal.get_normal().x * (SPEED)
+					move_direction.z = move_direction.z * -wall_normal.get_normal().x * (SPEED)
 			if wall_normal.get_normal().z != 0:
 				if wall_normal.get_normal().z > 0:
-					direction.x = -direction.x * -wall_normal.get_normal().z * (SPEED)
+					move_direction.x = -move_direction.x * -wall_normal.get_normal().z * (SPEED)
 				if wall_normal.get_normal().x < 0:
-					direction.x = direction.x * -wall_normal.get_normal().z * (SPEED)
+					move_direction.x = move_direction.x * -wall_normal.get_normal().z * (SPEED)
 			await get_tree().create_timer(0.2).timeout
 			is_wall_running = true
 		elif Input.is_action_just_released("ui_accept") and is_wall_running and is_on_wall():
@@ -136,7 +132,7 @@ func _physics_process(delta: float) -> void:
 			var tween = create_tween()
 			tween.tween_property(camera,"fov",95,0.1)
 			if slide_exponent < 0:
-				velocity = last_direction * pow(2,1 / slide_exponent) * SPEED * 2
+				velocity = last_raw_dir * pow(2,1 / slide_exponent) * SPEED * 2
 				slide_exponent += 0.5
 				move_and_slide()
 			else:
@@ -150,19 +146,30 @@ func _physics_process(delta: float) -> void:
 		if is_on_floor() and direction:
 			little_guy.play_animation("Walking")
 			$GPUParticles3D.emitting = true
-		elif is_on_floor() and !direction:
+		elif is_on_floor() and !input_dir:
 			little_guy.play_animation("Idle")
 			$GPUParticles3D.emitting = false
+		var target_angle = Vector3.BACK.signed_angle_to(last_raw_dir,Vector3.UP)
+		move_direction = move_direction.normalized()
 		if direction and !menu.visible:
-			velocity.x = direction.x * SPEED
-			velocity.z = direction.z * SPEED
-			last_direction = direction
+			velocity = velocity.move_toward(move_direction * SPEED,delta * 20)
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
-		
-		rpc("remote_set_position", velocity,global_position)
+		if move_direction.length() > 0.2:
+			last_raw_dir = move_direction
+		little_guy.global_rotation.y = target_angle
+				# Handle jump.
+		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+			velocity.y = JUMP_VELOCITY
+		if Input.is_action_just_pressed("ui_accept") and !is_on_wall() and !is_on_floor() and can_double_jump:
+			velocity.y = JUMP_VELOCITY
+			little_guy.play_animation("Flip")
+			can_double_jump = false
+		if not is_on_floor() and !is_wall_running:
+			velocity += get_gravity() * delta * 5
 		move_and_slide()
+		rpc("remote_set_position", velocity,global_position)
 
 
 @rpc("unreliable")
@@ -268,4 +275,3 @@ func _unhandled_input(event: InputEvent) -> void:
 		# Prevent the camera from rotating too far up or down.
 		_camera_pivot.rotation.x = clampf(_camera_pivot.rotation.x, -tilt_limit, tilt_limit)
 		_camera_pivot.rotation.y += -event.relative.x * mouse_sensitivity
-		self.rotate_y(-event.relative.x * mouse_sensitivity)

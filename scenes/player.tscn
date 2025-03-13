@@ -6,7 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dnxns5qpiqj8r" path="res://assets/images/void_titlecard.png" id="3_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://basdylifwg2g2" path="res://scenes/running_particles.tscn" id="5_qlg0r"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_63nt8"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_qlg0r"]
+size = Vector3(1, 1.36108, 1)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qhqgy"]
 properties/0/path = NodePath(".:username")
@@ -87,7 +88,8 @@ _data = {
 script = ExtResource("1_053sa")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_63nt8")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.180542, 0)
+shape = SubResource("BoxShape3D_qlg0r")
 
 [node name="lil_guy_rig" parent="." instance=ExtResource("2_dqkch")]
 transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 0, -0.224431, 0)
@@ -265,6 +267,10 @@ spring_length = 5.0
 
 [node name="Camera3D" type="Camera3D" parent="cam_pivot/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.157642, 5.72757)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(6.16074e-06, 0.586073, 0.783943, 1)
+light_energy = 0.2
 
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Party" to="." method="_on_party_pressed"]
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Quit" to="." method="_on_quit_pressed"]
