@@ -18,10 +18,6 @@ variables:
   PROJECT_PATH: .
 
 # Open the editor to import assets in case the cache was empty or outdated
-import-assets:
-  stage: import-assets
-  script:
-    - godot --headless --editor --quit
 
 linux:
   stage: export
