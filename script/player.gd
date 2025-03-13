@@ -49,7 +49,6 @@ func _ready() -> void:
 		await get_tree().create_timer(0.5).timeout
 		var world = get_parent().get_node("world")
 		var world_enum = world.world
-		get_actions(["Cashier","Fight"])
 		match world_enum:
 			world_type.the_void:
 				var new_tween = create_tween()
@@ -283,17 +282,14 @@ var buttons = {
 	"Count_Up": preload("res://assets/images/act.PNG")
 }
 var uses = []
-enum classes {
-	Cashier,
-	Electrician
-}
-var self_class = classes.Cashier
-func set_class(profession : classes):
+var self_class = "Cashier"
+func set_class(profession : String):
 	self_class = profession
 # Path is formatted like, [Class,Type,Name]
 # So Count up is stored [Cashier,Fight,Count_Up]
 # If you just want to access generally the fight class for Cashier use the path, [Cashier,Fight]
 func get_actions(path : Array):
+	print(path)
 	var zero_path = path[0]
 	var class_root : Dictionary = GlobalLists.abilities.get(zero_path)
 	var one_path = path[1]
@@ -314,12 +310,33 @@ func get_actions(path : Array):
 			if uses.get(uses.find(ability_name) + 1) == 0:
 				selectable = false
 			list_one.add_item(str(uses.get(uses.find(ability_name) + 1)),buttons.get(ability_name),false)
-	
-	
+		if list_one_amount == 4 and list_two_amount < 4:
+			list_two_amount += 1
+			print(uses.find(ability_name))
+			if uses.find(ability_name) == -1:
+				uses.append(ability_name)
+				uses.append(20)
+			var selectable = true
+			if uses.get(uses.find(ability_name) + 1) == 0:
+				selectable = false
+			list_two.add_item(str(uses.get(uses.find(ability_name) + 1)),buttons.get(ability_name),false)
+
+func turn():
+	pass
 # Max Per list is 4 buttons
 func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
-	pass # Replace with function body.
-
+	var clicked = buttons.find_key(list_one.get_item_icon(index))
+	match clicked:
+		"fight":
+			get_actions([self_class,"Fight"])
+		"act":
+			pass
+		"item":
+			pass
+		"team":
+			pass
+		"Count_Up":
+			pass
 
 func _on_item_list_2_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
 	pass # Replace with function body.

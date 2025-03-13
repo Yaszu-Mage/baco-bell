@@ -20,7 +20,8 @@ curve = SubResource("Curve_ew7q7")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8n1qf"]
 lifetime_randomness = 0.1
 particle_flag_damping_as_friction = true
-gravity = Vector3(-1, -1, 9)
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, -1, 0)
 scale_min = 0.0
 scale_curve = SubResource("CurveTexture_1mc37")
 scale_over_velocity_curve = SubResource("CurveTexture_2nnpf")
@@ -38,7 +39,6 @@ size = Vector2(0.5, 0.5)
 orientation = 2
 
 [node name="GPUParticles3D" type="GPUParticles3D"]
-amount = 4
 trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_8n1qf")
 draw_pass_1 = SubResource("PlaneMesh_ebyua")
