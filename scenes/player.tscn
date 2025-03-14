@@ -301,7 +301,6 @@ light_color = Color(6.16074e-06, 0.586073, 0.783943, 1)
 light_energy = 0.2
 
 [node name="turn_based_player" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 2186.0
@@ -374,6 +373,14 @@ item_0/selectable = false
 item_1/icon = ExtResource("8_d2wvv")
 item_2/icon = ExtResource("9_3v2ag")
 item_3/icon = ExtResource("10_jej6c")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="turn_based_player"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 203.0
+offset_right = 404.0
+offset_bottom = 238.0
+theme_override_fonts/normal_font = ExtResource("7_d2wvv")
 
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Party" to="." method="_on_party_pressed"]
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Quit" to="." method="_on_quit_pressed"]

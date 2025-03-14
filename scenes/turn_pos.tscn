@@ -1,9 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cs3s661ybnyx7"]
-
-[ext_resource type="Script" uid="uid://d0t40y0g2q83v" path="res://script/fight_scene_2.gd" id="1_cgfef"]
+[gd_scene format=3 uid="uid://dg4ers53q4mr6"]
 
 [node name="Node3D" type="Node3D"]
-script = ExtResource("1_cgfef")
 
 [node name="player" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)

@@ -270,6 +270,7 @@ func _unhandled_input(event: InputEvent) -> void:
 @onready var portrait = $turn_based_player/PanelContainer/PanelContainer/TextureRect
 @onready var list_one = $turn_based_player/PanelContainer/HBoxContainer/ItemList
 @onready var list_two = $turn_based_player/PanelContainer/HBoxContainer/ItemList2
+@onready var knower = $turn_based_player/RichTextLabel
 var fight_button = preload("res://assets/images/fight.PNG")
 var act_button = preload("res://assets/images/act.PNG")
 var item_button = preload("res://assets/images/item.PNG")
@@ -288,7 +289,12 @@ func set_class(profession : String):
 # Path is formatted like, [Class,Type,Name]
 # So Count up is stored [Cashier,Fight,Count_Up]
 # If you just want to access generally the fight class for Cashier use the path, [Cashier,Fight]
+func logger(text : String):
+	knower.clear()
+	knower.text = text
 func get_actions(path : Array):
+	knower.clear()
+	logger("Moving Buttons to: " + str(path))
 	print(path)
 	var zero_path = path[0]
 	var class_root : Dictionary = GlobalLists.abilities.get(zero_path)
@@ -321,8 +327,33 @@ func get_actions(path : Array):
 				selectable = false
 			list_two.add_item(str(uses.get(uses.find(ability_name) + 1)),buttons.get(ability_name),false)
 
-func turn():
+var fight_instance
+var effects = {}
+func start_fight(enemy : Node):
+	$turn_based_player.visible = true
+	can_move = false
+	var instance = load("res://scenes/fight_redo.tscn").instantiate()
+	self.global_position = instance.get_node("player")
+	enemy.global_position = instance.get_node("enemy")
+	instance.combatants_list.append(self)
+	instance.combatants_list.append(enemy)
+	fight_instance = instance
+	#Play Animations
+	get_parent().add_child(instance)
+
+func play_animation(anim):
 	pass
+	
+func turn():
+	for item in list_one.item_count:
+		list_one.set_item_selectable(item,false)
+	for item in list_two.item_count:
+		list_two.set_item_selectable(item,false)
+func not_turn():
+	for item in list_one.item_count:
+		list_one.set_item_selectable(item,false)
+	for item in list_two.item_count:
+		list_two.set_item_selectable(item,false)
 # Max Per list is 4 buttons
 func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
 	var clicked = buttons.find_key(list_one.get_item_icon(index))
@@ -336,7 +367,7 @@ func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_i
 		"team":
 			pass
 		"Count_Up":
-			pass
+			fight_instance.run_action(self,"Count_Up")
 
 func _on_item_list_2_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
 	pass # Replace with function body.
