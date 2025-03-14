@@ -62,16 +62,25 @@ func run_turn():
 func run_action(entity,action):
 	match action:
 		"Count_Up":
+			for entries in intiative:
+				if entries[0].is_in_group("player"):
+					entries[0].display_message(str(entity.username + " has attempted Count Up and..."))
 			#Flip a coin for buffs
 			var coin_flip = randi_range(0,1)
 			if coin_flip == 1:
 				if entity.is_in_group("player"):
 					entity.logger("Heads")
+					for entries in intiative:
+						if entries[0].is_in_group("player"):
+							entries[0].display_message(str(entity.username + " landed heads!"))
 				if entity.effects.has("Strength"):
 					entity.effects.set("Strength",entity.effects.get("Strength")+1)
 				else:
 					entity.effects.set("Strength",1)
 			else:
+				for entires in intiative:
+					if entires[0].is_in_group("player"):
+						entires[0].display_message(str(entity.username + " landed tails."))
 				entity.logger("Tails")
 				if entity.effects.has("Weakness"):
 					entity.effects.set("Weakness",entity.effects.get("Weakness")+1)

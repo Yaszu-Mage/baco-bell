@@ -40,6 +40,7 @@ enum world_type {
 @onready var title_card = $ColorRect/TextureRect
 @onready var fade = $ColorRect
 func _ready() -> void:
+	$turn_based_player.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	wall_min_slide_angle = 90
 	name = str(get_multiplayer_authority())
@@ -47,6 +48,8 @@ func _ready() -> void:
 	if is_multiplayer_authority():
 		camera.current = true
 		fade.visible = true
+		if username == "":
+			username = name
 		tween.tween_property(fade,"color",Color(0,0,0,0),1)
 		await get_tree().create_timer(0.5).timeout
 		world = get_parent().get_node("world")
@@ -59,6 +62,10 @@ func _ready() -> void:
 				await get_tree().create_timer(2.0).timeout
 				var brand_new_tween = create_tween()
 				brand_new_tween.tween_property(title_card,"modulate",Color(1,1,1,0),1)
+@onready var notification_menu_text = $turn_based_player/notifications/main/sub/VBoxContainer/actualtext
+func display_message(message : String):
+	notification_menu_text.add_text("
+	" + message)
 
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
@@ -190,11 +197,16 @@ func _process(delta: float) -> void:
 		var listpos = GlobalLists.usernames.get(name)
 		if listpos != username:
 			GlobalLists.usernames.set(name,username)
-		if $turn_based_player/move_window.button_pressed:
+		if $turn_based_player/main_menu/move_window.button_pressed:
 			var pos = get_viewport().get_mouse_position()
 			pos.x -= 314
 			pos.y += 32
 			turnbased_menu.position = pos
+		if $turn_based_player/notifications/move_window.button_pressed:
+			var pos = get_viewport().get_mouse_position()
+			pos.x -= 100
+			pos.y += 16
+			$turn_based_player/notifications.position = pos
 	if is_in_party and party_marker == null:
 		var instance = load("res://scenes/player_party.tscn").instantiate()
 		for c in $VBoxContainer.get_children():
@@ -274,10 +286,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 # Turn Based Starts Here, prepare thyself
 
-@onready var turnbased_menu = $turn_based_player
-@onready var portrait = $turn_based_player/PanelContainer2/PanelContainer/PanelContainer/TextureRect
-@onready var list_one = $turn_based_player/PanelContainer2/PanelContainer/HBoxContainer/ItemList
-@onready var list_two = $turn_based_player/PanelContainer2/PanelContainer/HBoxContainer/ItemList2
+@onready var turnbased_menu = $turn_based_player/main_menu
+@onready var notification_menu = $turn_based_player/notifications
+@onready var portrait = $turn_based_player/main_menu/main_menu/PanelContainer/PanelContainer/TextureRect
+@onready var list_one = $turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList
+@onready var list_two = $turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList2
 @onready var knower = $turn_based_player/RichTextLabel
 var fight_button = preload("res://assets/images/fight.PNG")
 var act_button = preload("res://assets/images/act.PNG")

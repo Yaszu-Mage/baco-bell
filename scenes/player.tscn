@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://de8w3x5hpj6x"]
+[gd_scene load_steps=30 format=3 uid="uid://de8w3x5hpj6x"]
 
 [ext_resource type="Script" uid="uid://cci7i4x2sxe7d" path="res://script/player.gd" id="1_053sa"]
 [ext_resource type="Texture2D" uid="uid://b0b67538ni2of" path="res://assets/images/arrow.png" id="2_4alws"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://sfwd7qo5nakr" path="res://assets/images/mike_image.PNG" id="6_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://vb7gr2n3sfbs" path="res://assets/images/windows.jpg" id="7_3v2ag"]
 [ext_resource type="FontFile" uid="uid://dci4cxvysgqif" path="res://assets/fonts/easvhs.ttf" id="7_d2wvv"]
+[ext_resource type="Theme" uid="uid://ducjn13fbpyf3" path="res://assets/themes/invis_button.theme" id="7_jej6c"]
 [ext_resource type="Texture2D" uid="uid://cm2g2j2n2jln3" path="res://assets/images/fight.PNG" id="7_y4r1p"]
 [ext_resource type="Texture2D" uid="uid://bdk7cmv1w6od5" path="res://assets/images/act.PNG" id="8_d2wvv"]
 [ext_resource type="Texture2D" uid="uid://wnwwubfjpt16" path="res://assets/images/team.PNG" id="9_3v2ag"]
@@ -123,19 +124,18 @@ bg_color = Color(0.781003, 0, 0.263485, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3v2ag"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f1ej7"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3v2ag"]
+texture = ExtResource("7_3v2ag")
+expand_margin_left = 5.0
+expand_margin_top = 30.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oprun"]
+[sub_resource type="Theme" id="Theme_jej6c"]
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_3v2ag")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qfm1y"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fulsm"]
-
-[sub_resource type="Theme" id="Theme_4r5pv"]
-Button/styles/disabled = SubResource("StyleBoxEmpty_f1ej7")
-Button/styles/focus = SubResource("StyleBoxEmpty_oprun")
-Button/styles/hover = SubResource("StyleBoxEmpty_qfm1y")
-Button/styles/normal = SubResource("StyleBoxEmpty_fulsm")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8ls1"]
+bg_color = Color(0.883271, 0.680063, 1.15514e-06, 1)
 
 [node name="player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_053sa")
@@ -326,7 +326,6 @@ light_color = Color(6.16074e-06, 0.586073, 0.783943, 1)
 light_energy = 0.2
 
 [node name="turn_based_player" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 3.0
@@ -345,43 +344,48 @@ offset_right = 404.0
 offset_bottom = 238.0
 theme_override_fonts/normal_font = ExtResource("7_d2wvv")
 
-[node name="PanelContainer2" type="PanelContainer" parent="turn_based_player"]
-layout_mode = 0
+[node name="main_menu" type="Control" parent="turn_based_player"]
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="main_menu" type="PanelContainer" parent="turn_based_player/main_menu"]
+layout_mode = 0
+offset_right = 828.0
+offset_bottom = 328.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_jej6c")
 
-[node name="PanelContainer" type="PanelContainer" parent="turn_based_player/PanelContainer2"]
+[node name="PanelContainer" type="PanelContainer" parent="turn_based_player/main_menu/main_menu"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_f1ej7")
 
-[node name="PanelContainer" type="PanelContainer" parent="turn_based_player/PanelContainer2/PanelContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="turn_based_player/main_menu/main_menu/PanelContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_oprun")
 
-[node name="ProgressBar" type="ProgressBar" parent="turn_based_player/PanelContainer2/PanelContainer/PanelContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="turn_based_player/main_menu/main_menu/PanelContainer/PanelContainer"]
 custom_minimum_size = Vector2(0, 27)
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_d2wvv")
 value = 100.0
 show_percentage = false
 
-[node name="TextureRect" type="TextureRect" parent="turn_based_player/PanelContainer2/PanelContainer/PanelContainer"]
-z_index = 1
+[node name="TextureRect" type="TextureRect" parent="turn_based_player/main_menu/main_menu/PanelContainer/PanelContainer"]
+z_as_relative = false
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("6_tuyoq")
 expand_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="turn_based_player/PanelContainer2/PanelContainer/PanelContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="turn_based_player/main_menu/main_menu/PanelContainer/PanelContainer"]
 layout_mode = 2
 text = "10/10"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="turn_based_player/PanelContainer2/PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="turn_based_player/main_menu/main_menu/PanelContainer"]
 layout_mode = 2
 theme_override_constants/separation = 300
 
-[node name="ItemList" type="ItemList" parent="turn_based_player/PanelContainer2/PanelContainer/HBoxContainer"]
+[node name="ItemList" type="ItemList" parent="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 theme_override_constants/outline_size = 10
@@ -407,7 +411,7 @@ item_1/icon = ExtResource("8_d2wvv")
 item_2/icon = ExtResource("9_3v2ag")
 item_3/icon = ExtResource("10_jej6c")
 
-[node name="ItemList2" type="ItemList" parent="turn_based_player/PanelContainer2/PanelContainer/HBoxContainer"]
+[node name="ItemList2" type="ItemList" parent="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 theme_override_constants/v_separation = 32
@@ -428,29 +432,70 @@ item_1/icon = ExtResource("8_d2wvv")
 item_2/icon = ExtResource("9_3v2ag")
 item_3/icon = ExtResource("10_jej6c")
 
-[node name="move_window" type="Button" parent="turn_based_player"]
+[node name="move_window" type="Button" parent="turn_based_player/main_menu"]
 layout_mode = 0
 offset_left = -4.0
 offset_top = -31.0
 offset_right = 767.0
 offset_bottom = -10.0
-theme = SubResource("Theme_4r5pv")
+theme = ExtResource("7_jej6c")
 keep_pressed_outside = true
 
-[node name="close_window" type="Button" parent="turn_based_player"]
+[node name="close_window" type="Button" parent="turn_based_player/main_menu"]
 layout_mode = 0
 offset_left = 811.0
 offset_top = -26.0
 offset_right = 828.0
 offset_bottom = -13.0
-theme = SubResource("Theme_4r5pv")
+theme = ExtResource("7_jej6c")
+
+[node name="notifications" type="Control" parent="turn_based_player"]
+anchors_preset = 0
+offset_top = 372.857
+offset_right = 40.0
+offset_bottom = 412.857
+
+[node name="main" type="PanelContainer" parent="turn_based_player/notifications"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_jej6c")
+
+[node name="sub" type="PanelContainer" parent="turn_based_player/notifications/main"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a8ls1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="turn_based_player/notifications/main/sub"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ColorRect" type="ColorRect" parent="turn_based_player/notifications/main/sub/VBoxContainer"]
+layout_mode = 2
+color = Color(0.934038, 0.679099, 0, 1)
+
+[node name="actualtext" type="RichTextLabel" parent="turn_based_player/notifications/main/sub/VBoxContainer"]
+custom_minimum_size = Vector2(512, 128)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("7_d2wvv")
+scroll_active = false
+scroll_following = true
+
+[node name="move_window" type="Button" parent="turn_based_player/notifications"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -30.0
+offset_right = 479.0
+offset_bottom = -20.0
+theme = ExtResource("7_jej6c")
 
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Party" to="." method="_on_party_pressed"]
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="item_selected" from="Menu/List of Players/GridContainer/ItemList" to="." method="_on_item_list_item_selected"]
 [connection signal="pressed" from="Notification/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
-[connection signal="item_clicked" from="turn_based_player/PanelContainer2/PanelContainer/HBoxContainer/ItemList" to="." method="_on_item_list_item_clicked"]
-[connection signal="item_clicked" from="turn_based_player/PanelContainer2/PanelContainer/HBoxContainer/ItemList2" to="." method="_on_item_list_2_item_clicked"]
-[connection signal="button_down" from="turn_based_player/move_window" to="." method="_on_move_window_button_down"]
-[connection signal="button_up" from="turn_based_player/move_window" to="." method="_on_move_window_button_up"]
-[connection signal="pressed" from="turn_based_player/move_window" to="." method="_on_move_window_pressed"]
+[connection signal="item_clicked" from="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="item_clicked" from="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList2" to="." method="_on_item_list_2_item_clicked"]
+[connection signal="button_down" from="turn_based_player/main_menu/move_window" to="." method="_on_move_window_button_down"]
+[connection signal="button_up" from="turn_based_player/main_menu/move_window" to="." method="_on_move_window_button_up"]
+[connection signal="pressed" from="turn_based_player/main_menu/move_window" to="." method="_on_move_window_pressed"]

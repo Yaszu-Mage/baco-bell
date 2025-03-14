@@ -8,6 +8,7 @@ var movement_delta: float
 var can_move = true
 var enemy_type = "cuber"
 var fight_instance
+
 @export var movement_speed: float = 4.0
 func _ready() -> void:
 	player = null
