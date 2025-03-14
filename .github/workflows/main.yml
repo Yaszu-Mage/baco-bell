@@ -5,7 +5,7 @@ on: push
 
 env:
   GODOT_VERSION: 4.4
-  EXPORT_NAME: baco-bell
+  EXPORT_NAME: .
   PROJECT_PATH: .
 
 jobs:
