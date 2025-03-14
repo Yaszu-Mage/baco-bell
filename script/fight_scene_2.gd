@@ -41,15 +41,19 @@ func _ready():
 			#Run enemies things
 			combatants.get("Enemies").set(entity.enemy_type,entity)
 			var initiative_roll = randi_range(0,20)
-			initiative_roll.append([entity,initiative_roll])
+			intiative.append([entity,initiative_roll])
 			entity.can_move = false
 	print("intiative order has been decidied!" + str(intiative))
 	run_turn()
 
 func run_turn():
+	print(intiative)
 	for entries in intiative:
 		entries[0].turn()
 		await action_chose
+		if entries[0].is_in_group("player"):
+			entries[0].reset_actions()
+		await get_tree().create_timer(0.1).timeout
 		entries[0].not_turn()
 	turn += 1
 	print("turn finished, we are now on turn " +str(turn))
@@ -63,13 +67,13 @@ func run_action(entity,action):
 			if coin_flip == 1:
 				if entity.is_in_group("player"):
 					entity.logger("Heads")
-				if entity.effect.has("Strength"):
+				if entity.effects.has("Strength"):
 					entity.effects.set("Strength",entity.effects.get("Strength")+1)
 				else:
 					entity.effects.set("Strength",1)
 			else:
 				entity.logger("Tails")
-				if entity.effect.has("Weakness"):
+				if entity.effects.has("Weakness"):
 					entity.effects.set("Weakness",entity.effects.get("Weakness")+1)
 				else:
 					entity.effects.set("Weakness",1)

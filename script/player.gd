@@ -307,20 +307,33 @@ func set_class(profession : String):
 func logger(text : String):
 	knower.clear()
 	knower.text = text
+func reset_actions():
+	list_one.clear()
+	list_one.add_item("",buttons.get("fight"))
+	list_one.add_item("",buttons.get("act"))
+	list_one.add_item("",buttons.get("item"))
+	list_one.add_item("",buttons.get("team"))
+	list_two.clear()
 func get_actions(path : Array):
+	var size = path.size()
+	print(size)
 	knower.clear()
 	logger("Moving Buttons to: " + str(path))
-	print(path)
 	var zero_path = path[0]
 	var class_root : Dictionary = GlobalLists.abilities.get(zero_path)
-	var one_path = path[1]
-	var type_root : Dictionary = class_root.get(one_path)
+	var type_root : Dictionary
+	if size != 1:
+		var one_path = path[1]
+		type_root = class_root.get(one_path)
+	else:
+		type_root = class_root
 	var list_one_amount = 0
 	var list_two_amount = 0
 	list_one.clear()
 	list_two.clear()
 	for value in type_root.values():
 		var ability_name = type_root.find_key(value)
+		print(ability_name)
 		if list_one_amount < 4:
 			list_one_amount += 1
 			print(uses.find(ability_name))
@@ -331,7 +344,9 @@ func get_actions(path : Array):
 			if uses.get(uses.find(ability_name) + 1) == 0:
 				selectable = false
 			list_one.add_item(str(uses.get(uses.find(ability_name) + 1)),buttons.get(ability_name),false)
+			continue
 		if list_one_amount == 4 and list_two_amount < 4:
+			print("list two ", ability_name)
 			list_two_amount += 1
 			print(uses.find(ability_name))
 			if uses.find(ability_name) == -1:
@@ -357,6 +372,7 @@ func start_fight(enemy : Node):
 		get_parent().add_child(instance)
 		await get_tree().create_timer(0.1).timeout
 		enemy.can_move = false
+		enemy.fight_instance = instance
 		self.global_position = instance.get_node("player").global_position
 		enemy.global_position = instance.get_node("enemy").global_position
 		world.get_node("all_things").visible = false
@@ -370,14 +386,24 @@ func play_animation(anim):
 	
 func turn():
 	for item in list_one.item_count:
+		print(item)
 		list_one.set_item_selectable(item,false)
+		list_one.set_item_disabled(item,false)
+		print(list_one.is_item_disabled(item))
 	for item in list_two.item_count:
+		print(item)
 		list_two.set_item_selectable(item,false)
+		list_two.set_item_disabled(item,false)
 func not_turn():
+	print("not turn")
 	for item in list_one.item_count:
 		list_one.set_item_selectable(item,false)
+		list_one.set_item_disabled(item,true)
+		print(list_one.is_item_disabled(item))
 	for item in list_two.item_count:
 		list_two.set_item_selectable(item,false)
+		list_two.set_item_disabled(item,true)
+		print(list_two.is_item_disabled(item))
 # Max Per list is 4 buttons
 func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
 	var clicked = buttons.find_key(list_one.get_item_icon(index))
