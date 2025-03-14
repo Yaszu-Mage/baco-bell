@@ -20,7 +20,7 @@ var abilities = {
 		},
 		"Hired_Help": {
 			"Type": "utility",
-			"Value": 0,
+			"Value": 1,
 			"Continuous" : false
 		},
 		"Rush_Hour": {

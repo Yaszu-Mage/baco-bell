@@ -6,6 +6,8 @@ var SPEED = 5.0
 var wandering = false
 var movement_delta: float
 var can_move = true
+var enemy_type = "cuber"
+var fight_instance
 @export var movement_speed: float = 4.0
 func _ready() -> void:
 	player = null
@@ -63,6 +65,9 @@ func _on_i_can_see_you_body_exited(body: Node3D) -> void:
 @rpc("unreliable")
 func pos(pos):
 	global_position = pos
+
+func turn():
+	fight_instance.action_chose.emit()
 
 func wander():
 	await get_tree().create_timer(1.0).timeout
