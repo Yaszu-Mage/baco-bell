@@ -19,6 +19,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
+      - name: Clear Godot Cache
+        run: |
+          rm -rf ~/.config/godot ~/.local/share/godot
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
