@@ -6,7 +6,7 @@ var abilities = {
 		"Continuous": false, # if it takes multiple turns
 	},
 	"Fireball":{
-		"Type": "Attack",
+		"Type": "attack",
 		"Value": 7,
 		"Continuous": false
 	},
@@ -18,6 +18,41 @@ var abilities = {
 			"Value" : 0,
 			"Continuous" : false
 		},
+		"Hired_Help": {
+			"Type": "utility",
+			"Value": 0,
+			"Continuous" : false
+		},
+		"Rush_Hour": {
+			"Type": "healing",
+			"Value" : 4,
+			"Continuous" : true
+		},
+		"Punch": {
+			"Type": "attack",
+			"Value" : 3,
+			"Continuous" : false
+		},
+		"Minimum_Effort": {
+			"Type": "healing",
+			"Value": 4,
+			"Continuous": false
+		},
+		"Company_Investment": {
+			"Type": "attack",
+			"Value": 8,
+			"Continuous": false
+		},
+		"Aftermath": {
+			"Type": "attack",
+			"Value": 6,
+			"Continuous": false
+		},
+		"Fake_Identity": {
+			"Type": "utility",
+			"Value": 6,
+			"Continuous": false
+		}
 		}
 	}
 }

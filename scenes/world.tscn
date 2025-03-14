@@ -56,35 +56,35 @@ light_color = Color(0.73234, 0.851062, 1, 1)
 light_energy = 0.192
 shadow_enabled = true
 
-[node name="NavigationRegion3D2" type="NavigationRegion3D" parent="."]
+[node name="all_things" type="NavigationRegion3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -2.85806, 0)
 navigation_mesh = SubResource("NavigationMesh_71j4m")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="all_things"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.449002, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D2/StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="all_things/StaticBody3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -0.898003, 0)
 
-[node name="void_town" parent="NavigationRegion3D2/StaticBody3D" instance=ExtResource("3_71j4m")]
+[node name="void_town" parent="all_things/StaticBody3D" instance=ExtResource("3_71j4m")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D2/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="all_things/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.338023, 0)
 shape = SubResource("CylinderShape3D_71j4m")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="NavigationRegion3D2/StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="all_things/StaticBody3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_71j4m")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="NavigationRegion3D2/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="all_things/StaticBody3D"]
 transform = Transform3D(0.915382, 0, -0.402587, 0, 1, 0, 0.402587, 0, 0.915382, 16.6669, 13.4502, -10.9999)
 shape = SubResource("BoxShape3D_71j4m")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="NavigationRegion3D2/StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="all_things/StaticBody3D"]
 transform = Transform3D(0.906145, 0, -0.422966, 0, 1, 0, 0.422966, 0, 0.906145, 2.58302, 10.1355, -22.6803)
 shape = SubResource("BoxShape3D_qfnet")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="NavigationRegion3D2/StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="all_things/StaticBody3D"]
 transform = Transform3D(0.999659, 0, 0.0261072, 0, 1, 0, -0.0261072, 0, 0.999659, 30.9083, 7.9662, 2.65877)
 shape = SubResource("BoxShape3D_i7141")
 

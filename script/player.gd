@@ -143,7 +143,8 @@ func _physics_process(delta: float) -> void:
 			velocity.z = move_toward(velocity.z, 0, SPEED)
 		if move_direction.length() > 0.2:
 			last_raw_dir = move_direction
-		little_guy.global_rotation.y = target_angle
+		if can_move:
+			little_guy.global_rotation.y = target_angle
 				# Handle jump.
 		if Input.is_action_just_pressed("ui_accept") and is_on_floor() and can_move:
 			velocity.y = JUMP_VELOCITY
@@ -189,6 +190,11 @@ func _process(delta: float) -> void:
 		var listpos = GlobalLists.usernames.get(name)
 		if listpos != username:
 			GlobalLists.usernames.set(name,username)
+		if $turn_based_player/move_window.button_pressed:
+			var pos = get_viewport().get_mouse_position()
+			pos.x -= 314
+			pos.y += 32
+			turnbased_menu.position = pos
 	if is_in_party and party_marker == null:
 		var instance = load("res://scenes/player_party.tscn").instantiate()
 		for c in $VBoxContainer.get_children():
@@ -269,9 +275,9 @@ func _unhandled_input(event: InputEvent) -> void:
 # Turn Based Starts Here, prepare thyself
 
 @onready var turnbased_menu = $turn_based_player
-@onready var portrait = $turn_based_player/PanelContainer/PanelContainer/TextureRect
-@onready var list_one = $turn_based_player/PanelContainer/HBoxContainer/ItemList
-@onready var list_two = $turn_based_player/PanelContainer/HBoxContainer/ItemList2
+@onready var portrait = $turn_based_player/PanelContainer2/PanelContainer/PanelContainer/TextureRect
+@onready var list_one = $turn_based_player/PanelContainer2/PanelContainer/HBoxContainer/ItemList
+@onready var list_two = $turn_based_player/PanelContainer2/PanelContainer/HBoxContainer/ItemList2
 @onready var knower = $turn_based_player/RichTextLabel
 var fight_button = preload("res://assets/images/fight.PNG")
 var act_button = preload("res://assets/images/act.PNG")
@@ -282,7 +288,14 @@ var buttons = {
 	"act": preload("res://assets/images/act.PNG"),
 	"item": preload("res://assets/images/item.PNG"),
 	"team": preload("res://assets/images/team.PNG"),
-	"Count_Up": preload("res://assets/images/act.PNG")
+	"Count_Up": preload("res://assets/images/Count-up.PNG"),
+	"Rush_Hour": preload("res://assets/images/Rush_Hour.PNG"),
+	"Punch" : preload("res://assets/images/Punch.PNG"),
+	"Minimum_Effort" : preload("res://assets/images/act.PNG"),
+	"Company_Investment": preload("res://assets/images/act.PNG"),
+	"Hired_Help" : preload("res://assets/images/Hired-Help.PNG"),
+	"Aftermath": preload("res://assets/images/act.PNG"),
+	"Fake_Identity": preload("res://assets/images/act.PNG")
 }
 var uses = []
 var self_class = "Cashier"
@@ -336,8 +349,6 @@ func start_fight(enemy : Node):
 		$turn_based_player.visible = true
 		can_move = false
 		var instance = load("res://scenes/fight_redo.tscn").instantiate()
-		self.global_position = instance.get_node("player").global_position
-		enemy.global_position = instance.get_node("enemy").global_position
 		instance.combatants_list.append(self)
 		instance.combatants_list.append(enemy)
 		fight_instance = instance
@@ -345,10 +356,15 @@ func start_fight(enemy : Node):
 		#Play Animations
 		get_parent().add_child(instance)
 		await get_tree().create_timer(0.1).timeout
-		world.visible = false
+		enemy.can_move = false
+		self.global_position = instance.get_node("player").global_position
+		enemy.global_position = instance.get_node("enemy").global_position
+		world.get_node("all_things").visible = false
+		little_guy.rotation.y = 0
+		little_guy.rotation.y = 120
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		camera.current = false
 		instance.camera.current = true
-
 func play_animation(anim):
 	pass
 	

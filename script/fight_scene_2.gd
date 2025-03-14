@@ -22,12 +22,13 @@ var turn = 0
 #We can roll by using randi_range(1,20)
 # We need to store combatants FIRST before we put it into the dictionary
 func _ready():
+	print("ready started!")
 	match world:
 		world_type.the_void:
 			var instance = load("res://scenes/void_town.tscn").instantiate()
 			instance.position = Vector3(0,-2,5.782)
 			add_child(instance)
-
+	print("combatants list is now: " + str(combatants_list))
 	for entity in combatants_list:
 		if entity.is_in_group("player"):
 			#Run player things
@@ -42,6 +43,7 @@ func _ready():
 			var initiative_roll = randi_range(0,20)
 			initiative_roll.append([entity,initiative_roll])
 			entity.can_move = false
+	print("intiative order has been decidied!" + str(intiative))
 	run_turn()
 
 func run_turn():
