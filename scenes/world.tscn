@@ -13,12 +13,12 @@ sky_cover = ExtResource("2_qfnet")
 ground_bottom_color = Color(0, 0, 0, 1)
 ground_horizon_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Sky" id="Sky_qfnet"]
+[sub_resource type="Sky" id="Sky_71j4m"]
 sky_material = SubResource("ProceduralSkyMaterial_71j4m")
 
 [sub_resource type="Environment" id="Environment_i7141"]
 background_mode = 2
-sky = SubResource("Sky_qfnet")
+sky = SubResource("Sky_71j4m")
 tonemap_mode = 2
 glow_enabled = true
 

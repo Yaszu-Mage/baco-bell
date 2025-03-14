@@ -301,6 +301,7 @@ light_color = Color(6.16074e-06, 0.586073, 0.783943, 1)
 light_energy = 0.2
 
 [node name="turn_based_player" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 2186.0

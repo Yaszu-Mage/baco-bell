@@ -6,15 +6,28 @@ var combatants = {
 
 }
 }
+#World Type for Generation
+enum world_type {
+	the_void
+}
+var world
 #["Player_Name",Instance]
 var combatants_list = []
 #[Instance,initiative order]
 var intiative = []
 signal action_chose
+var turn = 0
+@onready var camera = $Camera3D
 #We will roll initiative like DND so 1-20
 #We can roll by using randi_range(1,20)
 # We need to store combatants FIRST before we put it into the dictionary
 func _ready():
+	match world:
+		world_type.the_void:
+			var instance = load("res://scenes/void_town.tscn").instantiate()
+			instance.position = Vector3(0,-2,5.782)
+			add_child(instance)
+
 	for entity in combatants_list:
 		if entity.is_in_group("player"):
 			#Run player things
@@ -29,12 +42,16 @@ func _ready():
 			var initiative_roll = randi_range(0,20)
 			initiative_roll.append([entity,initiative_roll])
 			entity.can_move = false
+	run_turn()
 
 func run_turn():
 	for entries in intiative:
 		entries[0].turn()
 		await action_chose
 		entries[0].not_turn()
+	turn += 1
+	print("turn finished, we are now on turn " +str(turn))
+	run_turn()
 
 func run_action(entity,action):
 	match action:

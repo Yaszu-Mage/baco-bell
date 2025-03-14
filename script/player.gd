@@ -32,6 +32,7 @@ var wall_normal
 var fall = Vector3() 
 var waller = false
 var clicked = false
+var world
 var last_direction : Vector3 = Vector3.ZERO
 enum world_type {
 	the_void
@@ -44,10 +45,11 @@ func _ready() -> void:
 	name = str(get_multiplayer_authority())
 	var tween = create_tween()
 	if is_multiplayer_authority():
+		camera.current = true
 		fade.visible = true
 		tween.tween_property(fade,"color",Color(0,0,0,0),1)
 		await get_tree().create_timer(0.5).timeout
-		var world = get_parent().get_node("world")
+		world = get_parent().get_node("world")
 		var world_enum = world.world
 		match world_enum:
 			world_type.the_void:
@@ -61,7 +63,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		$Sprite3D.visible = true
-		camera.current = true
 		# Add the gravity.
 		
 		if is_on_floor():
@@ -267,6 +268,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 # Turn Based Starts Here, prepare thyself
 
+@onready var turnbased_menu = $turn_based_player
 @onready var portrait = $turn_based_player/PanelContainer/PanelContainer/TextureRect
 @onready var list_one = $turn_based_player/PanelContainer/HBoxContainer/ItemList
 @onready var list_two = $turn_based_player/PanelContainer/HBoxContainer/ItemList2
@@ -330,16 +332,22 @@ func get_actions(path : Array):
 var fight_instance
 var effects = {}
 func start_fight(enemy : Node):
-	$turn_based_player.visible = true
-	can_move = false
-	var instance = load("res://scenes/fight_redo.tscn").instantiate()
-	self.global_position = instance.get_node("player")
-	enemy.global_position = instance.get_node("enemy")
-	instance.combatants_list.append(self)
-	instance.combatants_list.append(enemy)
-	fight_instance = instance
-	#Play Animations
-	get_parent().add_child(instance)
+	if is_multiplayer_authority():
+		$turn_based_player.visible = true
+		can_move = false
+		var instance = load("res://scenes/fight_redo.tscn").instantiate()
+		self.global_position = instance.get_node("player").global_position
+		enemy.global_position = instance.get_node("enemy").global_position
+		instance.combatants_list.append(self)
+		instance.combatants_list.append(enemy)
+		fight_instance = instance
+		instance.world = world.world
+		#Play Animations
+		get_parent().add_child(instance)
+		await get_tree().create_timer(0.1).timeout
+		world.visible = false
+		camera.current = false
+		instance.camera.current = true
 
 func play_animation(anim):
 	pass
