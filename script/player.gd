@@ -85,7 +85,7 @@ func _physics_process(delta: float) -> void:
 		var forward = camera.global_basis.z
 		var right = camera.global_basis.x
 		var move_direction = forward * input_dir.y + right * input_dir.x
-		if is_on_wall_only() and Input.is_action_pressed("ui_accept") and !floor_ray.is_colliding() and !Input.is_action_pressed("slide") and wall_limit > 0:
+		if is_on_wall_only() and Input.is_action_pressed("ui_accept") and !floor_ray.is_colliding() and !Input.is_action_pressed("slide") and wall_limit > 0 and can_move:
 			var tween = create_tween()
 			tween.tween_property(camera,"fov",90,1)
 			wall_normal = get_slide_collision(0)
@@ -101,7 +101,7 @@ func _physics_process(delta: float) -> void:
 					move_direction.x = move_direction.x * -wall_normal.get_normal().z * (SPEED)
 			await get_tree().create_timer(0.2).timeout
 			is_wall_running = true
-		elif Input.is_action_just_released("ui_accept") and is_wall_running and is_on_wall():
+		elif Input.is_action_just_released("ui_accept") and is_wall_running and is_on_wall() and can_move:
 			wall_normal = get_slide_collision(0)
 			if wall_normal.get_normal().x != 0:
 				for x in 100:
@@ -119,9 +119,9 @@ func _physics_process(delta: float) -> void:
 				tween.tween_property(camera,"fov",75,1)
 		if !is_on_wall():
 			is_wall_running = false
-		if Input.is_action_just_pressed("slide"):
+		if Input.is_action_just_pressed("slide") and can_move:
 			slide_limit -= 1
-		if Input.is_action_pressed("slide") and slide_limit < 0:
+		if Input.is_action_pressed("slide") and slide_limit < 0 and can_move:
 			var tween = create_tween()
 			tween.tween_property(camera,"fov",95,0.1)
 			if slide_exponent < 0:
