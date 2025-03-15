@@ -38,7 +38,7 @@ jobs:
           files: |
             build/windows/baco_bell.exe
           tag_name:
-            Windows Build
+            "Windows Build"
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload Artifact
