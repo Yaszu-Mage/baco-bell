@@ -37,7 +37,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            build/windows/baco_bell.exe
+            build/windows/baco-bell.exe
           tag_name:
             Windows_Build
         env:
