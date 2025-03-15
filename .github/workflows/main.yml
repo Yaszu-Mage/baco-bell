@@ -31,7 +31,7 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           ls -la ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-          godot --headless --verbose --quit --export-debug "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe" 
+          godot --headless --verbose --quit --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe" 
           ls
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
