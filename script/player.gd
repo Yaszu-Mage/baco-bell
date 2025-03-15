@@ -22,6 +22,7 @@ var slide_exponent = 0.1
 var can_double_jump = true
 var rotating_now = false
 @export var party = []
+var slide_limit = 3
 var is_in_party = false
 var last_raw_dir : Vector3
 @onready var cam_rot = $cam_pivot/SpringArm3D
@@ -118,7 +119,9 @@ func _physics_process(delta: float) -> void:
 				tween.tween_property(camera,"fov",75,1)
 		if !is_on_wall():
 			is_wall_running = false
-		if Input.is_action_pressed("slide"):
+		if Input.is_action_just_pressed("slide"):
+			slide_limit -= 1
+		if Input.is_action_pressed("slide") and slide_limit < 0:
 			var tween = create_tween()
 			tween.tween_property(camera,"fov",95,0.1)
 			if slide_exponent < 0:
@@ -129,6 +132,8 @@ func _physics_process(delta: float) -> void:
 				velocity.x = move_toward(velocity.x, 0, SPEED)
 				velocity.z = move_toward(velocity.z, 0, SPEED)
 		else:
+			#Setting "Timer" for Slide Increase :3
+			slide_check()
 			slide_exponent = -10.0
 			if camera.fov == 95:
 				var tween = create_tween()
@@ -173,7 +178,11 @@ func remote_set_position(authority_velocity,authority_position,authority_rot):
 	little_guy.rotation = authority_rot
 	move_and_slide()
 
-
+func slide_check():
+	if slide_exponent == -10:
+		await get_tree().create_timer(10).timeout
+		if slide_exponent == -10:
+			slide_limit += 1
 @rpc("unreliable")
 func remote_set_username(authority_name):
 	username = authority_name
