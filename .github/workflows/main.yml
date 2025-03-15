@@ -38,15 +38,6 @@ jobs:
         with:
           name: windows
           path: build/windows
-      - name: Release with Notes
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            $EXPORT_DIR/windows/$EXPORT_NAME.exe
-          tag_name:
-            update
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
 
   export-linux:
@@ -134,3 +125,20 @@ jobs:
         with:
           name: mac
           path: build/mac
+    
+  release:
+    name: Release
+    runs-on: ubuntu-22.04
+    needs: [export-mac,export-linux,export-windows]
+    steps:
+      - name: Release with Notes
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            $EXPORT_DIR/windows/$EXPORT_NAME.exe
+            $EXPORT_DIR/linux/$EXPORT_NAME.x86_64
+            $EXPORT_DIR/linux/$EXPORT_NAME.x86_64
+          tag_name:
+            update
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
