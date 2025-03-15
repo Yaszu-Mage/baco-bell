@@ -131,6 +131,9 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [export-mac,export-linux,export-windows]
     steps:
+      - name: Check ls
+        run: |
+          ls build/mac
       - name: Release with Notes
         uses: softprops/action-gh-release@v1
         with:
