@@ -32,7 +32,15 @@ jobs:
           cd $PROJECT_PATH
           ls -la ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
           godot --headless --verbose --quit --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe" 
-          ls
+      - name: Release with Notes
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            build/windows/baco_bell.exe
+          tag_name:
+            Windows Build
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
