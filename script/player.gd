@@ -313,11 +313,11 @@ var buttons = {
 	"Count_Up": preload("res://assets/images/Count-up.PNG"),
 	"Rush_Hour": preload("res://assets/images/Rush_Hour.PNG"),
 	"Punch" : preload("res://assets/images/Punch.PNG"),
-	"Minimum_Effort" : preload("res://assets/images/act.PNG"),
-	"Company_Investment": preload("res://assets/images/act.PNG"),
+	"Minimum_Effort" : preload("res://assets/images/Minimum Effort.PNG"),
+	"Company_Investment": preload("res://assets/images/Company_Investment.PNG"),
 	"Hired_Help" : preload("res://assets/images/Hired-Help.PNG"),
-	"Aftermath": preload("res://assets/images/act.PNG"),
-	"Fake_Identity": preload("res://assets/images/act.PNG")
+	"Aftermath": preload("res://assets/images/Aftermath.PNG"),
+	"Fake_Identity": preload("res://assets/images/Fake_Identity.PNG")
 }
 var uses = []
 var self_class = "Cashier"
