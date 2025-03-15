@@ -135,6 +135,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
+            baco-bell/windows/baco-bell.exe
             $EXPORT_DIR/windows/$EXPORT_NAME.exe
             $EXPORT_DIR/linux/$EXPORT_NAME.x86_64
             $EXPORT_DIR/linux/$EXPORT_NAME.x86_64
