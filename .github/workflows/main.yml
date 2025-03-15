@@ -138,16 +138,17 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "macOS" "$EXPORT_DIR/mac/$EXPORT_NAME.zip"
+          ls build/mac
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: mac
           path: build/mac
       - name: Release with Notes
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
-            build/mac
+            build/mac/baco-bell.zip
           tag_name:
             Mac_Build
         env:
