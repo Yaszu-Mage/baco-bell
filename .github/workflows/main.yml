@@ -42,7 +42,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            $EXPORT_DIR/mac/$EXPORT_NAME.zip
+            build/windows
           tag_name:
             Windows_Build
         env:
@@ -78,7 +78,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            $EXPORT_DIR/mac/$EXPORT_NAME.zip
+            build/linux
           tag_name:
             Linux_Build
         env:
@@ -147,7 +147,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            $EXPORT_DIR/mac/$EXPORT_NAME.zip
+            build/mac
           tag_name:
             Mac_Build
         env:
