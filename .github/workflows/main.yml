@@ -133,7 +133,7 @@ jobs:
     steps:
       - name: Check ls
         run: |
-          ls build/mac
+          ls
       - name: Release with Notes
         uses: softprops/action-gh-release@v1
         with:
