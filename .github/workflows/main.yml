@@ -38,6 +38,14 @@ jobs:
         with:
           name: windows
           path: build/windows
+      - name: Release with Notes
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            $EXPORT_DIR/windows/$EXPORT_NAME.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
 
   export-linux:
     name: Linux Export
