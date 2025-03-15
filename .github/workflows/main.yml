@@ -38,15 +38,6 @@ jobs:
         with:
           name: windows
           path: build/windows
-      - name: Release with Notes
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            build/windows
-          tag_name:
-            Windows_Build
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
 
   export-linux:
@@ -74,15 +65,6 @@ jobs:
         with:
           name: linux
           path: build/linux
-      - name: Release with Notes
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            build/linux
-          tag_name:
-            Linux_Build
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   export-web:
     name: Web Export
@@ -144,12 +126,3 @@ jobs:
         with:
           name: mac
           path: build/mac
-      - name: Release with Notes
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            build/mac/baco-bell.zip
-          tag_name:
-            Mac_Build
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
