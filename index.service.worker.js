@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1742011195|12009719';
+const CACHE_VERSION = '1742011395|11721007';
 /** @type {string} */
 const CACHE_PREFIX = 'baco-bell-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
