@@ -156,10 +156,11 @@ jobs:
   ping:
     name: Discord Notification
     runs-on: ubuntu-22.04
+    needs: [export-mac, export-web, export-windows, export-linux]
     steps:
       - name: Discord notification
         uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          args: 'The game {{ EVENT_PAYLOAD.repository.full_name }} has been updated!'
+          args: 'Baco Bell has been updated!'
