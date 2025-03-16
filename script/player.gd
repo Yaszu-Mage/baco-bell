@@ -13,6 +13,7 @@ var slide_duration = 10
 var request
 @export var username = ""
 @onready var menu = $Menu
+@onready var cam_cam = $SubViewport/Camera3D
 var accepted = false
 var party_marker : Node = null
 var can_move = true
@@ -47,6 +48,8 @@ func _ready() -> void:
 	name = str(get_multiplayer_authority())
 	var tween = create_tween()
 	if is_multiplayer_authority():
+		
+		print(CameraServer.feeds())
 		camera.current = true
 		fade.visible = true
 		if username == "":
@@ -461,10 +464,17 @@ func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_i
 			pass
 		"Count_Up":
 			fight_instance.run_action(self,"Count_Up")
+		"Punch":
+			pass
 
 func _on_item_list_2_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
 	pass # Replace with function body.
 
-
 func damage(amount):
 	health -= amount
+
+
+func show_test():
+	list_one.clear()
+	list_two.clear()
+	CameraServer.feeds()

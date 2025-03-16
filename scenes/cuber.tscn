@@ -41,6 +41,12 @@ shape = SubResource("SphereShape3D_eib84")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_eib84")
 
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.68854)
+current = true
+
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
 [connection signal="body_entered" from="start_fight" to="." method="_on_start_fight_body_entered"]
 [connection signal="body_entered" from="I can see you" to="." method="_on_i_can_see_you_body_entered"]

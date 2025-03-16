@@ -674,6 +674,9 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1078, 57)
+
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Party" to="." method="_on_party_pressed"]
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="item_selected" from="Menu/List of Players/GridContainer/ItemList" to="." method="_on_item_list_item_selected"]
