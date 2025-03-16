@@ -44,7 +44,6 @@ enum world_type {
 func _ready() -> void:
 	$turn_based_player.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	wall_min_slide_angle = 90
 	name = str(get_multiplayer_authority())
 	var tween = create_tween()
 	if is_multiplayer_authority():
@@ -83,14 +82,22 @@ func _physics_process(delta: float) -> void:
 		var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 		var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if Input.is_action_pressed("sprint") and stamina > 0:
-			if camera.fov <= 75:
+			if camera.fov >= 75:
 				var tween = create_tween()
-				tween.tween_property(camera,"fov",85,1)
-			SPEED = 10.0
-			stamina -= 1
+				tween.tween_property(camera,"fov",95,1)
+			SPEED = 15.0
+			stamina -= 0.5
 		else:
 			SPEED = 5.0
 			stamina += 0.1
+			if camera.fov != 75:
+				var tween = create_tween()
+				tween.tween_property(camera,"fov",75,1)
+		if Input.is_action_pressed("optifine"):
+			if camera.fov <= 75:
+				var tween = create_tween()
+				tween.tween_property(camera,"fov",10,1)
+		else:
 			if camera.fov != 75:
 				var tween = create_tween()
 				tween.tween_property(camera,"fov",75,1)
@@ -417,6 +424,10 @@ func play_animation(anim):
 	pass
 	
 func turn():
+	logger("Your Turn")
+	list_one.clear()
+	list_two.clear()
+	reset_actions()
 	for item in list_one.item_count:
 		print(item)
 		list_one.set_item_selectable(item,false)
@@ -453,3 +464,7 @@ func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_i
 
 func _on_item_list_2_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
 	pass # Replace with function body.
+
+
+func damage(amount):
+	health -= amount

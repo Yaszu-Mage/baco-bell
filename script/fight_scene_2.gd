@@ -51,15 +51,17 @@ func run_turn():
 	for entries in intiative:
 		entries[0].turn()
 		await action_chose
+		print("passed!")
 		if entries[0].is_in_group("player"):
 			entries[0].reset_actions()
 		await get_tree().create_timer(0.1).timeout
-		entries[0].not_turn()
+		if entries[0].is_in_group("player"):
+			entries[0].not_turn()
 	turn += 1
 	print("turn finished, we are now on turn " +str(turn))
 	run_turn()
 
-func run_action(entity,action):
+func run_action(entity,action,target = null,type = ""):
 	match action:
 		"Count_Up":
 			for entries in intiative:
@@ -88,8 +90,21 @@ func run_action(entity,action):
 					entity.effects.set("Weakness",1)
 		"Pass":
 			pass
+		"Punch":
+			for entries in intiative:
+				if entries[0].is_in_group("player"):
+					entries[0].display_message(str(entity.username + " has punched " + target.username))
+			target.damage(4)
+	await get_tree().create_timer(0.2).timeout
 	action_chose.emit()
 
 @rpc("any_peer")
 func sync_action(player,action):
 	pass
+
+
+func get_combatants(source):
+	if source.is_in_group("player"):
+		return combatants.get("Enemies")
+	elif source.is_in_group("enemies"):
+		return combatants.get("Players")

@@ -8,7 +8,7 @@ var movement_delta: float
 var can_move = true
 var enemy_type = "cuber"
 var fight_instance
-
+var username = "Cuber"
 @export var movement_speed: float = 4.0
 func _ready() -> void:
 	player = null
@@ -68,8 +68,18 @@ func pos(pos):
 	global_position = pos
 
 func turn():
-	print("enemy turn")
-	fight_instance.run_action(self,"Pass")
+	var random = randi_range(0,0)
+	match random:
+		0:
+			var combatants = fight_instance.get_combatants(self)
+			var size = combatants.size()
+			var random_key = combatants.keys()[randi() % size]
+			var amount = combatants[random_key]
+			print(amount)
+			await get_tree().create_timer(1.0)
+			fight_instance.run_action(self,"Punch",amount)
+
+
 
 func wander():
 	await get_tree().create_timer(1.0).timeout
