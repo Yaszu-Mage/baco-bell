@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dxci5sigyt7xp"
-path="res://.godot/imported/lil_guy_rig.glb-7f4bcd6abca24e0e574acb6bcd022d25.scn"
+valid=false
 
 [deps]
 
 source_file="res://assets/model/lil_guy_rig.glb"
-dest_files=["res://.godot/imported/lil_guy_rig.glb-7f4bcd6abca24e0e574acb6bcd022d25.scn"]
 
 [params]
 
