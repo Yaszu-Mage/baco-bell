@@ -86,7 +86,9 @@ func run_action(entity,action):
 					entity.effects.set("Weakness",entity.effects.get("Weakness")+1)
 				else:
 					entity.effects.set("Weakness",1)
-			action_chose.emit()
+		"Pass":
+			pass
+	action_chose.emit()
 
 @rpc("any_peer")
 func sync_action(player,action):

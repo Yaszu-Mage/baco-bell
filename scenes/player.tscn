@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://de8w3x5hpj6x"]
+[gd_scene load_steps=36 format=3 uid="uid://de8w3x5hpj6x"]
 
 [ext_resource type="Script" uid="uid://cci7i4x2sxe7d" path="res://script/player.gd" id="1_053sa"]
 [ext_resource type="Texture2D" uid="uid://b0b67538ni2of" path="res://assets/images/arrow.png" id="2_4alws"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://bdk7cmv1w6od5" path="res://assets/images/act.PNG" id="8_d2wvv"]
 [ext_resource type="Texture2D" uid="uid://wnwwubfjpt16" path="res://assets/images/team.PNG" id="9_3v2ag"]
 [ext_resource type="Texture2D" uid="uid://nus7c57h5kkq" path="res://assets/images/item.PNG" id="10_jej6c"]
+[ext_resource type="Texture2D" uid="uid://cijcbyil75fwo" path="res://assets/materials/checker_albedo.png" id="13_oprun"]
+[ext_resource type="Texture2D" uid="uid://3ekptwl03qql" path="res://assets/images/gambling.png" id="15_a8ls1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qlg0r"]
 size = Vector3(1, 1.36108, 1)
@@ -113,9 +115,6 @@ border_color = Color(0.0253638, 0.0253638, 0.0253638, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oprun"]
 bg_color = Color(0.190762, 0.190762, 0.190762, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d2wvv"]
-bg_color = Color(0.781003, 0, 0.263485, 1)
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jej6c"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a8ls1"]
@@ -136,6 +135,26 @@ PanelContainer/styles/panel = SubResource("StyleBoxTexture_3v2ag")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8ls1"]
 bg_color = Color(0.883271, 0.680063, 1.15514e-06, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qfm1y"]
+load_path = "res://.godot/imported/windows.jpg-36cbd64c0cc75d51ccdbfbda0d15b450.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fulsm"]
+texture = SubResource("CompressedTexture2D_qfm1y")
+expand_margin_left = 5.0
+expand_margin_top = 10.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4r5pv"]
+texture = ExtResource("13_oprun")
+modulate_color = Color(0.239216, 0, 0.490196, 1)
+
+[sub_resource type="Theme" id="Theme_60mlk"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i4ail"]
+texture = ExtResource("13_oprun")
+modulate_color = Color(0.239216, 0, 0.490196, 1)
 
 [node name="player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_053sa")
@@ -159,7 +178,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.01132, 0)
 target_position = Vector3(0, -1.5, 0)
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
 offset_left = -163.0
 offset_top = -136.0
 offset_right = 2343.0
@@ -178,6 +196,7 @@ texture = ExtResource("3_qhqgy")
 
 [node name="Camera2D" type="Camera2D" parent="ColorRect"]
 position = Vector2(739, 460)
+zoom = Vector2(0.95, 0.95)
 
 [node name="VBoxContainer" type="GridContainer" parent="."]
 offset_left = -573.0
@@ -328,10 +347,10 @@ light_energy = 0.2
 [node name="turn_based_player" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 3.0
-offset_top = 27.0
-offset_right = 2189.0
-offset_bottom = 2038.0
+offset_left = 23.0
+offset_top = 47.0
+offset_right = 2209.0
+offset_bottom = 2058.0
 scale = Vector2(0.7, 0.7)
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -346,13 +365,15 @@ theme_override_fonts/normal_font = ExtResource("7_d2wvv")
 
 [node name="main_menu" type="Control" parent="turn_based_player"]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -57.1429
+offset_top = -40.0
+offset_right = -17.1429
+scale = Vector2(0.8, 0.8)
 
 [node name="main_menu" type="PanelContainer" parent="turn_based_player/main_menu"]
 layout_mode = 0
-offset_right = 828.0
-offset_bottom = 328.0
+offset_right = 550.0
+offset_bottom = 272.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_jej6c")
 
 [node name="PanelContainer" type="PanelContainer" parent="turn_based_player/main_menu/main_menu"]
@@ -363,35 +384,13 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_f1ej7")
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_oprun")
 
-[node name="ProgressBar" type="ProgressBar" parent="turn_based_player/main_menu/main_menu/PanelContainer/PanelContainer"]
-custom_minimum_size = Vector2(0, 27)
-layout_mode = 2
-theme_override_styles/fill = SubResource("StyleBoxFlat_d2wvv")
-value = 100.0
-show_percentage = false
-
-[node name="TextureRect" type="TextureRect" parent="turn_based_player/main_menu/main_menu/PanelContainer/PanelContainer"]
-z_as_relative = false
-layout_mode = 2
-size_flags_horizontal = 4
-texture = ExtResource("6_tuyoq")
-expand_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="turn_based_player/main_menu/main_menu/PanelContainer/PanelContainer"]
-layout_mode = 2
-text = "10/10"
-
 [node name="HBoxContainer" type="HBoxContainer" parent="turn_based_player/main_menu/main_menu/PanelContainer"]
 layout_mode = 2
-theme_override_constants/separation = 300
+theme_override_constants/separation = 14
 
 [node name="ItemList" type="ItemList" parent="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer"]
-custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
-theme_override_constants/outline_size = 10
-theme_override_constants/v_separation = 27
-theme_override_constants/icon_margin = -30
-theme_override_constants/h_separation = 0
+theme_override_constants/outline_size = 15
 theme_override_fonts/font = ExtResource("7_d2wvv")
 theme_override_font_sizes/font_size = 19
 theme_override_styles/focus = SubResource("StyleBoxEmpty_jej6c")
@@ -404,56 +403,66 @@ auto_height = true
 item_count = 4
 max_columns = 2
 icon_mode = 0
-fixed_icon_size = Vector2i(128, 128)
+fixed_icon_size = Vector2i(300, 128)
 item_0/icon = ExtResource("7_y4r1p")
 item_0/selectable = false
+item_0/disabled = true
 item_1/icon = ExtResource("8_d2wvv")
+item_1/disabled = true
 item_2/icon = ExtResource("9_3v2ag")
+item_2/disabled = true
 item_3/icon = ExtResource("10_jej6c")
+item_3/disabled = true
 
 [node name="ItemList2" type="ItemList" parent="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer"]
-custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
-theme_override_constants/v_separation = 32
-theme_override_constants/icon_margin = -23
+theme_override_constants/outline_size = 15
 theme_override_fonts/font = ExtResource("7_d2wvv")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 19
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jej6c")
 theme_override_styles/panel = SubResource("StyleBoxEmpty_a8ls1")
+theme_override_styles/selected = SubResource("StyleBoxEmpty_d2wvv")
+theme_override_styles/selected_focus = SubResource("StyleBoxEmpty_3v2ag")
 allow_search = false
 auto_width = true
 auto_height = true
 item_count = 4
 max_columns = 2
 icon_mode = 0
-fixed_icon_size = Vector2i(128, 128)
+fixed_icon_size = Vector2i(300, 128)
 item_0/icon = ExtResource("7_y4r1p")
 item_0/selectable = false
+item_0/disabled = true
 item_1/icon = ExtResource("8_d2wvv")
+item_1/disabled = true
 item_2/icon = ExtResource("9_3v2ag")
+item_2/disabled = true
 item_3/icon = ExtResource("10_jej6c")
+item_3/disabled = true
 
 [node name="move_window" type="Button" parent="turn_based_player/main_menu"]
 layout_mode = 0
 offset_left = -4.0
 offset_top = -31.0
-offset_right = 767.0
+offset_right = 1145.0
 offset_bottom = -10.0
 theme = ExtResource("7_jej6c")
 keep_pressed_outside = true
 
 [node name="close_window" type="Button" parent="turn_based_player/main_menu"]
 layout_mode = 0
-offset_left = 811.0
-offset_top = -26.0
-offset_right = 828.0
-offset_bottom = -13.0
+offset_left = 1214.29
+offset_top = -26.7857
+offset_right = 1231.29
+offset_bottom = -13.7857
 theme = ExtResource("7_jej6c")
 
 [node name="notifications" type="Control" parent="turn_based_player"]
 anchors_preset = 0
-offset_top = 372.857
-offset_right = 40.0
-offset_bottom = 412.857
+offset_left = 955.714
+offset_top = -31.4285
+offset_right = 995.714
+offset_bottom = 8.57146
 
 [node name="main" type="PanelContainer" parent="turn_based_player/notifications"]
 layout_mode = 0
@@ -490,12 +499,179 @@ offset_right = 479.0
 offset_bottom = -20.0
 theme = ExtResource("7_jej6c")
 
+[node name="Player_Stats" type="Control" parent="turn_based_player"]
+anchors_preset = 0
+offset_left = -95.7143
+offset_top = 562.857
+offset_right = -55.7143
+offset_bottom = 602.857
+scale = Vector2(1.3, 1.3)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="turn_based_player/Player_Stats"]
+layout_mode = 0
+offset_left = 35.7143
+offset_top = 20.0
+offset_right = 75.7143
+offset_bottom = 75.0
+theme_override_constants/separation = 15
+
+[node name="Player_Stats" type="PanelContainer" parent="turn_based_player/Player_Stats/HBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_fulsm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4r5pv")
+
+[node name="TextureRect" type="TextureRect" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/HBoxContainer/PanelContainer"]
+modulate = Color(1, 0.694078, 0.656107, 1)
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+theme = SubResource("Theme_60mlk")
+texture = ExtResource("6_tuyoq")
+expand_mode = 2
+
+[node name="stats" type="PanelContainer" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats"]
+layout_mode = 2
+
+[node name="Inner_Thigh" type="PanelContainer" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_i4ail")
+
+[node name="Health" type="HBoxContainer" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh"]
+layout_mode = 2
+
+[node name="HP_CONSTANT" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health"]
+custom_minimum_size = Vector2(29.92, 0)
+layout_mode = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("7_d2wvv")
+theme_override_font_sizes/normal_font_size = 24
+text = "HP"
+scroll_active = false
+tab_size = 8
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bar" type="TextureRect" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health"]
+custom_minimum_size = Vector2(94.96, 32)
+layout_mode = 2
+texture = ExtResource("15_a8ls1")
+expand_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar"]
+offset_left = 1.28572
+offset_top = -2.28568
+offset_right = 96.2857
+offset_bottom = 37.7143
+
+[node name="SP_CONSTANT" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer"]
+custom_minimum_size = Vector2(29.92, 0)
+layout_mode = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("7_d2wvv")
+theme_override_font_sizes/normal_font_size = 17
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SP_CONSTANT2" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer"]
+custom_minimum_size = Vector2(29.92, 0)
+layout_mode = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("7_d2wvv")
+theme_override_font_sizes/normal_font_size = 17
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SP_CONSTANT3" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer"]
+custom_minimum_size = Vector2(29.92, 0)
+layout_mode = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("7_d2wvv")
+theme_override_font_sizes/normal_font_size = 17
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Outer_Thigh" type="PanelContainer" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_i4ail")
+
+[node name="Health" type="HBoxContainer" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh"]
+layout_mode = 2
+
+[node name="SP_CONSTANT" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health"]
+custom_minimum_size = Vector2(29.92, 0)
+layout_mode = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("7_d2wvv")
+theme_override_font_sizes/normal_font_size = 24
+text = "SP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bar" type="TextureRect" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health"]
+custom_minimum_size = Vector2(94.96, 32)
+layout_mode = 2
+texture = ExtResource("15_a8ls1")
+expand_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar"]
+layout_mode = 0
+offset_left = 1.28572
+offset_top = -2.28568
+offset_right = 96.2857
+offset_bottom = 37.7143
+
+[node name="SP_CONSTANT" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer"]
+custom_minimum_size = Vector2(29.92, 0)
+layout_mode = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("7_d2wvv")
+theme_override_font_sizes/normal_font_size = 17
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SP_CONSTANT2" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer"]
+custom_minimum_size = Vector2(29.92, 0)
+layout_mode = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("7_d2wvv")
+theme_override_font_sizes/normal_font_size = 17
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SP_CONSTANT3" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer"]
+custom_minimum_size = Vector2(29.92, 0)
+layout_mode = 2
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("7_d2wvv")
+theme_override_font_sizes/normal_font_size = 17
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Party" to="." method="_on_party_pressed"]
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="item_selected" from="Menu/List of Players/GridContainer/ItemList" to="." method="_on_item_list_item_selected"]
 [connection signal="pressed" from="Notification/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="item_clicked" from="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList" to="." method="_on_item_list_item_clicked"]
-[connection signal="item_clicked" from="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList2" to="." method="_on_item_list_2_item_clicked"]
+[connection signal="item_clicked" from="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList2" to="." method="_on_item_list_item_clicked"]
 [connection signal="button_down" from="turn_based_player/main_menu/move_window" to="." method="_on_move_window_button_down"]
 [connection signal="button_up" from="turn_based_player/main_menu/move_window" to="." method="_on_move_window_button_up"]
 [connection signal="pressed" from="turn_based_player/main_menu/move_window" to="." method="_on_move_window_pressed"]

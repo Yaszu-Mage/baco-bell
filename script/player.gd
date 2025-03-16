@@ -363,9 +363,7 @@ func get_actions(path : Array):
 				uses.append(ability_name)
 				uses.append(20)
 			var selectable = true
-			if uses.get(uses.find(ability_name) + 1) == 0:
-				selectable = false
-			list_one.add_item(str(uses.get(uses.find(ability_name) + 1)),buttons.get(ability_name),false)
+			list_one.add_item("",buttons.get(ability_name),false)
 			continue
 		if list_one_amount == 4 and list_two_amount < 4:
 			print("list two ", ability_name)
@@ -377,7 +375,7 @@ func get_actions(path : Array):
 			var selectable = true
 			if uses.get(uses.find(ability_name) + 1) == 0:
 				selectable = false
-			list_two.add_item(str(uses.get(uses.find(ability_name) + 1)),buttons.get(ability_name),false)
+			list_two.add_item("",buttons.get(ability_name),false)
 
 var fight_instance
 var effects = {}

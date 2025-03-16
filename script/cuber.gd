@@ -68,7 +68,8 @@ func pos(pos):
 	global_position = pos
 
 func turn():
-	fight_instance.action_chose.emit()
+	print("enemy turn")
+	fight_instance.run_action(self,"Pass")
 
 func wander():
 	await get_tree().create_timer(1.0).timeout
