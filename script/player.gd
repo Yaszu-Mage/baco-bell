@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 var health = 100
-const SPEED = 5.0
+var SPEED = 5.0
 const JUMP_VELOCITY = 22.5
 var can_wall_jump = true
 @onready var list = $"Menu/List of Players"
@@ -81,7 +81,10 @@ func _physics_process(delta: float) -> void:
 			# As good practice, you should replace UI actions with custom gameplay actions	.
 		var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 		var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		
+		if Input.is_action_pressed("sprint"):
+			SPEED = 10.0
+		else:
+			SPEED = 5.0
 		var forward = camera.global_basis.z
 		var right = camera.global_basis.x
 		var move_direction = forward * input_dir.y + right * input_dir.x
