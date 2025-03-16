@@ -19,6 +19,7 @@ var can_move = true
 var wall_limit = 3
 var is_wall_running = false
 var slide_exponent = 0.1
+var stamina = 100
 var can_double_jump = true
 var rotating_now = false
 @export var party = []
@@ -81,10 +82,18 @@ func _physics_process(delta: float) -> void:
 			# As good practice, you should replace UI actions with custom gameplay actions	.
 		var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 		var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		if Input.is_action_pressed("sprint"):
+		if Input.is_action_pressed("sprint") and stamina > 0:
+			if camera.fov <= 75:
+				var tween = create_tween()
+				tween.tween_property(camera,"fov",85,1)
 			SPEED = 10.0
+			stamina -= 1
 		else:
 			SPEED = 5.0
+			stamina += 0.1
+			if camera.fov != 75:
+				var tween = create_tween()
+				tween.tween_property(camera,"fov",75,1)
 		var forward = camera.global_basis.z
 		var right = camera.global_basis.x
 		var move_direction = forward * input_dir.y + right * input_dir.x

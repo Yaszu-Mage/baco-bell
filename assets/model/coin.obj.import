@@ -4,11 +4,14 @@ importer="wavefront_obj"
 importer_version=1
 type="Mesh"
 uid="uid://31ss0qqhstda"
-valid=false
+path="res://.godot/imported/coin.obj-75f8e333ddb2eae430d10fb41cfcc13b.mesh"
 
 [deps]
 
+files=["res://.godot/imported/coin.obj-75f8e333ddb2eae430d10fb41cfcc13b.mesh"]
+
 source_file="res://assets/model/coin.obj"
+dest_files=["res://.godot/imported/coin.obj-75f8e333ddb2eae430d10fb41cfcc13b.mesh", "res://.godot/imported/coin.obj-75f8e333ddb2eae430d10fb41cfcc13b.mesh"]
 
 [params]
 

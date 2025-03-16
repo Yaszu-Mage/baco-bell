@@ -4,11 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://d06bgq581vcpl"
-valid=false
+path="res://.godot/imported/coin.fbx-3178feb973d01052d5d95e66d95386c0.scn"
 
 [deps]
 
 source_file="res://assets/model/coin.fbx"
+dest_files=["res://.godot/imported/coin.fbx-3178feb973d01052d5d95e66d95386c0.scn"]
 
 [params]
 

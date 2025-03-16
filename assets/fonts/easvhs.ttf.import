@@ -3,11 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://dci4cxvysgqif"
-valid=false
+path="res://.godot/imported/easvhs.ttf-aa02bfce9cd6a3458f3f2a297a24725d.fontdata"
 
 [deps]
 
 source_file="res://assets/fonts/easvhs.ttf"
+dest_files=["res://.godot/imported/easvhs.ttf-aa02bfce9cd6a3458f3f2a297a24725d.fontdata"]
 
 [params]
 

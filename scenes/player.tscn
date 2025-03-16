@@ -572,6 +572,7 @@ texture = ExtResource("15_a8ls1")
 expand_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar"]
+layout_mode = 0
 offset_left = 1.28572
 offset_top = -2.28568
 offset_right = 96.2857

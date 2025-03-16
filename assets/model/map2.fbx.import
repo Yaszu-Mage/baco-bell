@@ -4,11 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://d2f0ualwkk02m"
-valid=false
+path="res://.godot/imported/map2.fbx-88c159154778f85222616db6abb2926f.scn"
 
 [deps]
 
 source_file="res://assets/model/map2.fbx"
+dest_files=["res://.godot/imported/map2.fbx-88c159154778f85222616db6abb2926f.scn"]
 
 [params]
 
