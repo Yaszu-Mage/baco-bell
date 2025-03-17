@@ -31,6 +31,6 @@ func _process(_delta):
 		if data == "LookingForServer":
 			# Respond
 			print("we responded to " + sender_ip," " ,sender_port)
-			udp_listener.set_dest_address("localhost", 5000)
+			udp_listener.set_dest_address(sender_ip, 5000)
 			udp_listener.put_packet(RESPONSE_MESSAGE.to_utf8_buffer())
 			emit_signal("discovery_request_received", sender_ip)

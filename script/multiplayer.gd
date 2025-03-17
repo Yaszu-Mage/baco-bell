@@ -5,6 +5,7 @@ const PORT = 9999
 const ADDRESS = "127.0.0.1"
 @export var username_sync = {}
 @onready var server_list := $Menu/GridContainer/ItemList
+@onready var item = preload("res://assets/images/crazy.png")
 var client_discovery := preload("res://addons/lan_server_discovery/client_discovery.gd").new()
 var server_discovery := preload("res://addons/lan_server_discovery/server_discovery.gd").new()
 var connected_peer_ids = []
@@ -45,8 +46,11 @@ func _on_scan_servers_pressed():
 
 
 func _on_server_found(server_ip):
-	print("server found! " + server_ip)
-	server_list.add_item(server_ip)
+	print("server found! at " + server_ip)
+	server_list.add_item(server_ip,item)
+	print(server_list.get_item_text(0))
+	print(server_list.item_count)
+	print(server_list.get_item_icon(0))
 func _on_join_pressed():
 	$Menu.visible = false
 	var world_instance = world.instantiate()
