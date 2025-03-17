@@ -13,7 +13,7 @@ var username = "Cuber"
 @onready var sub = $SubViewport
 @onready var sub_cam = $SubViewport/Camera3D
 @onready var health_bar = $SubViewport2/ProgressBar
-var health = 10
+var health = 2
 @export var movement_speed: float = 4.0
 func _ready() -> void:
 	player = null
@@ -121,5 +121,5 @@ func _on_start_fight_body_entered(body: Node3D) -> void:
 
 func death():
 	fight_instance.enemies.remove_at(fight_instance.enemies.find(self))
-	fight_instance.kill_me()
+	fight_instance.kill_me(self)
 	self.queue_free()

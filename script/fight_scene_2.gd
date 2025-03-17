@@ -72,19 +72,21 @@ func run_turn():
 		entries[0].turn()
 		await action_chose
 		print("passed!")
-		if entries[0].is_in_group("player"):
-			entries[0].reset_actions()
-		await get_tree().create_timer(0.1).timeout
-		if entries[0].is_in_group("player"):
-			entries[0].not_turn()
+		if is_instance_valid(entries[0]):
+			if entries[0].is_in_group("player"):
+				entries[0].reset_actions()
+				await get_tree().create_timer(0.1).timeout
+			if entries[0].is_in_group("player"):
+				entries[0].not_turn()
 		for entry in intiative:
-			if entry[0].health <= 0:
-				entry[0].death()
+			if is_instance_valid(entry[0]):
+				if entry[0].health <= 0:
+					entry[0].death()
 	turn += 1
 	print("turn finished, we are now on turn " +str(turn))
 	run_turn()
 
-func run_action(entity,action,target = null,type = ""):
+func run_action(entity,action,target = null,_type = ""):
 	match action:
 		"Count_Up":
 			for entries in intiative:
@@ -117,7 +119,10 @@ func run_action(entity,action,target = null,type = ""):
 			for entries in intiative:
 				if entries[0].is_in_group("player"):
 					entries[0].display_message(str(entity.username + " has punched " + target.username))
-			target.damage(4)
+			if entity.is_in_group("enemies"):
+				target.damage(2)
+			if entity.is_in_group("player"):
+				target.damage(4)
 	await get_tree().create_timer(0.2).timeout
 	action_chose.emit()
 
@@ -125,7 +130,8 @@ func run_action(entity,action,target = null,type = ""):
 func sync_action(player,action):
 	pass
 
-
+func _process(delta):
+	find_invalid()
 func get_combatants(source):
 	if source.is_in_group("player"):
 		return combatants.get("Enemies")
@@ -137,5 +143,27 @@ func end_fight():
 		entry.can_move = true
 	self.queue_free()
 
-func kill_me():
-	pass
+func kill_me(ref):
+	print(str(intiative) + " is start")
+	var index = 0
+	for entry in intiative:
+		index += 1
+		if entry[0] == ref:
+			intiative.remove_at(index)
+	print(index)
+	intiative.remove_at(index)
+	index = 0
+	for entry in intiative:
+		index += 1
+		if entry[0] == ref:
+			intiative.remove_at(index)
+	intiative.remove_at(index)
+	print(str(intiative) + " should be right")
+	combatants_list.remove_at(combatants_list.find(Node))
+
+func find_invalid():
+	for entries in intiative:
+		if is_instance_valid(entries):
+			pass
+		else:
+			intiative.remove_at(intiative.find(entries))
