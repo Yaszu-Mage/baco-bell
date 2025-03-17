@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://dxln0smww0hkn"]
+[gd_scene load_steps=18 format=4 uid="uid://dxln0smww0hkn"]
 
 [ext_resource type="Texture2D" uid="uid://8erkx7tl56vb" path="res://assets/model/lil_guy_rig_lil_chest.png" id="1_jn585"]
 [ext_resource type="Script" uid="uid://dysxpr1qvgb0a" path="res://script/lil_guy.gd" id="1_m2t2s"]
@@ -107,6 +107,14 @@ bind/8/pose = Transform3D(-0.999998, -0.00207065, 0.000451493, 0.00207065, -0.99
 bind/9/name = &"lower_leg.R"
 bind/9/bone = -1
 bind/9/pose = Transform3D(-0.999996, -0.00288602, 0.00045151, 0.00288602, -0.999996, -6.51969e-07, 0.00045151, 6.511e-07, 1, -0.499824, -1.65211, 0.00022483)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m2t2s"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ps2lo"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_hh7ou"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_m2t2s"]
 properties/0/path = NodePath("AnimationPlayer:current_animation")
@@ -403,8 +411,15 @@ bones/9/rotation = Quaternion(9.19575e-08, -8.72388e-09, 0.000407688, 1)
 bones/9/scale = Vector3(1, 1, 1)
 
 [node name="Cube_001" type="MeshInstance3D" parent="Armature_001/Skeleton3D"]
+cast_shadow = 0
+gi_lightmap_texel_scale = 10.0
 mesh = SubResource("ArrayMesh_gfndi")
 skin = SubResource("Skin_alu0b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Armature_001/Skeleton3D/Cube_001"]
+material_override = SubResource("StandardMaterial3D_m2t2s")
+material_overlay = SubResource("StandardMaterial3D_ps2lo")
+mesh = SubResource("ArrayMesh_hh7ou")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_m2t2s")

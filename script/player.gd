@@ -357,9 +357,6 @@ var uses = []
 var self_class = "Cashier"
 func set_class(profession : String):
 	self_class = profession
-# Path is formatted like, [Class,Type,Name]
-# So Count up is stored [Cashier,Fight,Count_Up]
-# If you just want to access generally the fight class for Cashier use the path, [Cashier,Fight]
 func logger(text : String):
 	knower.clear()
 	knower.text = text
@@ -370,6 +367,9 @@ func reset_actions():
 	list_one.add_item("",buttons.get("item"))
 	list_one.add_item("",buttons.get("team"))
 	list_two.clear()
+# Path is formatted like, [Class,Type,Name]
+# So Count up is stored [Cashier,Fight,Count_Up]
+# If you just want to access generally the fight class for Cashier use the path, [Cashier,Fight]
 func get_actions(path : Array):
 	var size = path.size()
 	print(size)
@@ -464,6 +464,7 @@ func not_turn():
 		print(list_two.is_item_disabled(item))
 # Max Per list is 4 buttons
 func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
+	print(index)
 	var clicked = buttons.find_key(list_one.get_item_icon(index))
 	match clicked:
 		"fight":
@@ -478,16 +479,20 @@ func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_i
 			fight_instance.run_action(self,"Count_Up")
 		"Punch":
 			show_test()
+	if second_menu:
+		fight_instance.run_action(self,"Punch",fight_instance.enemies[index])
+		second_menu = false
 
 func _on_item_list_2_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
 	pass # Replace with function body.
 
 func damage(amount):
 	health -= amount
-
-
+var second_menu = false
 func show_test():
 	list_one.clear()
 	list_two.clear()
 	for entity in fight_instance.enemies:
 		list_one.add_item("",entity.sub_tex)
+	await get_tree().create_timer(0.1).timeout
+	second_menu = true

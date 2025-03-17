@@ -340,10 +340,6 @@ spring_length = 5.0
 [node name="Camera3D" type="Camera3D" parent="cam_pivot/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.157642, 5.72757)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-light_color = Color(6.16074e-06, 0.586073, 0.783943, 1)
-light_energy = 0.2
-
 [node name="turn_based_player" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0

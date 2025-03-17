@@ -12,12 +12,16 @@ var username = "Cuber"
 @onready var sub_tex = $SubViewport.get_texture()
 @onready var sub = $SubViewport
 @onready var sub_cam = $SubViewport/Camera3D
+@onready var health_bar = $SubViewport2/ProgressBar
+var health = 10
 @export var movement_speed: float = 4.0
 func _ready() -> void:
 	player = null
+	health_bar.max_value = health
 	wander()
 func _process(delta):
 	sub_cam.global_position = self.global_position + Vector3(0,0,1.689)
+	health_bar.value = health
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 			velocity += get_gravity() * delta
@@ -108,7 +112,8 @@ func _on_invisible() -> void:
 	if is_multiplayer_authority():
 		print(visible)
 		visible = false
-
+func damage(value):
+	health -= value
 
 func _on_start_fight_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
