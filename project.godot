@@ -23,6 +23,10 @@ GlobalLists="*res://Global_Lists.gd"
 
 window/stretch/mode="viewport"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/lan_server_discovery/plugin.cfg")
+
 [input]
 
 ui_left={

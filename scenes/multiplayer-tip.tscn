@@ -31,6 +31,10 @@ custom_minimum_size = Vector2(128, 35)
 layout_mode = 2
 placeholder_text = "Username"
 
+[node name="Scan" type="Button" parent="Menu/GridContainer"]
+layout_mode = 2
+text = "Scan Server"
+
 [node name="Host" type="Button" parent="Menu/GridContainer"]
 layout_mode = 2
 text = "Host"
@@ -39,9 +43,16 @@ text = "Host"
 layout_mode = 2
 text = "Join"
 
+[node name="ItemList" type="ItemList" parent="Menu/GridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+item_count = 1
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_3lg42")
 
-[connection signal="pressed" from="Menu/GridContainer/Host" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Menu/GridContainer/Scan" to="." method="_on_scan_pressed"]
 [connection signal="pressed" from="Menu/GridContainer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Menu/GridContainer/Host" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Menu/GridContainer/Join" to="." method="_on_join_pressed"]
+[connection signal="item_selected" from="Menu/GridContainer/ItemList" to="." method="_on_item_list_item_selected"]

@@ -4,6 +4,9 @@ var multiplayer_peer = ENetMultiplayerPeer.new()
 const PORT = 9999
 const ADDRESS = "127.0.0.1"
 @export var username_sync = {}
+@onready var server_list := $Menu/GridContainer/ItemList
+var client_discovery := preload("res://addons/lan_server_discovery/client_discovery.gd").new()
+var server_discovery := preload("res://addons/lan_server_discovery/server_discovery.gd").new()
 var connected_peer_ids = []
 var local_player_character
 @export var instances = {}
@@ -14,6 +17,8 @@ func _on_host_pressed():
 	$Menu.visible = false
 	multiplayer_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
+	add_child(server_discovery)
+	server_discovery.start_listening()
 	add_player_character(1)
 	multiplayer_peer.peer_connected.connect(
 		func(new_peer_id):
@@ -24,6 +29,24 @@ func _on_host_pressed():
 	)
 
 
+func _ready() -> void:
+		# Add discovery node
+	add_child(client_discovery)
+	
+	# Connect signal when a server is found
+	client_discovery.server_found.connect(_on_server_found)
+	# Optionally clear server list at start
+	server_list.clear()
+
+func _on_scan_servers_pressed():
+	server_list.clear()
+	client_discovery.reset_discovered_servers()
+	client_discovery.broadcast_request()
+
+
+func _on_server_found(server_ip):
+	print("server found! " + server_ip)
+	server_list.add_item(server_ip)
 func _on_join_pressed():
 	$Menu.visible = false
 	var world_instance = world.instantiate()
@@ -60,3 +83,22 @@ func _process(delta: float) -> void:
 	GlobalLists.players = connected_peer_ids
 	GlobalLists.usernames = username_sync
 	GlobalLists.instances = instances
+
+
+
+func _on_scan_pressed() -> void:
+	server_list.clear()
+	client_discovery.reset_discovered_servers()
+	client_discovery.broadcast_request()
+
+
+func _on_item_list_item_selected(index: int) -> void:
+	var server_ip = server_list.get_item_text(index)
+	print("Connecting to:", server_ip)
+	
+	$Menu.visible = false
+	var world_instance = world.instantiate()
+	add_child(world_instance)
+	
+	multiplayer_peer.create_client(server_ip, PORT)
+	multiplayer.multiplayer_peer = multiplayer_peer
