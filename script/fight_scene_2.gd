@@ -82,6 +82,10 @@ func run_turn():
 			if is_instance_valid(entry[0]):
 				if entry[0].health <= 0:
 					entry[0].death()
+		if enemies == []:
+			for player in players:
+				player.death()
+				
 	turn += 1
 	print("turn finished, we are now on turn " +str(turn))
 	run_turn()
@@ -162,8 +166,10 @@ func kill_me(ref):
 	combatants_list.remove_at(combatants_list.find(Node))
 
 func find_invalid():
+	await get_tree().create_timer(0.1).timeout
 	for entries in intiative:
-		if is_instance_valid(entries):
+		if is_instance_valid(entries[0]):
 			pass
 		else:
+			print("We have pruned instance at" + str(entries))
 			intiative.remove_at(intiative.find(entries))

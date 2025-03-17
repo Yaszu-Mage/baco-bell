@@ -22,6 +22,8 @@ func _ready() -> void:
 func _process(delta):
 	sub_cam.global_position = self.global_position + Vector3(0,0,1.689)
 	health_bar.value = health
+	if health <= 0:
+		death()
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 			velocity += get_gravity() * delta

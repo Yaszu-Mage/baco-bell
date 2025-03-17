@@ -439,15 +439,24 @@ func play_animation(anim):
 	pass
 
 func death():
-	$turn_based_player.visible = false
-	can_move = true
-	fight_instance.players.remove_at(fight_instance.players.find(self))
-	if fight_instance.players == []:
+	await get_tree().create_timer(0.1).timeout
+	if health >= 0:
+		$turn_based_player.visible = false
+		can_move = true
+		fight_instance.players.remove_at(fight_instance.players.find(self))
+		if fight_instance.players == []:
+			fight_instance.end_fight()
+		world.get_node("all_things").visible = true
+		camera.current = true
+		self.global_position = Vector3(0,100,0)
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	else:
+		$turn_based_player.visible = false
+		can_move = true
 		fight_instance.end_fight()
-	world.get_node("all_things").visible = true
-	camera.current = true
-	self.global_position = Vector3(0,100,0)
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		world.get_node("all_things").visible = true
+		camera.current = true
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func turn():
 	logger("Your Turn")
