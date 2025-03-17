@@ -163,4 +163,4 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          args: 'Baco Bell has been updated! The Author Stated that, ${{ github.event.head_commit.message }}' 
+          args: 'Baco Bell has been updated! The Author Stated that,"${{ github.event.head_commit.message }}"' 

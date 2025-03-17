@@ -9,13 +9,15 @@ var can_move = true
 var enemy_type = "cuber"
 var fight_instance
 var username = "Cuber"
-var sub_tex = $SubViewport.get_texture()
+@onready var sub_tex = $SubViewport.get_texture()
 @onready var sub = $SubViewport
+@onready var sub_cam = $SubViewport/Camera3D
 @export var movement_speed: float = 4.0
 func _ready() -> void:
 	player = null
 	wander()
-
+func _process(delta):
+	sub_cam.global_position = self.global_position + Vector3(0,0,1.689)
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 			velocity += get_gravity() * delta

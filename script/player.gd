@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-var health = 100
+var health = 10
 var SPEED = 5.0
 const JUMP_VELOCITY = 22.5
 var can_wall_jump = true
@@ -223,6 +223,16 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	if is_multiplayer_authority():
 		_camera_pivot.global_position = self.global_position
+		var ones = health % 10
+		var tens = floor(health / 10) % 10
+		var hundreds = (health / 100) % 10
+		#health_tells goes hundreds, tens, ones
+		health_tells[2].clear()
+		health_tells[0].clear()
+		health_tells[1].clear()
+		health_tells[2].add_text(str(ones))
+		health_tells[1].add_text(str(tens))
+		health_tells[0].add_text(str(hundreds))
 		rpc("remote_set_username",username)
 		username = GlobalLists.username
 		var listpos = GlobalLists.usernames.get(name)
@@ -323,6 +333,8 @@ func _unhandled_input(event: InputEvent) -> void:
 @onready var list_one = $turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList
 @onready var list_two = $turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList2
 @onready var knower = $turn_based_player/RichTextLabel
+@onready var health_tells = [$turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer/HP_Hundreds, $turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer/HP_TENS, $turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer/HP_ONES]
+@onready var sp_tells = [$turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer/SP_Hundreds,$turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer/SP_Tens,$turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer/SP_Ones]
 var fight_button = preload("res://assets/images/fight.PNG")
 var act_button = preload("res://assets/images/act.PNG")
 var item_button = preload("res://assets/images/item.PNG")
@@ -465,7 +477,7 @@ func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_i
 		"Count_Up":
 			fight_instance.run_action(self,"Count_Up")
 		"Punch":
-			pass
+			show_test()
 
 func _on_item_list_2_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
 	pass # Replace with function body.
@@ -477,4 +489,5 @@ func damage(amount):
 func show_test():
 	list_one.clear()
 	list_two.clear()
-	CameraServer.feeds()
+	for entity in fight_instance.enemies:
+		list_one.add_item("",entity.sub_tex)

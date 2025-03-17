@@ -6,6 +6,9 @@ var combatants = {
 
 }
 }
+#So we are going to store players and enemies in two places and two formats
+var players = []
+var enemies = []
 #World Type for Generation
 enum world_type {
 	the_void
@@ -35,11 +38,13 @@ func _ready():
 			combatants.get("Players").set(entity.username,entity)
 			var initiative_roll = randi_range(0,20)
 			intiative.append([entity,initiative_roll])
+			players.append(entity)
 			entity.can_move = false
 			entity.turnbased_menu.visible = true
 		if entity.is_in_group("enemies"):
 			#Run enemies things
 			combatants.get("Enemies").set(entity.enemy_type,entity)
+			enemies.append(entity)
 			var initiative_roll = randi_range(0,20)
 			intiative.append([entity,initiative_roll])
 			entity.can_move = false

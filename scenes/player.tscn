@@ -345,7 +345,6 @@ light_color = Color(6.16074e-06, 0.586073, 0.783943, 1)
 light_energy = 0.2
 
 [node name="turn_based_player" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 23.0
@@ -578,7 +577,7 @@ offset_top = -2.28568
 offset_right = 96.2857
 offset_bottom = 37.7143
 
-[node name="SP_CONSTANT" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer"]
+[node name="HP_Hundreds" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer"]
 custom_minimum_size = Vector2(29.92, 0)
 layout_mode = 2
 theme_override_constants/outline_size = 3
@@ -588,7 +587,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SP_CONSTANT2" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer"]
+[node name="HP_TENS" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer"]
 custom_minimum_size = Vector2(29.92, 0)
 layout_mode = 2
 theme_override_constants/outline_size = 3
@@ -598,7 +597,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SP_CONSTANT3" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer"]
+[node name="HP_ONES" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer"]
 custom_minimum_size = Vector2(29.92, 0)
 layout_mode = 2
 theme_override_constants/outline_size = 3
@@ -638,7 +637,7 @@ offset_top = -2.28568
 offset_right = 96.2857
 offset_bottom = 37.7143
 
-[node name="SP_CONSTANT" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer"]
+[node name="SP_Hundreds" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer"]
 custom_minimum_size = Vector2(29.92, 0)
 layout_mode = 2
 theme_override_constants/outline_size = 3
@@ -648,7 +647,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SP_CONSTANT2" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer"]
+[node name="SP_Tens" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer"]
 custom_minimum_size = Vector2(29.92, 0)
 layout_mode = 2
 theme_override_constants/outline_size = 3
@@ -658,7 +657,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SP_CONSTANT3" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer"]
+[node name="SP_Ones" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer"]
 custom_minimum_size = Vector2(29.92, 0)
 layout_mode = 2
 theme_override_constants/outline_size = 3
