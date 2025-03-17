@@ -537,3 +537,16 @@ func show_test():
 		list_one.add_item("",entity.sub_tex)
 	await get_tree().create_timer(0.1).timeout
 	second_menu = true
+
+func sync_cubers(jumper):
+	rpc("sync_cube",jumper)
+
+var preloaded_enemy = preload("res://scenes/enemy_base.tscn")
+
+@rpc("any_peer")
+func sync_cube(jumper):
+	add_child(jumper)
+	await get_tree().create_timer(0.01).timeout
+	var actual_enemy = jumper.get_main()
+	actual_enemy.can_move = false
+	actual_enemy.fight_instance = self

@@ -134,6 +134,4 @@ func death():
 
 @rpc("any_peer")
 func death_rpc():
-	fight_instance.enemies.remove_at(fight_instance.enemies.find(self))
-	fight_instance.kill_me(self)
 	self.queue_free()

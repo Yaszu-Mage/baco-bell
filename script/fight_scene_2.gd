@@ -45,6 +45,7 @@ func _ready():
 			actual_enemy.global_position = get_node("enemy" + str(amount + 2)).global_position
 			actual_enemy.fight_instance = self
 			combatants_list.append(actual_enemy)
+			sync_cubers(instance)
 	await get_tree().create_timer(0.5).timeout
 	print("combatants list is now: " + str(combatants_list))
 	for entity in combatants_list:
@@ -173,3 +174,6 @@ func find_invalid():
 		else:
 			print("We have pruned instance at" + str(entries))
 			intiative.remove_at(intiative.find(entries))
+
+func sync_cubers(jumper):
+	players[0].sync_cubers(jumper)
