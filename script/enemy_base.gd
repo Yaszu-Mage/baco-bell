@@ -23,6 +23,9 @@ func _ready() -> void:
 			add_child(me)
 
 
+func get_main():
+	return me
+
 func _on_visible_on_screen_enabler_3d_screen_entered() -> void:
 	me.visible = true
 

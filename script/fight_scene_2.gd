@@ -20,17 +20,32 @@ var combatants_list = []
 var intiative = []
 signal action_chose
 var turn = 0
+var preloaded_enemy = preload("res://scenes/enemy_base.tscn")
 @onready var camera = $Camera3D
 #We will roll initiative like DND so 1-20
 #We can roll by using randi_range(1,20)
 # We need to store combatants FIRST before we put it into the dictionary
 func _ready():
 	print("ready started!")
+	
 	match world:
 		world_type.the_void:
 			var instance = load("res://scenes/void_town.tscn").instantiate()
 			instance.position = Vector3(0,-2,5.782)
 			add_child(instance)
+	var jumped = randi_range(0,3)
+	if jumped > 0:
+		for amount in jumped:
+			var instance = preloaded_enemy.instantiate()
+			add_child(instance)
+			await get_tree().create_timer(0.01).timeout
+			var actual_enemy = instance.get_main()
+			print("enemy" + str(amount + 1))
+			actual_enemy.can_move = false
+			actual_enemy.global_position = get_node("enemy" + str(amount + 2)).global_position
+			actual_enemy.fight_instance = self
+			combatants_list.append(actual_enemy)
+	await get_tree().create_timer(0.5).timeout
 	print("combatants list is now: " + str(combatants_list))
 	for entity in combatants_list:
 		if entity.is_in_group("player"):
@@ -62,6 +77,9 @@ func run_turn():
 		await get_tree().create_timer(0.1).timeout
 		if entries[0].is_in_group("player"):
 			entries[0].not_turn()
+		for entry in intiative:
+			if entry[0].health <= 0:
+				entry[0].death()
 	turn += 1
 	print("turn finished, we are now on turn " +str(turn))
 	run_turn()
@@ -113,3 +131,11 @@ func get_combatants(source):
 		return combatants.get("Enemies")
 	elif source.is_in_group("enemies"):
 		return combatants.get("Players")
+
+func end_fight():
+	for entry in enemies:
+		entry.can_move = true
+	self.queue_free()
+
+func kill_me():
+	pass
