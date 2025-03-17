@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://de8w3x5hpj6x"]
+[gd_scene load_steps=39 format=3 uid="uid://de8w3x5hpj6x"]
 
 [ext_resource type="Script" uid="uid://cci7i4x2sxe7d" path="res://script/player.gd" id="1_053sa"]
 [ext_resource type="Texture2D" uid="uid://b0b67538ni2of" path="res://assets/images/arrow.png" id="2_4alws"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://nus7c57h5kkq" path="res://assets/images/item.PNG" id="10_jej6c"]
 [ext_resource type="Texture2D" uid="uid://cijcbyil75fwo" path="res://assets/materials/checker_albedo.png" id="13_oprun"]
 [ext_resource type="Texture2D" uid="uid://3ekptwl03qql" path="res://assets/images/gambling.png" id="15_a8ls1"]
+[ext_resource type="Texture2D" uid="uid://cypaxyt3gh2u7" path="res://assets/images/dust.png" id="16_a8ls1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qlg0r"]
 size = Vector3(1, 1.36108, 1)
@@ -155,6 +156,15 @@ modulate_color = Color(0.239216, 0, 0.490196, 1)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i4ail"]
 texture = ExtResource("13_oprun")
 modulate_color = Color(0.239216, 0, 0.490196, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qfm1y"]
+transparency = 1
+albedo_texture = ExtResource("16_a8ls1")
+billboard_mode = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fulsm"]
+material = SubResource("StandardMaterial3D_qfm1y")
+orientation = 2
 
 [node name="player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_053sa")
@@ -672,6 +682,18 @@ offset_bottom = 40.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1078, 57)
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+visible = false
+amount = 4
+mesh = SubResource("PlaneMesh_fulsm")
+direction = Vector3(1, -1, 1)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_max = 1.0
+angular_velocity_max = 1.0
+linear_accel_max = 1.0
+radial_accel_max = 1.0
 
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Party" to="." method="_on_party_pressed"]
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Quit" to="." method="_on_quit_pressed"]

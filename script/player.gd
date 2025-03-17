@@ -46,10 +46,10 @@ func _ready() -> void:
 	$turn_based_player.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	name = str(get_multiplayer_authority())
+	$ColorRect.visible = false
 	var tween = create_tween()
 	if is_multiplayer_authority():
-		
-		print(CameraServer.feeds())
+		$ColorRect.visible = true
 		camera.current = true
 		fade.visible = true
 		if username == "":
@@ -353,6 +353,7 @@ var buttons = {
 	"Aftermath": preload("res://assets/images/Aftermath.PNG"),
 	"Fake_Identity": preload("res://assets/images/Fake_Identity.PNG")
 }
+var in_fight = false
 var uses = []
 var self_class = "Cashier"
 func set_class(profession : String):
@@ -370,6 +371,22 @@ func reset_actions():
 # Path is formatted like, [Class,Type,Name]
 # So Count up is stored [Cashier,Fight,Count_Up]
 # If you just want to access generally the fight class for Cashier use the path, [Cashier,Fight]
+
+@rpc("any_peer")
+func sync_fight(position,enemy):
+	if in_fight:
+		$CPUParticles3D.visible = true
+	else:
+		$CPUParticles3D.visible = false
+	if is_multiplayer_authority():
+		$CPUParticles3D.visible = false
+	
+	can_move = false
+	await get_tree().create_timer(0.1).timeout
+	
+	little_guy.rotation.y = 0
+	little_guy.rotation.y = 120
+
 func get_actions(path : Array):
 	var size = path.size()
 	print(size)
@@ -417,6 +434,7 @@ func start_fight(enemy : Node):
 	if is_multiplayer_authority():
 		$turn_based_player.visible = true
 		can_move = false
+		rpc("sync_fight",self.global_position,enemy)
 		var instance = load("res://scenes/fight_redo.tscn").instantiate()
 		instance.combatants_list.append(self)
 		instance.combatants_list.append(enemy)
@@ -425,10 +443,13 @@ func start_fight(enemy : Node):
 		#Play Animations
 		get_parent().add_child(instance)
 		await get_tree().create_timer(0.1).timeout
+		enemy.in_fight = true
 		enemy.can_move = false
 		enemy.fight_instance = instance
 		self.global_position = instance.get_node("player").global_position
 		enemy.global_position = instance.get_node("enemy").global_position
+		enemy.rpc("pos",instance.get_node("enemy").global_position)
+		enemy.rpc("sync_vars",false)
 		world.get_node("all_things").visible = false
 		little_guy.rotation.y = 0
 		little_guy.rotation.y = 120

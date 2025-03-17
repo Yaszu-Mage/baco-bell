@@ -8,6 +8,7 @@ var movement_delta: float
 var can_move = true
 var enemy_type = "cuber"
 var fight_instance
+var in_fight = false
 var username = "Cuber"
 @onready var sub_tex = $SubViewport.get_texture()
 @onready var sub = $SubViewport
@@ -27,8 +28,8 @@ func _process(delta):
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 			velocity += get_gravity() * delta
-	if multiplayer.is_server():
-		rpc("pos",global_position)
+	
+	rpc("pos",global_position)
 	if can_move:
 		if player != null:
 			SPEED = 5
@@ -73,10 +74,13 @@ func _on_i_can_see_you_body_entered(body: Node3D) -> void:
 func _on_i_can_see_you_body_exited(body: Node3D) -> void:
 	if player == body:
 		player = null
-@rpc("unreliable")
+@rpc("any_peer")
 func pos(pos):
 	global_position = pos
 
+@rpc("any_peer")
+func sync_vars(move):
+	can_move = move
 func turn():
 	var random = randi_range(0,0)
 	match random:
@@ -118,10 +122,18 @@ func damage(value):
 	health -= value
 
 func _on_start_fight_body_entered(body: Node3D) -> void:
-	if body.is_in_group("player"):
+	if body.is_in_group("player") and can_move:
 		body.start_fight(self)
 
 func death():
+	fight_instance.enemies.remove_at(fight_instance.enemies.find(self))
+	fight_instance.kill_me(self)
+	rpc("death_rpc")
+	self.queue_free()
+
+
+@rpc("any_peer")
+func death_rpc():
 	fight_instance.enemies.remove_at(fight_instance.enemies.find(self))
 	fight_instance.kill_me(self)
 	self.queue_free()
