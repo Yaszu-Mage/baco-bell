@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://de8w3x5hpj6x"]
+[gd_scene load_steps=60 format=3 uid="uid://de8w3x5hpj6x"]
 
 [ext_resource type="Script" uid="uid://cci7i4x2sxe7d" path="res://script/player.gd" id="1_053sa"]
 [ext_resource type="Texture2D" uid="uid://b0b67538ni2of" path="res://assets/images/arrow.png" id="2_4alws"]
@@ -157,6 +157,30 @@ modulate_color = Color(0.239216, 0, 0.490196, 1)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i4ail"]
 texture = ExtResource("13_oprun")
 modulate_color = Color(0.239216, 0, 0.490196, 1)
+
+[sub_resource type="Theme" id="Theme_qfm1y"]
+RichTextLabel/constants/outline_size = 10
+RichTextLabel/font_sizes/normal_font_size = 17
+
+[sub_resource type="Theme" id="Theme_fulsm"]
+RichTextLabel/constants/outline_size = 10
+RichTextLabel/font_sizes/normal_font_size = 17
+
+[sub_resource type="Theme" id="Theme_4r5pv"]
+RichTextLabel/constants/outline_size = 10
+RichTextLabel/font_sizes/normal_font_size = 17
+
+[sub_resource type="Theme" id="Theme_i4ail"]
+RichTextLabel/constants/outline_size = 10
+RichTextLabel/font_sizes/normal_font_size = 17
+
+[sub_resource type="Theme" id="Theme_a38lo"]
+RichTextLabel/constants/outline_size = 10
+RichTextLabel/font_sizes/normal_font_size = 17
+
+[sub_resource type="Theme" id="Theme_4ni07"]
+RichTextLabel/constants/outline_size = 10
+RichTextLabel/font_sizes/normal_font_size = 17
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qfm1y"]
 transparency = 1
@@ -692,9 +716,8 @@ offset_bottom = 37.7143
 [node name="HP_Hundreds" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer"]
 custom_minimum_size = Vector2(29.92, 0)
 layout_mode = 2
-theme_override_constants/outline_size = 3
+theme = SubResource("Theme_qfm1y")
 theme_override_fonts/normal_font = ExtResource("7_d2wvv")
-theme_override_font_sizes/normal_font_size = 17
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -702,7 +725,7 @@ vertical_alignment = 1
 [node name="HP_TENS" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer"]
 custom_minimum_size = Vector2(29.92, 0)
 layout_mode = 2
-theme_override_constants/outline_size = 3
+theme = SubResource("Theme_fulsm")
 theme_override_fonts/normal_font = ExtResource("7_d2wvv")
 theme_override_font_sizes/normal_font_size = 17
 text = "0"
@@ -712,7 +735,7 @@ vertical_alignment = 1
 [node name="HP_ONES" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Inner_Thigh/Health/Bar/HBoxContainer"]
 custom_minimum_size = Vector2(29.92, 0)
 layout_mode = 2
-theme_override_constants/outline_size = 3
+theme = SubResource("Theme_4r5pv")
 theme_override_fonts/normal_font = ExtResource("7_d2wvv")
 theme_override_font_sizes/normal_font_size = 17
 text = "0"
@@ -752,9 +775,8 @@ offset_bottom = 37.7143
 [node name="SP_Hundreds" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer"]
 custom_minimum_size = Vector2(29.92, 0)
 layout_mode = 2
-theme_override_constants/outline_size = 3
+theme = SubResource("Theme_i4ail")
 theme_override_fonts/normal_font = ExtResource("7_d2wvv")
-theme_override_font_sizes/normal_font_size = 17
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -762,9 +784,8 @@ vertical_alignment = 1
 [node name="SP_Tens" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer"]
 custom_minimum_size = Vector2(29.92, 0)
 layout_mode = 2
-theme_override_constants/outline_size = 3
+theme = SubResource("Theme_a38lo")
 theme_override_fonts/normal_font = ExtResource("7_d2wvv")
-theme_override_font_sizes/normal_font_size = 17
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -772,7 +793,7 @@ vertical_alignment = 1
 [node name="SP_Ones" type="RichTextLabel" parent="turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/stats/VBoxContainer/Outer_Thigh/Health/Bar/HBoxContainer"]
 custom_minimum_size = Vector2(29.92, 0)
 layout_mode = 2
-theme_override_constants/outline_size = 3
+theme = SubResource("Theme_4ni07")
 theme_override_fonts/normal_font = ExtResource("7_d2wvv")
 theme_override_font_sizes/normal_font_size = 17
 text = "0"
@@ -806,7 +827,7 @@ position = Vector2(582.5, 331.5)
 scale = Vector2(73.8125, 42.4375)
 sprite_frames = SubResource("SpriteFrames_wnwbv")
 animation = &"new_animation"
-frame_progress = 0.629783
+frame_progress = 0.728468
 
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Party" to="." method="_on_party_pressed"]
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Quit" to="." method="_on_quit_pressed"]

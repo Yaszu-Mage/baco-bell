@@ -440,6 +440,7 @@ func start_fight(enemy : Node):
 		instance.combatants_list.append(enemy)
 		fight_instance = instance
 		instance.world = world.world
+		rpc("add_close")
 		#Play Animations
 		get_parent().add_child(instance)
 		await get_tree().create_timer(0.1).timeout
@@ -458,6 +459,12 @@ func start_fight(enemy : Node):
 		instance.camera.current = true
 func play_animation(anim):
 	pass
+
+@rpc("any_peer")
+func add_close():
+	var instance = load("res://scenes/enter_fight.tscn").instantiate()
+	add_child(instance)
+	instance.global_position = self.global_position
 
 func death():
 	await get_tree().create_timer(0.1).timeout

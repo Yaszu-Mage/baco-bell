@@ -106,3 +106,13 @@ func _on_item_list_item_selected(index: int) -> void:
 	
 	multiplayer_peer.create_client(server_ip, PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
+
+
+func _on_button_pressed() -> void:
+	
+	$Menu.visible = false
+	var world_instance = world.instantiate()
+	add_child(world_instance)
+	
+	multiplayer_peer.create_client("localhost", PORT)
+	multiplayer.multiplayer_peer = multiplayer_peer
