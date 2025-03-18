@@ -1,7 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://dg8by3s6h6mrh"]
+[gd_scene load_steps=11 format=3 uid="uid://dg8by3s6h6mrh"]
 
 [ext_resource type="Script" uid="uid://g58gqvmt3cay" path="res://script/world_void.gd" id="1_k0juu"]
-[ext_resource type="PackedScene" uid="uid://djf6i1t13v5tq" path="res://scenes/enemy_base.tscn" id="2_rwgxs"]
 [ext_resource type="Script" uid="uid://d2ldvls4abn84" path="res://script/world_boundry.gd" id="3_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://b8jgnm2jum2tm" path="res://scenes/void_town.tscn" id="3_71j4m"]
 
@@ -66,9 +65,6 @@ shape = SubResource("BoxShape3D_qfnet")
 transform = Transform3D(0.999659, 0, 0.0261072, 0, 1, 0, -0.0261072, 0, 0.999659, 30.9083, 7.9662, 2.65877)
 visible = false
 shape = SubResource("BoxShape3D_i7141")
-
-[node name="enemy_base" parent="." instance=ExtResource("2_rwgxs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8271, 0, 0)
 
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.31163, 0)

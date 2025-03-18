@@ -5,10 +5,10 @@ var player : Node = self
 var SPEED = 5.0
 var wandering = false
 var movement_delta: float
-var can_move = true
+@export var can_move = false
 var enemy_type = "cuber"
 var fight_instance
-var in_fight = false
+@export var in_fight = true
 var username = "Cuber"
 @onready var sub_tex = $SubViewport.get_texture()
 @onready var sub = $SubViewport
@@ -21,6 +21,10 @@ func _ready() -> void:
 	health_bar.max_value = health
 	wander()
 func _process(delta):
+	if !in_fight and !can_move:
+		self.visible = false
+		self.set_collision_layer_value(1,false)
+	rpc("pos",global_position)
 	sub_cam.global_position = self.global_position + Vector3(0,0,1.689)
 	health_bar.value = health
 	if health <= 0:
@@ -28,7 +32,6 @@ func _process(delta):
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 			velocity += get_gravity() * delta
-	
 	rpc("pos",global_position)
 	if can_move:
 		if player != null:

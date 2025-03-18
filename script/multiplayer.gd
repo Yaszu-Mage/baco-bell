@@ -14,7 +14,7 @@ var local_player_character
 var world = preload("res://scenes/world.tscn")
 func _on_host_pressed():
 	var world_instance = world.instantiate()
-	add_child(world_instance)
+	add_child(world_instance,true)
 	$Menu.visible = false
 	multiplayer_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
@@ -51,12 +51,6 @@ func _on_server_found(server_ip):
 	print(server_list.get_item_text(0))
 	print(server_list.item_count)
 	print(server_list.get_item_icon(0))
-func _on_join_pressed():
-	$Menu.visible = false
-	var world_instance = world.instantiate()
-	add_child(world_instance)
-	multiplayer_peer.create_client("localhost", PORT)
-	multiplayer.multiplayer_peer = multiplayer_peer
 
 func add_player_character(peer_id):
 	connected_peer_ids.append(peer_id)
@@ -102,17 +96,19 @@ func _on_item_list_item_selected(index: int) -> void:
 	
 	$Menu.visible = false
 	var world_instance = world.instantiate()
-	add_child(world_instance)
+	add_child(world_instance,true)
 	
 	multiplayer_peer.create_client(server_ip, PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
 
 
 func _on_button_pressed() -> void:
-	
+	print("joining local")
 	$Menu.visible = false
 	var world_instance = world.instantiate()
-	add_child(world_instance)
-	
+	add_child(world_instance,true)
 	multiplayer_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
+	await get_tree().create_timer(1.0).timeout
+	if is_instance_valid(get_node("world2")):
+		get_node("world2").queue_free()

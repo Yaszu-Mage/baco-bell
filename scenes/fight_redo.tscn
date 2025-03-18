@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://cs3s661ybnyx7"]
+[gd_scene load_steps=3 format=3 uid="uid://cs3s661ybnyx7"]
 
 [ext_resource type="Script" uid="uid://d0t40y0g2q83v" path="res://script/fight_scene_2.gd" id="1_cgfef"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_cgfef"]
+properties/0/path = NodePath(".:jumped")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_cgfef")
@@ -32,3 +37,9 @@ transform = Transform3D(-0.999992, 0, 0.00396194, 0, 1, 0, -0.00396194, 0, -0.99
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.952582, -0.304283, 0, 0.304283, 0.952582, 0, -0.015518, 5.78214)
 fov = 90.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_cgfef")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")

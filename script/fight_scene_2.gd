@@ -9,6 +9,7 @@ var combatants = {
 #So we are going to store players and enemies in two places and two formats
 var players = []
 var enemies = []
+var not_local = false
 #World Type for Generation
 enum world_type {
 	the_void
@@ -18,8 +19,10 @@ var world
 var combatants_list = []
 #[Instance,initiative order]
 var intiative = []
+@onready var spawner = $MultiplayerSpawner
 signal action_chose
 var turn = 0
+@export var jumped = 0
 var preloaded_enemy = preload("res://scenes/enemy_base.tscn")
 @onready var camera = $Camera3D
 #We will roll initiative like DND so 1-20
@@ -27,17 +30,24 @@ var preloaded_enemy = preload("res://scenes/enemy_base.tscn")
 # We need to store combatants FIRST before we put it into the dictionary
 func _ready():
 	print("ready started!")
+	if not_local:
+		pass
+	else:
+		match world:
+			world_type.the_void:
+				var instance = load("res://scenes/void_town.tscn").instantiate()
+				instance.position = Vector3(0,-2,5.782)
+				add_child(instance)
 	
-	match world:
-		world_type.the_void:
-			var instance = load("res://scenes/void_town.tscn").instantiate()
-			instance.position = Vector3(0,-2,5.782)
-			add_child(instance)
-	var jumped = randi_range(0,3)
+	jumped = randi_range(0,3)
+	if not_local:
+		self.visible = false
+	rpc("authority_jumped")
+	await get_tree().create_timer(0.1).timeout
 	if jumped > 0:
 		for amount in jumped:
 			var instance = preloaded_enemy.instantiate()
-			add_child(instance)
+			add_child(instance,true)
 			await get_tree().create_timer(0.01).timeout
 			var actual_enemy = instance.get_main()
 			print("enemy" + str(amount + 1))
@@ -45,27 +55,29 @@ func _ready():
 			actual_enemy.global_position = get_node("enemy" + str(amount + 2)).global_position
 			actual_enemy.fight_instance = self
 			combatants_list.append(actual_enemy)
-			sync_cubers(instance)
 	await get_tree().create_timer(0.5).timeout
 	print("combatants list is now: " + str(combatants_list))
-	for entity in combatants_list:
-		if entity.is_in_group("player"):
-			#Run player things
-			combatants.get("Players").set(entity.username,entity)
-			var initiative_roll = randi_range(0,20)
-			intiative.append([entity,initiative_roll])
-			players.append(entity)
-			entity.can_move = false
-			entity.turnbased_menu.visible = true
-		if entity.is_in_group("enemies"):
-			#Run enemies things
-			combatants.get("Enemies").set(entity.enemy_type,entity)
-			enemies.append(entity)
-			var initiative_roll = randi_range(0,20)
-			intiative.append([entity,initiative_roll])
-			entity.can_move = false
-	print("intiative order has been decidied!" + str(intiative))
-	run_turn()
+	if not_local:
+		pass
+	else:
+		for entity in combatants_list:
+			if entity.is_in_group("player"):
+				#Run player things
+				combatants.get("Players").set(entity.username,entity)
+				var initiative_roll = randi_range(0,20)
+				intiative.append([entity,initiative_roll])
+				players.append(entity)
+				entity.can_move = false
+				entity.turnbased_menu.visible = true
+			if entity.is_in_group("enemies"):
+				#Run enemies things
+				combatants.get("Enemies").set(entity.enemy_type,entity)
+				enemies.append(entity)
+				var initiative_roll = randi_range(0,20)
+				intiative.append([entity,initiative_roll])
+				entity.can_move = false
+		print("intiative order has been decidied!" + str(intiative))
+		run_turn()
 
 func run_turn():
 	print(intiative)
@@ -90,6 +102,10 @@ func run_turn():
 	turn += 1
 	print("turn finished, we are now on turn " +str(turn))
 	run_turn()
+
+@rpc("any_peer")
+func authority_jumped(jump):
+	jumped = jump
 
 func run_action(entity,action,target = null,_type = ""):
 	match action:
@@ -144,8 +160,13 @@ func get_combatants(source):
 		return combatants.get("Players")
 
 func end_fight():
+	rpc("end_fight_remote")
 	for entry in enemies:
 		entry.can_move = true
+	self.queue_free()
+
+@rpc("call_remote")
+func end_fight_remote():
 	self.queue_free()
 
 func kill_me(ref):
@@ -174,6 +195,3 @@ func find_invalid():
 		else:
 			print("We have pruned instance at" + str(entries))
 			intiative.remove_at(intiative.find(entries))
-
-func sync_cubers(jumper):
-	players[0].sync_cubers(jumper)

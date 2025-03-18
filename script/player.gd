@@ -435,6 +435,7 @@ func start_fight(enemy : Node):
 		$turn_based_player.visible = true
 		can_move = false
 		rpc("sync_fight",self.global_position,enemy)
+		rpc("start_fight_remote",self,enemy)
 		var instance = load("res://scenes/fight_redo.tscn").instantiate()
 		instance.combatants_list.append(self)
 		instance.combatants_list.append(enemy)
@@ -460,14 +461,34 @@ func start_fight(enemy : Node):
 func play_animation(anim):
 	pass
 
+@rpc("call_remote")
+func start_fight_remote(player,enemy):
+	self.visible = false
+	self.set_collision_layer_value(1,false)
+	var instance = load("res://scenes/fight_redo.tscn").instantiate()
+	instance.combatants_list.append(self)
+	instance.combatants_list.append(enemy)
+	instance.not_local = true
+	fight_instance = instance
+	#Play Animations
+	get_parent().add_child(instance)
+	await get_tree().create_timer(0.1).timeout
+	self.global_position = instance.get_node("player").global_position
+
 @rpc("any_peer")
 func add_close():
 	var instance = load("res://scenes/enter_fight.tscn").instantiate()
-	add_child(instance)
+	get_parent().add_child(instance)
 	instance.global_position = self.global_position
+
+@rpc("call_remote")
+func reawaken():
+	self.set_collision_layer_value(1,true)
+	self.visible = true
 
 func death():
 	await get_tree().create_timer(0.1).timeout
+	rpc("reawaken")
 	if health >= 0:
 		$turn_based_player.visible = false
 		can_move = true
@@ -545,17 +566,5 @@ func show_test():
 	await get_tree().create_timer(0.1).timeout
 	second_menu = true
 
-func sync_cubers(jumper):
-	rpc("sync_cube",jumper)
 
 var preloaded_enemy = preload("res://scenes/enemy_base.tscn")
-
-
-
-@rpc("any_peer")
-func sync_cube(jumper):
-	add_child(jumper)
-	await get_tree().create_timer(0.01).timeout
-	var actual_enemy = jumper.get_main()
-	actual_enemy.can_move = false
-	actual_enemy.fight_instance = self
