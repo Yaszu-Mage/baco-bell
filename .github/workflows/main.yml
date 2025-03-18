@@ -27,6 +27,14 @@ jobs:
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Windows Build
         run: |
+          apt-get update
+          apt-get install -y --no-install-recommends xz-utils
+          wget -nv https://mirror.clarkson.edu/blender/release/Blender4.4/blender-4.4.0-linux-x64.tar.xz
+          tar -xf blender-4.4.0-linux-x64.tar.xz
+          cd blender-4.4.0-linux-x64
+          touch .gdignore
+          pwd | sed 's/^/filesystem\/import\/blender\/blender_path = \"/;s/$/"/' >> ~/.config/godot/editor_settings-4.4.tres
+          cd ..
           mkdir -v -p build/windows
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
