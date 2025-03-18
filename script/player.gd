@@ -543,6 +543,8 @@ func sync_cubers(jumper):
 
 var preloaded_enemy = preload("res://scenes/enemy_base.tscn")
 
+
+
 @rpc("any_peer")
 func sync_cube(jumper):
 	add_child(jumper)

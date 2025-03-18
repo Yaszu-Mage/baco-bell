@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://dpohvt5agmmae"]
+
+[ext_resource type="Script" uid="uid://c86p054yret31" path="res://script/enter_fight.gd" id="1_i8ctl"]
+[ext_resource type="Texture2D" uid="uid://cypaxyt3gh2u7" path="res://assets/images/dust.png" id="1_v6unp"]
+[ext_resource type="Texture2D" uid="uid://rv8g43tkf2if" path="res://icon.svg" id="2_qgs3u"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qgs3u"]
+radius = 1.07491
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qfm1y"]
+transparency = 1
+albedo_texture = ExtResource("1_v6unp")
+billboard_mode = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i8ctl"]
+material = SubResource("StandardMaterial3D_qfm1y")
+orientation = 2
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_i8ctl")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_qgs3u")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+amount = 4
+mesh = SubResource("PlaneMesh_i8ctl")
+direction = Vector3(1, -1, 1)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_max = 1.0
+angular_velocity_max = 1.0
+linear_accel_max = 1.0
+radial_accel_max = 1.0
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+billboard = 2
+texture = ExtResource("2_qgs3u")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
