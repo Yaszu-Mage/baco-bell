@@ -39,13 +39,16 @@ func _ready():
 				instance.position = Vector3(0,-2,5.782)
 				add_child(instance)
 	
-	jumped = randi_range(0,3)
 	if not_local:
 		self.visible = false
-	rpc("authority_jumped")
-	await get_tree().create_timer(0.1).timeout
+	else:
+		jumped = randi_range(0,3)
+		rpc("authority_jumped",jumped)
+	await get_tree().create_timer(0.2).timeout
 	if jumped > 0:
+		print(jumped)
 		for amount in jumped:
+			
 			var instance = preloaded_enemy.instantiate()
 			add_child(instance,true)
 			await get_tree().create_timer(0.01).timeout
@@ -77,6 +80,7 @@ func _ready():
 				intiative.append([entity,initiative_roll])
 				entity.can_move = false
 		print("intiative order has been decidied!" + str(intiative))
+		rpc("sync_variables",intiative,combatants_list,combatants)
 		run_turn()
 
 func run_turn():
@@ -195,3 +199,34 @@ func find_invalid():
 		else:
 			print("We have pruned instance at" + str(entries))
 			intiative.remove_at(intiative.find(entries))
+
+@rpc("any_peer")
+func join_fight(fight):
+	print("Has reached fight scene!")
+	if !not_local:
+		var player = get_parent().get_node(str(fight[3]))
+		print(player.name)
+		var initiative_roll = randi_range(0,20)
+		intiative.append([player,initiative_roll])
+		players.append(player)
+		player.can_move = false
+		player.turnbased_menu.visible = true
+		#Why not just players.size()? Because of how the nodes are arranged
+		# We want player, player2,player3,player4 so with array sizes
+		# players.size() + 1 = [0,1,1,2] etc but we don't have to get none since its declared at start
+		print(players.size() + 1)
+		player.global_position = get_node("player" + str(players.size() + 1)).global_position
+		player.rpc("sync_turn_based_actions",player.global_position,str(name),str(player.name))
+		rpc("sync_variables",intiative,combatants_list,combatants)
+		for enemy in enemies:
+			player.rpc("show_enemy",str(enemy.name),str(player.name))
+		for play in players:
+			player.rpc("show_player",str(player.name),str(play.name))
+		print("finished!")
+
+
+@rpc("any_peer")
+func sync_variables(init,combat,combats):
+	intiative = init
+	combatants_list = combat
+	combatants = combats

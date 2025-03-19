@@ -10,7 +10,7 @@ properties/1/path = NodePath(".:instances")
 properties/1/spawn = true
 properties/1/replication_mode = 2
 
-[node name="Node3D" type="Node3D"]
+[node name="multiplayer" type="Node3D"]
 script = ExtResource("1_w4jws")
 
 [node name="Menu" type="Control" parent="."]
@@ -51,6 +51,9 @@ text = "Join (Local Host)"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_3lg42")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
 
 [connection signal="pressed" from="Menu/GridContainer/Scan" to="." method="_on_scan_pressed"]
 [connection signal="pressed" from="Menu/GridContainer/Host" to="." method="_on_host_pressed"]

@@ -19,7 +19,7 @@ properties/4/path = NodePath(".:enemies")
 properties/4/spawn = true
 properties/4/replication_mode = 1
 
-[node name="Node3D" type="Node3D"]
+[node name="fight_scene" type="Node3D"]
 script = ExtResource("1_cgfef")
 
 [node name="player" type="Marker3D" parent="."]

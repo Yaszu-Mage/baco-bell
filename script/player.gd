@@ -51,7 +51,7 @@ func _ready() -> void:
 		$ColorRect.visible = true
 		camera.current = true
 		fade.visible = true
-		if username == "":
+		if username != "":
 			username = name
 		tween.tween_property(fade,"color",Color(0,0,0,0),1)
 		await get_tree().create_timer(0.5).timeout
@@ -194,9 +194,10 @@ func _physics_process(delta: float) -> void:
 
 @rpc("unreliable")
 func remote_set_position(authority_velocity,authority_position,authority_rot):
-	velocity = authority_velocity
-	global_position = authority_position
-	little_guy.rotation = authority_rot
+	if can_move:
+		velocity = authority_velocity
+		global_position = authority_position
+		little_guy.rotation = authority_rot
 	move_and_slide()
 
 func slide_check():
@@ -447,6 +448,7 @@ func start_fight(enemy : Node):
 		await get_tree().create_timer(0.1).timeout
 		enemy.in_fight = true
 		enemy.can_move = false
+		enemy.set_collision_layer_value(1,false)
 		enemy.fight_instance = instance
 		self.global_position = instance.get_node("player").global_position
 		enemy.global_position = instance.get_node("enemy").global_position
@@ -466,7 +468,13 @@ func play_animation(anim):
 func join_fight(fight):
 	# we need to check and find the instance and then compute all of the information
 	# think of a way to do that with how it is structured
-	var scene = fight[0]
+	var scene = get_parent().get_node(str(fight[0]))
+	turnbased_menu.visible = true
+	can_move = false
+	fight[3] = str(name)
+	scene.not_local = false
+	print("player has tried to join a fight!")
+	scene.rpc("join_fight",fight)
 	#should we have the functions for the fight scene run client side or server side
 
 @rpc("call_remote")
@@ -489,6 +497,11 @@ func add_close():
 	var instance = load("res://scenes/enter_fight.tscn").instantiate()
 	get_parent().add_child(instance)
 	instance.global_position = self.global_position
+	var fight = inst_to_dict(fight_instance)
+	var check = inst_to_dict(self)
+	instance.fight = [fight_instance.name,fight,check,name]
+
+
 
 @rpc("call_remote")
 func reawaken():
@@ -575,5 +588,41 @@ func show_test():
 	await get_tree().create_timer(0.1).timeout
 	second_menu = true
 
+@rpc("any_peer")
+func sync_turn_based_actions(position,fight_instance_name,playername):
+	if playername == name:
+		world.get_node("all_things").visible = false
+		self.global_position = position
+		can_move = false
+		$turn_based_player.visible = true
+		var fight = get_parent().get_node(fight_instance_name)
+		fight_instance = fight
+		fight_instance.visible = true
+		var world_enum = world.world
+		match world_enum:
+			world_type.the_void:
+				print("void")
+				var instance = load("res://scenes/void_town.tscn").instantiate()
+				instance.position = Vector3(0,-2,5.782)
+				fight_instance.add_child(instance)
+		fight_instance.camera.current = true
+		camera.current = false
+		little_guy.rotation.y = 0
+		little_guy.rotation.x = 120
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
+@rpc("any_peer")
+func show_enemy(enemy_name,player_name):
+	if player_name == name:
+		var enemy = get_parent().get_node(enemy_name)
+		enemy.in_fight = true
+		enemy.can_move = false
+
+@rpc("any_peer")
+func show_player(player_name,ext_player_name):
+	if player_name == name:
+		var play = get_parent().get_node(ext_player_name)
+		print(play.name)
+		play.visible = true
+		print(play.visible)
 var preloaded_enemy = preload("res://scenes/enemy_base.tscn")
