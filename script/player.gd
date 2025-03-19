@@ -1,5 +1,4 @@
 extends CharacterBody3D
-
 var health = 10
 var SPEED = 5.0
 const JUMP_VELOCITY = 22.5
@@ -443,6 +442,7 @@ func start_fight(enemy : Node):
 		instance.world = world.world
 		rpc("add_close")
 		#Play Animations
+		GlobalLists.active_fights.append([instance,self])
 		get_parent().add_child(instance)
 		await get_tree().create_timer(0.1).timeout
 		enemy.in_fight = true
@@ -461,6 +461,14 @@ func start_fight(enemy : Node):
 func play_animation(anim):
 	pass
 
+# We will store all active fights in array
+# It will be stored like [Instance,StarterPlayer]
+func join_fight(fight):
+	# we need to check and find the instance and then compute all of the information
+	# think of a way to do that with how it is structured
+	var scene = fight[0]
+	#should we have the functions for the fight scene run client side or server side
+
 @rpc("call_remote")
 func start_fight_remote(player,enemy):
 	self.visible = false
@@ -469,6 +477,7 @@ func start_fight_remote(player,enemy):
 	instance.combatants_list.append(self)
 	instance.combatants_list.append(enemy)
 	instance.not_local = true
+	GlobalLists.active_fights.append([instance,self])
 	fight_instance = instance
 	#Play Animations
 	get_parent().add_child(instance)

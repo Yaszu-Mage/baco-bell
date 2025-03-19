@@ -7,8 +7,8 @@ var combatants = {
 }
 }
 #So we are going to store players and enemies in two places and two formats
-var players = []
-var enemies = []
+@export var players = []
+@export var enemies = []
 var not_local = false
 #World Type for Generation
 enum world_type {
@@ -18,10 +18,10 @@ var world
 #["Player_Name",Instance]
 var combatants_list = []
 #[Instance,initiative order]
-var intiative = []
+@export var intiative = []
 @onready var spawner = $MultiplayerSpawner
 signal action_chose
-var turn = 0
+@export var turn = 0
 @export var jumped = 0
 var preloaded_enemy = preload("res://scenes/enemy_base.tscn")
 @onready var camera = $Camera3D

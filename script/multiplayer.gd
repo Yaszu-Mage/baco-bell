@@ -12,9 +12,12 @@ var connected_peer_ids = []
 var local_player_character
 @export var instances = {}
 var world = preload("res://scenes/world.tscn")
+# Parent --> Child --> Child
 func _on_host_pressed():
 	var world_instance = world.instantiate()
 	add_child(world_instance,true)
+	#Instead of using show() hide()
+	#Nodename.property = value
 	$Menu.visible = false
 	multiplayer_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer

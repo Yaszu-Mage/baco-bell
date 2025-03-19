@@ -6,6 +6,18 @@
 properties/0/path = NodePath(".:jumped")
 properties/0/spawn = true
 properties/0/replication_mode = 1
+properties/1/path = NodePath(".:intiative")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:turn")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:players")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:enemies")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_cgfef")

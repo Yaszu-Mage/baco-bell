@@ -56,6 +56,9 @@ var abilities = {
 		}
 	}
 }
+# We will store all active fights in array
+# It will be stored like [Instance,StarterPlayer]
+var active_fights = []
 enum environments {
 	the_void,
 }
