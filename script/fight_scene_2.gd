@@ -38,7 +38,6 @@ func _ready():
 				var instance = load("res://scenes/void_town.tscn").instantiate()
 				instance.position = Vector3(0,-2,5.782)
 				add_child(instance)
-	
 	if not_local:
 		self.visible = false
 	else:
@@ -75,7 +74,7 @@ func _ready():
 			if entity.is_in_group("enemies"):
 				#Run enemies things
 				combatants.get("Enemies").set(entity.enemy_type,entity)
-				enemies.append(entity)
+				enemies.append(str(entity.name))
 				var initiative_roll = randi_range(0,20)
 				intiative.append([entity,initiative_roll])
 				entity.can_move = false
@@ -145,7 +144,7 @@ func run_action(entity,action,target = null,_type = ""):
 				if entries[0].is_in_group("player"):
 					entries[0].display_message(str(entity.username + " has punched " + target.username))
 			if entity.is_in_group("enemies"):
-				target.damage(2)
+				get_parent().get_node(target).damage(2)
 			if entity.is_in_group("player"):
 				target.damage(4)
 	await get_tree().create_timer(0.2).timeout
