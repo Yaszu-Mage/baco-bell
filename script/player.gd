@@ -190,11 +190,11 @@ func _physics_process(delta: float) -> void:
 			velocity += get_gravity() * delta * 5
 		move_and_slide()
 		rpc("remote_set_position", velocity,global_position,little_guy.rotation)
-
+var waiting = false
 
 @rpc("unreliable")
 func remote_set_position(authority_velocity,authority_position,authority_rot):
-	if can_move:
+	if waiting:
 		velocity = authority_velocity
 		global_position = authority_position
 		little_guy.rotation = authority_rot
@@ -329,7 +329,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 @onready var turnbased_menu = $turn_based_player/main_menu
 @onready var notification_menu = $turn_based_player/notifications
-@onready var portrait = $turn_based_player/main_menu/main_menu/PanelContainer/PanelContainer/TextureRect
+@onready var portrait = $turn_based_player/Player_Stats/HBoxContainer/Player_Stats/VBoxContainer/HBoxContainer/PanelContainer/TextureRect
 @onready var list_one = $turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList
 @onready var list_two = $turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList2
 @onready var knower = $turn_based_player/RichTextLabel
@@ -469,6 +469,7 @@ func join_fight(fight):
 	# we need to check and find the instance and then compute all of the information
 	# think of a way to do that with how it is structured
 	var scene = get_parent().get_node(str(fight[0]))
+	waiting = true
 	turnbased_menu.visible = true
 	can_move = false
 	fight[3] = str(name)
@@ -607,9 +608,11 @@ func sync_turn_based_actions(position,fight_instance_name,playername):
 				fight_instance.add_child(instance)
 		fight_instance.camera.current = true
 		camera.current = false
+		little_guy.rotation = Vector3.ZERO
 		little_guy.rotation.y = 0
 		little_guy.rotation.x = 120
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		waiting = false
 
 @rpc("any_peer")
 func show_enemy(enemy_name,player_name):

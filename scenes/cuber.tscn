@@ -19,6 +19,9 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:in_fight")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath(".:can_move")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eib84"]
 bg_color = Color(0.988235, 0, 0.0823529, 1)

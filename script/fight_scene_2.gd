@@ -208,6 +208,7 @@ func join_fight(fight):
 		print(player.name)
 		var initiative_roll = randi_range(0,20)
 		intiative.append([player,initiative_roll])
+		
 		players.append(player)
 		player.can_move = false
 		player.turnbased_menu.visible = true
@@ -215,6 +216,7 @@ func join_fight(fight):
 		# We want player, player2,player3,player4 so with array sizes
 		# players.size() + 1 = [0,1,1,2] etc but we don't have to get none since its declared at start
 		print(players.size() + 1)
+		print(players)
 		player.global_position = get_node("player" + str(players.size() + 1)).global_position
 		player.rpc("sync_turn_based_actions",player.global_position,str(name),str(player.name))
 		rpc("sync_variables",intiative,combatants_list,combatants)
