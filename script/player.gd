@@ -22,6 +22,7 @@ var slide_exponent = 0.1
 var stamina = 100
 var can_double_jump = true
 var rotating_now = false
+var inventory = []
 @export var party = []
 var slide_limit = 3
 var is_in_party = false
@@ -164,8 +165,8 @@ func _physics_process(delta: float) -> void:
 			rpc("sync_anim","Walking")
 			$GPUParticles3D.emitting = true
 		elif is_on_floor() and !input_dir:
-			little_guy.play_animation("Idle")
-			rpc("sync_anim","Idle")
+			little_guy.play_animation("idle")
+			rpc("sync_anim","idle")
 			$GPUParticles3D.emitting = false
 		var target_angle = Vector3.BACK.signed_angle_to(last_raw_dir,Vector3.UP)
 		move_direction = move_direction.normalized()

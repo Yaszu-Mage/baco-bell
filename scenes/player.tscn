@@ -19,7 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://b86utmphdc66e" path="res://assets/images/fadein.png" id="17_qfm1y"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qlg0r"]
-size = Vector3(1, 1.36108, 1)
+size = Vector3(0.972412, 1.60204, 1)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qhqgy"]
 properties/0/path = NodePath(".:username")
@@ -299,11 +299,11 @@ animations = [{
 script = ExtResource("1_053sa")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.180542, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0137939, 0.601479, 0)
 shape = SubResource("BoxShape3D_qlg0r")
 
 [node name="lil_guy_rig" parent="." instance=ExtResource("2_dqkch")]
-transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 0, -0.224431, 0)
+transform = Transform3D(-0.5, 0, -7.54979e-08, 0, 0.5, 0, 7.54979e-08, 0, -0.5, 0, 0, 0)
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 1.5, 0)
