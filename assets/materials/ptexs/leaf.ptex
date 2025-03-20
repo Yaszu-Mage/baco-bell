@@ -1,0 +1,138 @@
+{
+	"connections": [
+		{
+			"from": "pixelize",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "wavelet_noise",
+			"from_port": 0,
+			"to": "colorize",
+			"to_port": 0
+		},
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "pixelize",
+			"to_port": 0
+		}
+	],
+	"label": "Graph",
+	"longdesc": "",
+	"name": "@Node@10178",
+	"node_position": {
+		"x": 0.0,
+		"y": 0.0
+	},
+	"nodes": [
+		{
+			"export_paths": {
+
+			},
+			"name": "Material",
+			"node_position": {
+				"x": 140.0,
+				"y": 100.0
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1.0,
+					"b": 1.0,
+					"g": 1.0,
+					"r": 1.0,
+					"type": "Color"
+				},
+				"ao": 1.0,
+				"depth_scale": 0.5,
+				"emission_energy": 1.0,
+				"flags_transparent": true,
+				"metallic": 0.0,
+				"normal": 1.0,
+				"roughness": 1.0,
+				"size": 11,
+				"sss": 1.0
+			},
+			"seed_int": 0,
+			"type": "material"
+		},
+		{
+			"name": "pixelize",
+			"node_position": {
+				"x": -257.0,
+				"y": 186.0
+			},
+			"parameters": {
+				"c": 8.0,
+				"d": 0.5,
+				"x": 4.0,
+				"y": 4.0
+			},
+			"seed_int": 0,
+			"type": "pixelize"
+		},
+		{
+			"name": "wavelet_noise",
+			"node_position": {
+				"x": -700.0,
+				"y": 280.0
+			},
+			"parameters": {
+				"frequency": 2.0,
+				"iterations": 2.0,
+				"offset": 0.0,
+				"persistence": 0.5,
+				"scale_x": 2.0,
+				"scale_y": 2.0,
+				"type": 0.0
+			},
+			"seed_int": 169917496,
+			"type": "wavelet_noise"
+		},
+		{
+			"name": "colorize",
+			"node_position": {
+				"x": -460.0,
+				"y": 240.0
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1.0,
+							"b": 0.059661865234375,
+							"g": 0.44921875,
+							"pos": 0.0105107431193344,
+							"r": 0.0
+						},
+						{
+							"a": 1.0,
+							"b": 0.37890625,
+							"g": 1.0,
+							"pos": 0.512419140065899,
+							"r": 0.451355338096619
+						},
+						{
+							"a": 1.0,
+							"b": 0.0,
+							"g": 1.0,
+							"pos": 1.0,
+							"r": 0.21875
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_int": 0,
+			"type": "colorize"
+		}
+	],
+	"parameters": {
+
+	},
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}

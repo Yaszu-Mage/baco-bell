@@ -1,0 +1,93 @@
+{
+	"connections": [
+		{
+			"from": "wavelet_noise",
+			"from_port": 0,
+			"to": "pixelize",
+			"to_port": 0
+		},
+		{
+			"from": "pixelize",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		}
+	],
+	"label": "Graph",
+	"longdesc": "",
+	"name": "@Node@479",
+	"node_position": {
+		"x": 0.0,
+		"y": 0.0
+	},
+	"nodes": [
+		{
+			"export_last_target": "Godot/Godot 4",
+			"export_paths": {
+				"Godot/Godot 4": "C:/Users/Yaszu/Documents/baco-bell/assets/materials/glitch"
+			},
+			"name": "Material",
+			"node_position": {
+				"x": 160.0,
+				"y": 320.0
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1.0,
+					"b": 1.0,
+					"g": 1.0,
+					"r": 1.0,
+					"type": "Color"
+				},
+				"ao": 1.0,
+				"depth_scale": 0.5,
+				"emission_energy": 1.0,
+				"flags_transparent": true,
+				"metallic": 0.0,
+				"normal": 1.0,
+				"roughness": 1.0
+			},
+			"seed_int": 0,
+			"type": "material_dynamic"
+		},
+		{
+			"name": "wavelet_noise",
+			"node_position": {
+				"x": -480.0,
+				"y": 340.0
+			},
+			"parameters": {
+				"frequency": 2.0,
+				"iterations": 5.0,
+				"offset": 0.0,
+				"persistence": 0.5,
+				"scale_x": "$time",
+				"scale_y": "$time",
+				"type": 1
+			},
+			"seed_int": 169917496,
+			"type": "wavelet_noise"
+		},
+		{
+			"name": "pixelize",
+			"node_position": {
+				"x": -120.0,
+				"y": 320.0
+			},
+			"parameters": {
+				"c": 32.0,
+				"d": 1.0,
+				"x": 16.0,
+				"y": 16.0
+			},
+			"seed_int": 0,
+			"type": "pixelize"
+		}
+	],
+	"parameters": {
+
+	},
+	"seed_int": 0,
+	"shortdesc": "",
+	"type": "graph"
+}
