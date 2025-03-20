@@ -9,6 +9,8 @@ var combatants = {
 #So we are going to store players and enemies in two places and two formats
 @export var players = []
 @export var enemies = []
+#Enemy Parent
+@export var enemies_mommys = []
 var not_local = false
 #World Type for Generation
 enum world_type {
@@ -75,6 +77,7 @@ func _ready():
 				#Run enemies things
 				combatants.get("Enemies").set(entity.enemy_type,entity)
 				enemies.append(str(entity.name))
+				enemies_mommys.append(str(entity.get_parent().name))
 				var initiative_roll = randi_range(0,20)
 				intiative.append([entity,initiative_roll])
 				entity.can_move = false

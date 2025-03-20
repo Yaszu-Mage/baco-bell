@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwdepvyi1bi2t"]
+
+[ext_resource type="Script" uid="uid://xe8cykqkbofd" path="res://script/item.gd" id="1_s8enn"]
+[ext_resource type="Texture2D" uid="uid://n7fki57114qv" path="res://assets/images/items/moke.png" id="2_6muww"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vljjh"]
+radius = 0.308548
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ro5b8"]
+radius = 0.27153
+
+[node name="Item" type="CharacterBody3D"]
+script = ExtResource("1_s8enn")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+billboard = 2
+texture_filter = 0
+texture = ExtResource("2_6muww")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_vljjh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ro5b8")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

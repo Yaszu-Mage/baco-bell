@@ -22,6 +22,7 @@ var slide_exponent = 0.1
 var stamina = 100
 var can_double_jump = true
 var rotating_now = false
+#items will be stored as ["Item_Name", 1 (amount)]
 var inventory = []
 @export var party = []
 var slide_limit = 3
@@ -585,8 +586,8 @@ var second_menu = false
 func show_test():
 	list_one.clear()
 	list_two.clear()
-	for entity in fight_instance.enemies:
-		list_one.add_item("",entity.sub_tex)
+	for entity in fight_instance.enemies_mommys:
+		list_one.add_item("",entity.get_main().sub_tex)
 	await get_tree().create_timer(0.1).timeout
 	second_menu = true
 
@@ -629,4 +630,23 @@ func show_player(player_name,ext_player_name):
 		print(play.name)
 		play.visible = true
 		print(play.visible)
+
 var preloaded_enemy = preload("res://scenes/enemy_base.tscn")
+
+
+func add_item(item_name : String, amount : int, item_instance : Node):
+	if inventory.size() > 16:
+		for item in inventory:
+			if item[0] == item_name:
+				item[1] += 1
+			else:
+				inventory.append([item_name,amount])
+		item_instance.rpc("kill")
+	else:
+		return
+
+func remove_item(index : int ,amount : int):
+	pass
+
+func index_items():
+	pass
