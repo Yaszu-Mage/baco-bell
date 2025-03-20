@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://de8w3x5hpj6x"]
+[gd_scene load_steps=62 format=3 uid="uid://de8w3x5hpj6x"]
 
 [ext_resource type="Script" uid="uid://cci7i4x2sxe7d" path="res://script/player.gd" id="1_053sa"]
 [ext_resource type="Texture2D" uid="uid://b0b67538ni2of" path="res://assets/images/arrow.png" id="2_4alws"]
@@ -17,9 +17,20 @@
 [ext_resource type="Texture2D" uid="uid://3ekptwl03qql" path="res://assets/images/gambling.png" id="15_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://cypaxyt3gh2u7" path="res://assets/images/dust.png" id="16_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://b86utmphdc66e" path="res://assets/images/fadein.png" id="17_qfm1y"]
+[ext_resource type="PackedScene" uid="uid://dm6q0abakck7u" path="res://scenes/joystick.tscn" id="18_fulsm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qlg0r"]
 size = Vector3(0.972412, 1.60204, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jej6c"]
+texture = ExtResource("7_3v2ag")
+expand_margin_left = 5.0
+expand_margin_top = 30.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fulsm"]
+bg_color = Color(0.303233, 0.303233, 0.303233, 1)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qhqgy"]
 properties/0/path = NodePath(".:username")
@@ -98,13 +109,6 @@ _data = {
 &"RESET": SubResource("Animation_qhqgy"),
 &"notification_on": SubResource("Animation_dqkch")
 }
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jej6c"]
-texture = ExtResource("7_3v2ag")
-expand_margin_left = 5.0
-expand_margin_top = 30.0
-expand_margin_right = 5.0
-expand_margin_bottom = 5.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1ej7"]
 bg_color = Color(0.180005, 0.180005, 0.180005, 1)
@@ -317,6 +321,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.01132, 0)
 target_position = Vector3(0, -1.5, 0)
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 offset_left = -163.0
 offset_top = -136.0
 offset_right = 2343.0
@@ -388,7 +393,7 @@ layout_mode = 2
 [node name="HSplitContainer6" type="HSplitContainer" parent="Menu/Buttons/GridContainer"]
 layout_mode = 2
 
-[node name="Button2" type="Button" parent="Menu/Buttons/GridContainer"]
+[node name="Options" type="Button" parent="Menu/Buttons/GridContainer"]
 layout_mode = 2
 text = "Options"
 
@@ -421,6 +426,39 @@ text = "List of Players"
 
 [node name="ItemList" type="ItemList" parent="Menu/List of Players/GridContainer"]
 custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+
+[node name="Options Window" type="PanelContainer" parent="Menu"]
+visible = false
+layout_mode = 0
+offset_left = 385.0
+offset_top = 214.0
+offset_right = 759.0
+offset_bottom = 465.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_jej6c")
+
+[node name="PanelContainer" type="PanelContainer" parent="Menu/Options Window"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fulsm")
+
+[node name="GridContainer" type="GridContainer" parent="Menu/Options Window/PanelContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Mobile" type="CheckButton" parent="Menu/Options Window/PanelContainer/GridContainer"]
+layout_mode = 2
+text = "Mobile"
+
+[node name="Controller" type="CheckButton" parent="Menu/Options Window/PanelContainer/GridContainer"]
+layout_mode = 2
+text = "Controller"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Menu/Options Window/PanelContainer/GridContainer"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+text = "  FOV"
+
+[node name="FOV" type="HSlider" parent="Menu/Options Window/PanelContainer/GridContainer"]
 layout_mode = 2
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -480,6 +518,7 @@ spring_length = 5.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.157642, 5.72757)
 
 [node name="turn_based_player" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 23.0
@@ -829,12 +868,33 @@ sprite_frames = SubResource("SpriteFrames_wnwbv")
 animation = &"new_animation"
 frame_progress = 0.728468
 
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Joystick" parent="UI" instance=ExtResource("18_fulsm")]
+position = Vector2(56, 572)
+
+[node name="meny" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 1095.0
+offset_right = 1148.0
+offset_bottom = 31.0
+text = "Menu"
+
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Party" to="." method="_on_party_pressed"]
+[connection signal="pressed" from="Menu/Buttons/GridContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="item_selected" from="Menu/List of Players/GridContainer/ItemList" to="." method="_on_item_list_item_selected"]
+[connection signal="toggled" from="Menu/Options Window/PanelContainer/GridContainer/Mobile" to="." method="_on_mobile_toggled"]
+[connection signal="toggled" from="Menu/Options Window/PanelContainer/GridContainer/Controller" to="." method="_on_controller_toggled"]
+[connection signal="value_changed" from="Menu/Options Window/PanelContainer/GridContainer/FOV" to="." method="_on_fov_value_changed"]
 [connection signal="pressed" from="Notification/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="item_clicked" from="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList" to="." method="_on_item_list_item_clicked"]
 [connection signal="item_clicked" from="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList2" to="." method="_on_item_list_item_clicked"]
 [connection signal="button_down" from="turn_based_player/main_menu/move_window" to="." method="_on_move_window_button_down"]
 [connection signal="button_up" from="turn_based_player/main_menu/move_window" to="." method="_on_move_window_button_up"]
 [connection signal="pressed" from="turn_based_player/main_menu/move_window" to="." method="_on_move_window_pressed"]
+[connection signal="pressed" from="UI/meny" to="." method="_on_meny_pressed"]

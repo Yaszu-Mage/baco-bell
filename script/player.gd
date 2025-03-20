@@ -81,9 +81,20 @@ func _physics_process(delta: float) -> void:
 			can_wall_jump = true
 			can_double_jump = true
 			wall_limit = 3
+		if ProjectSettings.get_setting("global/mobile"):
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			$UI/Joystick.visible = true
+		else:
+			$UI/Joystick.visible = false
 		# Get the input direction and handle the movement/deceleration.
 			# As good practice, you should replace UI actions with custom gameplay actions	.
-		var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		var input_dir
+		if ProjectSettings.get_setting("global/mobile"):
+			input_dir = $UI/Joystick.posVector
+		elif ProjectSettings.get_setting("global/controller"):
+			input_dir = Vector2(Input.get_joy_axis(0,JOY_AXIS_LEFT_X),Input.get_joy_axis(0,JOY_AXIS_LEFT_Y))
+		else:
+			input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 		var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if Input.is_action_pressed("sprint") and stamina > 0:
 			if camera.fov >= 75:
@@ -171,7 +182,7 @@ func _physics_process(delta: float) -> void:
 			$GPUParticles3D.emitting = false
 		var target_angle = Vector3.BACK.signed_angle_to(last_raw_dir,Vector3.UP)
 		move_direction = move_direction.normalized()
-		if direction and !menu.visible and can_move:
+		if move_direction and !menu.visible and can_move:
 			velocity = velocity.move_toward(move_direction * SPEED,delta * 20)
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
@@ -220,6 +231,8 @@ func _input(event: InputEvent) -> void:
 				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			if list.visible:
 				list.visible = not list.visible
+			if $"Menu/Options Window".visible:
+				$"Menu/Options Window".visible = not $"Menu/Options Window".visible
 			
 
 func _process(delta: float) -> void:
@@ -650,3 +663,25 @@ func remove_item(index : int ,amount : int):
 
 func index_items():
 	pass
+
+
+func _on_options_pressed() -> void:
+	$Menu/Buttons.visible = false
+	$"Menu/Options Window".visible = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+func _on_mobile_toggled(toggled_on: bool) -> void:
+	ProjectSettings.set_setting("global/mobile",toggled_on)
+
+
+func _on_controller_toggled(toggled_on: bool) -> void:
+	ProjectSettings.set_setting("global/controller",toggled_on)
+
+
+func _on_fov_value_changed(value: float) -> void:
+	camera.fov = 55 + value
+
+
+func _on_meny_pressed() -> void:
+	$Menu.visible = true

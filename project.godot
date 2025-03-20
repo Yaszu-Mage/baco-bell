@@ -27,6 +27,11 @@ window/stretch/mode="viewport"
 
 enabled=PackedStringArray("res://addons/lan_server_discovery/plugin.cfg")
 
+[global]
+
+mobile=false
+controller=false
+
 [input]
 
 ui_left={
