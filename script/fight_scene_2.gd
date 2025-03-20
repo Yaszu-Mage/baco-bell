@@ -143,13 +143,16 @@ func run_action(entity,action,target = null,_type = ""):
 		"Pass":
 			pass
 		"Punch":
+			var enemy = get_node(target)
+			if enemy == null:
+				enemy = get_parent().get_node("world").get_node(target).get_main()
 			for entries in intiative:
 				if entries[0].is_in_group("player"):
-					entries[0].display_message(str(entity.username + " has punched " + target.username))
+					entries[0].display_message(entries[0].username + " has punched " + enemy.username)
 			if entity.is_in_group("enemies"):
 				get_parent().get_node(target).damage(2)
 			if entity.is_in_group("player"):
-				target.damage(4)
+				enemy.damage(4)
 	await get_tree().create_timer(0.2).timeout
 	action_chose.emit()
 

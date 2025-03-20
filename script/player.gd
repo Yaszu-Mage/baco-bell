@@ -124,27 +124,27 @@ func _physics_process(delta: float) -> void:
 			tween.tween_property(camera,"fov",90,1)
 			wall_normal = get_slide_collision(0)
 			if wall_normal.get_normal().x != 0:
+				little_guy.play_animation("Climb")
+				rpc("sync_anim","Climb")
 				if wall_normal.get_normal().x > 0:
-					move_direction.z = -move_direction.z * -wall_normal.get_normal().x * (SPEED)
+					move_direction.z = -move_direction.z * -wall_normal.get_normal().reflect(move_direction).x * (SPEED)
 				if wall_normal.get_normal().x < 0:
-					move_direction.z = move_direction.z * -wall_normal.get_normal().x * (SPEED)
+					move_direction.z = move_direction.z * -wall_normal.get_normal().reflect(move_direction).x * (SPEED)
 			if wall_normal.get_normal().z != 0:
+				little_guy.play_animation("Climb")
+				rpc("sync_anim","Climb")
 				if wall_normal.get_normal().z > 0:
-					move_direction.x = -move_direction.x * -wall_normal.get_normal().z * (SPEED)
+					move_direction.x = -move_direction.x * -wall_normal.get_normal().reflect(move_direction).z * (SPEED)
 				if wall_normal.get_normal().x < 0:
-					move_direction.x = move_direction.x * -wall_normal.get_normal().z * (SPEED)
+					move_direction.x = move_direction.x * -wall_normal.get_normal().reflect(move_direction).z * (SPEED)
 			await get_tree().create_timer(0.2).timeout
 			is_wall_running = true
 		elif Input.is_action_just_released("ui_accept") and is_wall_running and is_on_wall() and can_move:
 			wall_normal = get_slide_collision(0)
-			if wall_normal.get_normal().x != 0:
-				for x in 100:
-					move_direction.x = -wall_normal.get_normal().x * JUMP_VELOCITY
-					velocity.y = JUMP_VELOCITY
-			if wall_normal.get_normal().z != 0:
-				for x in 100:
-					move_direction.z = -wall_normal.get_normal().z * JUMP_VELOCITY
-					velocity.y = JUMP_VELOCITY
+			move_direction = -wall_normal.get_normal().reflect(move_direction) * JUMP_VELOCITY
+			velocity.y = JUMP_VELOCITY
+			move_direction = -wall_normal.get_normal().reflect(move_direction) * JUMP_VELOCITY
+			velocity.y = JUMP_VELOCITY
 			wall_limit -= 1
 		else:
 			is_wall_running = false
@@ -583,11 +583,11 @@ func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_i
 		"team":
 			pass
 		"Count_Up":
-			fight_instance.run_action(self,"Count_Up")
+			fight_instance.run_action(str(self.name),"Count_Up")
 		"Punch":
 			show_test()
 	if second_menu:
-		fight_instance.run_action(self,"Punch",fight_instance.enemies[index])
+		fight_instance.run_action(self,"Punch",fight_instance.enemies_mommys[index])
 		second_menu = false
 
 func _on_item_list_2_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
@@ -600,7 +600,14 @@ func show_test():
 	list_one.clear()
 	list_two.clear()
 	for entity in fight_instance.enemies_mommys:
-		list_one.add_item("",entity.get_main().sub_tex)
+		print(entity)
+		var node = get_parent().get_node(entity)
+		if node == null:
+			var world = get_parent().get_node("world")
+			node = world.get_node(entity)
+			if node == null:
+				node = fight_instance.get_node(entity)
+		list_one.add_item("",node.get_main().sub_tex)
 	await get_tree().create_timer(0.1).timeout
 	second_menu = true
 
