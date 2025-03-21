@@ -127,16 +127,16 @@ func _physics_process(delta: float) -> void:
 				little_guy.play_animation("Climb")
 				rpc("sync_anim","Climb")
 				if wall_normal.get_normal().x > 0:
-					move_direction.z = -move_direction.z * -wall_normal.get_normal().reflect(move_direction).x * (SPEED)
+					move_direction.z = -move_direction.z * -wall_normal.get_normal().reflect(move_direction).normalized().x * (SPEED)
 				if wall_normal.get_normal().x < 0:
-					move_direction.z = move_direction.z * -wall_normal.get_normal().reflect(move_direction).x * (SPEED)
+					move_direction.z = move_direction.z * -wall_normal.get_normal().reflect(move_direction).normalized().x * (SPEED)
 			if wall_normal.get_normal().z != 0:
 				little_guy.play_animation("Climb")
 				rpc("sync_anim","Climb")
 				if wall_normal.get_normal().z > 0:
-					move_direction.x = -move_direction.x * -wall_normal.get_normal().reflect(move_direction).z * (SPEED)
+					move_direction.x = -move_direction.x * -wall_normal.get_normal().reflect(move_direction).normalized().z * (SPEED)
 				if wall_normal.get_normal().x < 0:
-					move_direction.x = move_direction.x * -wall_normal.get_normal().reflect(move_direction).z * (SPEED)
+					move_direction.x = move_direction.x * -wall_normal.get_normal().reflect(move_direction).normalized().z * (SPEED)
 			await get_tree().create_timer(0.2).timeout
 			is_wall_running = true
 		elif Input.is_action_just_released("ui_accept") and is_wall_running and is_on_wall() and can_move:

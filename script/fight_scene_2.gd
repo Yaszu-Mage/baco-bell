@@ -143,14 +143,23 @@ func run_action(entity,action,target = null,_type = ""):
 		"Pass":
 			pass
 		"Punch":
-			var enemy = get_node(target)
-			if enemy == null:
-				enemy = get_parent().get_node("world").get_node(target).get_main()
+			var enemy = target
+			if target is Object:
+				pass
+			else:
+				enemy = get_node(target)
+				if enemy == null:
+					enemy = get_parent().get_node("world").get_node(target).get_main()
 			for entries in intiative:
+				if enemy.name.contains("enemy_base"):
+						enemy = enemy.get_main()
 				if entries[0].is_in_group("player"):
 					entries[0].display_message(entries[0].username + " has punched " + enemy.username)
 			if entity.is_in_group("enemies"):
-				get_parent().get_node(target).damage(2)
+				if target is Object:
+					target.damage(2)
+				else:
+					enemy.damage(2)
 			if entity.is_in_group("player"):
 				enemy.damage(4)
 	await get_tree().create_timer(0.2).timeout
@@ -171,6 +180,9 @@ func get_combatants(source):
 func end_fight():
 	rpc("end_fight_remote")
 	for entry in enemies:
+		entry = get_node(entry)
+		if entry == null:
+			get_parent().get_node("world").get_node(entry).get_main()
 		entry.can_move = true
 	self.queue_free()
 
@@ -179,22 +191,29 @@ func end_fight_remote():
 	self.queue_free()
 
 func kill_me(ref):
-	print(str(intiative) + " is start")
-	var index = 0
-	for entry in intiative:
-		index += 1
-		if entry[0] == ref:
-			intiative.remove_at(index)
-	print(index)
-	intiative.remove_at(index)
-	index = 0
-	for entry in intiative:
-		index += 1
-		if entry[0] == ref:
-			intiative.remove_at(index)
-	intiative.remove_at(index)
-	print(str(intiative) + " should be right")
-	combatants_list.remove_at(combatants_list.find(Node))
+	if !not_local:
+		print(str(intiative) + " is start")
+		print(ref)
+		var enemy = get_node(ref)
+		if enemy == null:
+			enemy = get_parent().get_node("world").get_node(ref)
+		print("enemy ", enemy)
+		var index = 0
+		for entry in intiative:
+			index += 1
+			print(entry, enemy)
+			if entry[0] == enemy:
+				intiative.remove_at(index)
+		print(index)
+		intiative.remove_at(index)
+		index = 0
+		for entry in intiative:
+			index += 1
+			if entry[0] == enemy:
+				intiative.remove_at(index)
+		intiative.remove_at(index)
+		print(str(intiative) + " should be right")
+		combatants_list.remove_at(combatants_list.find(Node))
 
 func find_invalid():
 	await get_tree().create_timer(0.1).timeout

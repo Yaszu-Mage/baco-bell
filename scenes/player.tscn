@@ -518,7 +518,6 @@ spring_length = 5.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.157642, 5.72757)
 
 [node name="turn_based_player" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 23.0
@@ -875,6 +874,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Joystick" parent="UI" instance=ExtResource("18_fulsm")]
+visible = false
 position = Vector2(56, 572)
 
 [node name="meny" type="Button" parent="UI"]

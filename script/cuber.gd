@@ -129,8 +129,8 @@ func _on_start_fight_body_entered(body: Node3D) -> void:
 		body.start_fight(self)
 
 func death():
-	fight_instance.enemies.remove_at(fight_instance.enemies.find(self))
-	fight_instance.kill_me(self)
+	fight_instance.enemies.remove_at(fight_instance.enemies_mommys.find(str(get_parent().name)))
+	fight_instance.kill_me(str(get_parent().name))
 	rpc("death_rpc")
 	self.queue_free()
 

@@ -393,6 +393,3 @@ vec4 o23615978345791_0_1_rgba = o12176718828260_0_1_rgba;
 	NORMAL = vec3(0.5);
 	EMISSION = ((o23615978345791_0_1_rgba).rgb)*p_o357958686749_emission_energy;
 }
-
-
-
