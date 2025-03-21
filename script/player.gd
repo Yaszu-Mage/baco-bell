@@ -207,11 +207,21 @@ var waiting = false
 
 @rpc("unreliable")
 func remote_set_position(authority_velocity,authority_position,authority_rot):
-	if waiting:
+	if !waiting:
 		velocity = authority_velocity
 		global_position = authority_position
 		little_guy.rotation = authority_rot
 	move_and_slide()
+
+
+@rpc("any_peer")
+func reset_actions_remote():
+	list_one.clear()
+	list_one.add_item("",buttons.get("fight"))
+	list_one.add_item("",buttons.get("act"))
+	list_one.add_item("",buttons.get("item"))
+	list_one.add_item("",buttons.get("team"))
+	list_two.clear()
 
 func slide_check():
 	if slide_exponent == -10:
@@ -233,8 +243,14 @@ func _input(event: InputEvent) -> void:
 				list.visible = not list.visible
 			if $"Menu/Options Window".visible:
 				$"Menu/Options Window".visible = not $"Menu/Options Window".visible
+		if Input.is_action_just_pressed("inventory"):
+			menu.visible = true
+			$Menu/Buttons.visible = false
+			$Menu/Inventory.visible = true
+			for items in inventory:
+				inventory_space.add_item(str(items[0] + "(" + items[1] + ")"))
 			
-
+@onready var inventory_space = $Menu/Inventory/PanelContainer/ItemList
 func _process(delta: float) -> void:
 	if is_multiplayer_authority():
 		_camera_pivot.global_position = self.global_position
@@ -333,11 +349,16 @@ func sync_anim(anim):
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion and is_multiplayer_authority():
+	if event is InputEventMouseMotion and is_multiplayer_authority() and can_move:
 		_camera_pivot.rotation.x -= event.relative.y * mouse_sensitivity
 		# Prevent the camera from rotating too far up or down.
 		_camera_pivot.rotation.x = clampf(_camera_pivot.rotation.x, -tilt_limit, tilt_limit)
 		_camera_pivot.rotation.y += -event.relative.x * mouse_sensitivity
+	if event is InputEventJoypadMotion and is_multiplayer_authority() and can_move:
+		var look_dir = Vector2(Input.get_joy_axis(0,JOY_AXIS_RIGHT_X),Input.get_joy_axis(0,JOY_AXIS_RIGHT_Y)).normalized()
+		_camera_pivot.rotation.x -= look_dir.y * mouse_sensitivity
+		_camera_pivot.rotation.x = clampf(_camera_pivot.rotation.x, -tilt_limit, tilt_limit)
+		_camera_pivot.rotation.y += -look_dir.x * mouse_sensitivity * 10
 
 
 # Turn Based Starts Here, prepare thyself
@@ -450,7 +471,7 @@ func start_fight(enemy : Node):
 		$turn_based_player.visible = true
 		can_move = false
 		rpc("sync_fight",self.global_position,enemy)
-		rpc("start_fight_remote",self,enemy)
+		rpc("start_fight_remote",self,str(enemy.name))
 		var instance = load("res://scenes/fight_redo.tscn").instantiate()
 		instance.combatants_list.append(self)
 		instance.combatants_list.append(enemy)
@@ -463,6 +484,7 @@ func start_fight(enemy : Node):
 		await get_tree().create_timer(0.1).timeout
 		enemy.in_fight = true
 		enemy.can_move = false
+		enemy.local_fight = true
 		enemy.set_collision_layer_value(1,false)
 		enemy.fight_instance = instance
 		self.global_position = instance.get_node("player").global_position
@@ -497,9 +519,11 @@ func join_fight(fight):
 func start_fight_remote(player,enemy):
 	self.visible = false
 	self.set_collision_layer_value(1,false)
+	var enemy_instance = get_parent().get_node("world").get_node("enemy_base").get_node(enemy)
 	var instance = load("res://scenes/fight_redo.tscn").instantiate()
 	instance.combatants_list.append(self)
 	instance.combatants_list.append(enemy)
+	enemy_instance.local_fight = false
 	instance.not_local = true
 	GlobalLists.active_fights.append([instance,self])
 	fight_instance = instance
@@ -507,6 +531,7 @@ func start_fight_remote(player,enemy):
 	get_parent().add_child(instance)
 	await get_tree().create_timer(0.1).timeout
 	self.global_position = instance.get_node("player").global_position
+	enemy_instance.global_position = instance.get_node("enemy").global_position
 
 @rpc("any_peer")
 func add_close():
@@ -587,7 +612,7 @@ func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_i
 		"Punch":
 			show_test()
 	if second_menu:
-		fight_instance.run_action(self,"Punch",fight_instance.enemies_mommys[index])
+		fight_instance.run_action(str(self.name),"Punch",fight_instance.enemies_mommys[index])
 		second_menu = false
 
 func _on_item_list_2_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
@@ -642,6 +667,7 @@ func show_enemy(enemy_name,player_name):
 		var enemy = get_parent().get_node(enemy_name)
 		enemy.in_fight = true
 		enemy.can_move = false
+		enemy.local_fight = true
 
 @rpc("any_peer")
 func show_player(player_name,ext_player_name):
@@ -692,3 +718,27 @@ func _on_fov_value_changed(value: float) -> void:
 
 func _on_meny_pressed() -> void:
 	$Menu.visible = true
+
+
+
+
+func take_attack(time : float,enemy_name : String, damage_scale : Array):
+	var enemy = get_parent().get_node("world").get_node(enemy_name)
+	if enemy == null:
+		enemy = fight_instance.get_node(enemy_name)
+	enemy.walk_up(self.global_position)
+	await get_tree().create_timer(1.0).timeout
+	var timer = get_tree().create_timer(time)
+	var dodge_time = 0
+	var good = time / 2
+	var constipated = time / 4
+	var okay = time / 1.5
+	while timer.time_left > 0:
+		if Input.is_action_just_pressed("ui_accept"):
+			dodge_time = timer.time_left
+	if dodge_time >= good and dodge_time > constipated:
+		damage(damage_scale[0])
+	elif dodge_time < constipated:
+		damage(damage_scale[1])
+	else:
+		damage(damage_scale[2])

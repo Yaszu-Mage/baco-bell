@@ -9,6 +9,7 @@ var movement_delta: float
 var enemy_type = "cuber"
 var fight_instance
 @export var in_fight = true
+var local_fight = false
 var username = "Cuber"
 @onready var sub_tex = $SubViewport.get_texture()
 @onready var sub = $SubViewport
@@ -21,7 +22,7 @@ func _ready() -> void:
 	health_bar.max_value = health
 	wander()
 func _process(delta):
-	if !in_fight and !can_move:
+	if !in_fight and !can_move and !local_fight:
 		self.visible = false
 		self.set_collision_layer_value(1,false)
 	rpc("pos",global_position)
@@ -94,10 +95,11 @@ func turn():
 			var amount = combatants[random_key]
 			print(amount)
 			await get_tree().create_timer(1.0)
-			fight_instance.run_action(self,"Punch",amount)
+			fight_instance.run_action(str(self.name),"Punch",amount)
 
-
-
+func walk_up(target_pos : Vector3):
+	var tween = create_tween()
+	tween.tween_property(self,"global_position",target_pos - Vector3(1,1,1),1)
 func wander():
 	await get_tree().create_timer(1.0).timeout
 	if wandering and player == null:

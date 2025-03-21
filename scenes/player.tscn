@@ -1,13 +1,15 @@
-[gd_scene load_steps=62 format=3 uid="uid://de8w3x5hpj6x"]
+[gd_scene load_steps=65 format=3 uid="uid://de8w3x5hpj6x"]
 
 [ext_resource type="Script" uid="uid://cci7i4x2sxe7d" path="res://script/player.gd" id="1_053sa"]
 [ext_resource type="Texture2D" uid="uid://b0b67538ni2of" path="res://assets/images/arrow.png" id="2_4alws"]
 [ext_resource type="PackedScene" uid="uid://dxln0smww0hkn" path="res://scenes/lil_gut.tscn" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://dnxns5qpiqj8r" path="res://assets/images/void_titlecard.png" id="3_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://basdylifwg2g2" path="res://scenes/running_particles.tscn" id="5_qlg0r"]
+[ext_resource type="FontFile" uid="uid://b8y8r00o4leu1" path="res://assets/fonts/Starborn.ttf" id="6_60mlk"]
 [ext_resource type="Texture2D" uid="uid://sfwd7qo5nakr" path="res://assets/images/mike_image.PNG" id="6_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://vb7gr2n3sfbs" path="res://assets/images/windows.jpg" id="7_3v2ag"]
 [ext_resource type="FontFile" uid="uid://dci4cxvysgqif" path="res://assets/fonts/easvhs.ttf" id="7_d2wvv"]
+[ext_resource type="Texture2D" uid="uid://n7fki57114qv" path="res://assets/images/items/moke.png" id="7_i4ail"]
 [ext_resource type="Theme" uid="uid://ducjn13fbpyf3" path="res://assets/themes/invis_button.theme" id="7_jej6c"]
 [ext_resource type="Texture2D" uid="uid://cm2g2j2n2jln3" path="res://assets/images/fight.PNG" id="7_y4r1p"]
 [ext_resource type="Texture2D" uid="uid://bdk7cmv1w6od5" path="res://assets/images/act.PNG" id="8_d2wvv"]
@@ -31,6 +33,9 @@ expand_margin_bottom = 5.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fulsm"]
 bg_color = Color(0.303233, 0.303233, 0.303233, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a38lo"]
+bg_color = Color(0.212305, 0.212305, 0.212305, 1)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qhqgy"]
 properties/0/path = NodePath(".:username")
@@ -351,7 +356,6 @@ theme_override_constants/h_separation = 146
 columns = 8
 
 [node name="Menu" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1160.0
@@ -461,6 +465,29 @@ text = "  FOV"
 [node name="FOV" type="HSlider" parent="Menu/Options Window/PanelContainer/GridContainer"]
 layout_mode = 2
 
+[node name="Inventory" type="PanelContainer" parent="Menu"]
+visible = false
+layout_mode = 0
+offset_left = 30.0
+offset_top = 51.0
+offset_right = 350.0
+offset_bottom = 371.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_jej6c")
+
+[node name="PanelContainer" type="PanelContainer" parent="Menu/Inventory"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a38lo")
+
+[node name="ItemList" type="ItemList" parent="Menu/Inventory/PanelContainer"]
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_60mlk")
+item_count = 1
+icon_mode = 0
+icon_scale = 2.0
+item_0/text = "Moke (1)"
+item_0/icon = ExtResource("7_i4ail")
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qhqgy")
 
@@ -518,6 +545,7 @@ spring_length = 5.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.157642, 5.72757)
 
 [node name="turn_based_player" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 23.0

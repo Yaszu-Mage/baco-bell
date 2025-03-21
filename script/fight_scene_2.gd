@@ -56,6 +56,7 @@ func _ready():
 			var actual_enemy = instance.get_main()
 			print("enemy" + str(amount + 1))
 			actual_enemy.can_move = false
+			actual_enemy.local_fight = true
 			actual_enemy.global_position = get_node("enemy" + str(amount + 2)).global_position
 			actual_enemy.fight_instance = self
 			combatants_list.append(actual_enemy)
@@ -87,23 +88,25 @@ func _ready():
 
 func run_turn():
 	print(intiative)
-	for entries in intiative:
-		entries[0].turn()
-		await action_chose
-		print("passed!")
-		if is_instance_valid(entries[0]):
-			if entries[0].is_in_group("player"):
-				entries[0].reset_actions()
-				await get_tree().create_timer(0.1).timeout
-			if entries[0].is_in_group("player"):
-				entries[0].not_turn()
-		for entry in intiative:
-			if is_instance_valid(entry[0]):
-				if entry[0].health <= 0:
-					entry[0].death()
-		if enemies == []:
-			for player in players:
-				player.death()
+	if !not_local:
+		for entries in intiative:
+			entries[0].turn()
+			await action_chose
+			print("passed!")
+			if is_instance_valid(entries[0]):
+				if entries[0].is_in_group("player"):
+					entries[0].reset_actions()
+					entries[0].rpc("reset_actions_remote")
+					await get_tree().create_timer(0.1).timeout
+				if entries[0].is_in_group("player"):
+					entries[0].not_turn()
+			for entry in intiative:
+				if is_instance_valid(entry[0]):
+					if entry[0].health <= 0:
+						entry[0].death()
+			if enemies == []:
+				for player in players:
+					player.death()
 				
 	turn += 1
 	print("turn finished, we are now on turn " +str(turn))
@@ -114,56 +117,57 @@ func authority_jumped(jump):
 	jumped = jump
 
 func run_action(entity,action,target = null,_type = ""):
-	match action:
-		"Count_Up":
-			for entries in intiative:
-				if entries[0].is_in_group("player"):
-					entries[0].display_message(str(entity.username + " has attempted Count Up and..."))
-			#Flip a coin for buffs
-			var coin_flip = randi_range(0,1)
-			if coin_flip == 1:
-				if entity.is_in_group("player"):
-					entity.logger("Heads")
-					for entries in intiative:
-						if entries[0].is_in_group("player"):
-							entries[0].display_message(str(entity.username + " landed heads!"))
-				if entity.effects.has("Strength"):
-					entity.effects.set("Strength",entity.effects.get("Strength")+1)
+	if !not_local:
+		match action:
+			"Count_Up":
+				for entries in intiative:
+					if entries[0].is_in_group("player"):
+						entries[0].display_message(str(entity.username + " has attempted Count Up and..."))
+				#Flip a coin for buffs
+				var coin_flip = randi_range(0,1)
+				if coin_flip == 1:
+					if entity.is_in_group("player"):
+						entity.logger("Heads")
+						for entries in intiative:
+							if entries[0].is_in_group("player"):
+								entries[0].display_message(str(entity.username + " landed heads!"))
+					if entity.effects.has("Strength"):
+						entity.effects.set("Strength",entity.effects.get("Strength")+1)
+					else:
+						entity.effects.set("Strength",1)
 				else:
-					entity.effects.set("Strength",1)
-			else:
-				for entires in intiative:
-					if entires[0].is_in_group("player"):
-						entires[0].display_message(str(entity.username + " landed tails."))
-				entity.logger("Tails")
-				if entity.effects.has("Weakness"):
-					entity.effects.set("Weakness",entity.effects.get("Weakness")+1)
-				else:
-					entity.effects.set("Weakness",1)
-		"Pass":
-			pass
-		"Punch":
-			var enemy = target
-			if target is Object:
+					for entires in intiative:
+						if entires[0].is_in_group("player"):
+							entires[0].display_message(str(entity.username + " landed tails."))
+					entity.logger("Tails")
+					if entity.effects.has("Weakness"):
+						entity.effects.set("Weakness",entity.effects.get("Weakness")+1)
+					else:
+						entity.effects.set("Weakness",1)
+			"Pass":
 				pass
-			else:
-				enemy = get_node(target)
-				if enemy == null:
-					enemy = get_parent().get_node("world").get_node(target).get_main()
-			for entries in intiative:
-				if enemy.name.contains("enemy_base"):
-						enemy = enemy.get_main()
-				if entries[0].is_in_group("player"):
-					entries[0].display_message(entries[0].username + " has punched " + enemy.username)
-			if entity.is_in_group("enemies"):
+			"Punch":
+				var enemy = target
 				if target is Object:
-					target.damage(2)
+					pass
 				else:
-					enemy.damage(2)
-			if entity.is_in_group("player"):
-				enemy.damage(4)
-	await get_tree().create_timer(0.2).timeout
-	action_chose.emit()
+					enemy = get_node(target)
+					if enemy == null:
+						enemy = get_parent().get_node("world").get_node(target).get_main()
+				for entries in intiative:
+					if enemy.name.contains("enemy_base"):
+							enemy = enemy.get_main()
+					if entries[0].is_in_group("player"):
+						entries[0].display_message(entries[0].username + " has punched " + enemy.username)
+				if entity.is_in_group("enemies"):
+					if target is Object:
+						target.damage(2)
+					else:
+						enemy.damage(2)
+				if entity.is_in_group("player"):
+					enemy.take_attack(2,target,[0,2,4])
+		await get_tree().create_timer(0.2).timeout
+		action_chose.emit()
 
 @rpc("any_peer")
 func sync_action(player,action):
@@ -245,7 +249,10 @@ func join_fight(fight):
 		player.rpc("sync_turn_based_actions",player.global_position,str(name),str(player.name))
 		rpc("sync_variables",intiative,combatants_list,combatants)
 		for enemy in enemies:
-			player.rpc("show_enemy",str(enemy.name),str(player.name))
+			if enemy is String:
+				pass
+			else:
+				player.rpc("show_enemy",str(enemy.name),str(player.name))
 		for play in players:
 			player.rpc("show_player",str(player.name),str(play.name))
 		print("finished!")
