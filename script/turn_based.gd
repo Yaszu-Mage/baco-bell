@@ -119,3 +119,17 @@ func sync_variables(init,combat,combats):
 	intiative = init
 	combatants_list = combat
 	combatants = combats
+
+
+func run_action(entity,action,target = null, _type = ""):
+	var initial = entity
+	if !not_local:
+		entity = get_parent().get_node(initial)
+		match action:
+			"Count_Up":
+				if entity.is_in_group("player"):
+					entity.display_message(str(entity.username + " has attempted Count Up and..."))
+				var coin_flip = randi_range(0,1)
+				if coin_flip == 1:
+					if entity.is_in_group("player"):
+						pass
