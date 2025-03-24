@@ -95,7 +95,7 @@ func turn():
 			var amount = combatants[random_key]
 			print(amount)
 			await get_tree().create_timer(1.0)
-			fight_instance.run_action(str(self.name),"Punch",amount)
+			fight_instance.run_action(str(get_parent().name),"Punch",amount)
 
 func walk_up(target_pos : Vector3):
 	var tween = create_tween()

@@ -117,12 +117,12 @@ func authority_jumped(jump):
 	jumped = jump
 
 func run_action(entity,action,target = null,_type = ""):
+	var initial = entity
 	if !not_local:
 		if entity is String:
-			var initial = entity
-			get_node(entity)
+			entity = get_node(initial)
 			if entity == null:
-				get_parent().get_node(initial)
+				entity = get_parent().get_node(initial)
 		match action:
 			"Count_Up":
 				for entries in intiative:
@@ -165,12 +165,13 @@ func run_action(entity,action,target = null,_type = ""):
 					if entries[0].is_in_group("player"):
 						entries[0].display_message(entries[0].username + " has punched " + enemy.username)
 				if entity.is_in_group("enemies"):
+					enemy.take_attack(2,target,[0,2,4])
+
+				if entity.is_in_group("player"):
 					if target is Object:
 						target.damage(2)
 					else:
 						enemy.damage(2)
-				if entity.is_in_group("player"):
-					enemy.take_attack(2,target,[0,2,4])
 		await get_tree().create_timer(0.2).timeout
 		action_chose.emit()
 
@@ -226,12 +227,15 @@ func kill_me(ref):
 
 func find_invalid():
 	await get_tree().create_timer(0.1).timeout
-	for entries in intiative:
-		if is_instance_valid(entries[0]):
+	for entries in enemies_mommys:
+		var entity = get_node(entries)
+		if entries == null:
+			entity = get_parent().get_node(entries)
+		if is_instance_valid(entity):
 			pass
 		else:
 			print("We have pruned instance at" + str(entries))
-			intiative.remove_at(intiative.find(entries))
+			intiative.remove_at(enemies_mommys.find(entries) + players.size())
 
 @rpc("any_peer")
 func join_fight(fight):
