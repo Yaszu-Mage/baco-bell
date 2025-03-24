@@ -16,6 +16,7 @@ var world = preload("res://scenes/world.tscn")
 func _on_host_pressed():
 	var world_instance = world.instantiate()
 	add_child(world_instance,true)
+	multiplayer_peer.close()
 	#Instead of using show() hide()
 	#Nodename.property = value
 	$Menu.visible = false

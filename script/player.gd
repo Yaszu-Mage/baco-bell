@@ -41,9 +41,13 @@ var last_direction : Vector3 = Vector3.ZERO
 enum world_type {
 	the_void
 }
+var gravity
+var initial_gravity
 @onready var title_card = $ColorRect/TextureRect
 @onready var fade = $ColorRect
 func _ready() -> void:
+	initial_gravity = get_gravity()
+	gravity = initial_gravity 
 	$turn_based_player.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	name = str(get_multiplayer_authority())
@@ -120,6 +124,7 @@ func _physics_process(delta: float) -> void:
 		var right = camera.global_basis.x
 		var move_direction = forward * input_dir.y + right * input_dir.x
 		if is_on_wall_only() and Input.is_action_pressed("ui_accept") and !floor_ray.is_colliding() and !Input.is_action_pressed("slide") and wall_limit > 0 and can_move:
+			print(move_direction)
 			var tween = create_tween()
 			tween.tween_property(camera,"fov",90,1)
 			wall_normal = get_slide_collision(0)
@@ -137,6 +142,7 @@ func _physics_process(delta: float) -> void:
 					move_direction.x = -move_direction.x * -wall_normal.get_normal().reflect(move_direction).normalized().z * (SPEED)
 				if wall_normal.get_normal().x < 0:
 					move_direction.x = move_direction.x * -wall_normal.get_normal().reflect(move_direction).normalized().z * (SPEED)
+			print(move_direction)
 			await get_tree().create_timer(0.2).timeout
 			is_wall_running = true
 		elif Input.is_action_just_released("ui_accept") and is_wall_running and is_on_wall() and can_move:
@@ -520,7 +526,7 @@ func start_fight_remote(player,enemy):
 	self.visible = false
 	self.set_collision_layer_value(1,false)
 	var enemy_instance = get_parent().get_node("world").get_node("enemy_base").get_node(enemy)
-	var instance = load("res://scenes/fight_redo.tscn").instantiate()
+	var instance = load("res://scenes/fight_rphyedo.tscn").instantiate()
 	instance.combatants_list.append(self)
 	instance.combatants_list.append(enemy)
 	enemy_instance.local_fight = false

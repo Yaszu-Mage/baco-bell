@@ -118,6 +118,11 @@ func authority_jumped(jump):
 
 func run_action(entity,action,target = null,_type = ""):
 	if !not_local:
+		if entity is String:
+			var initial = entity
+			get_node(entity)
+			if entity == null:
+				get_parent().get_node(initial)
 		match action:
 			"Count_Up":
 				for entries in intiative:
