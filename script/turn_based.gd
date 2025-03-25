@@ -132,4 +132,7 @@ func run_action(entity,action,target = null, _type = ""):
 				var coin_flip = randi_range(0,1)
 				if coin_flip == 1:
 					if entity.is_in_group("player"):
-						pass
+						if entity.effects.has("Strength"):
+							entity.effects.set("Strength",entity.effects.get("Strength")+1)
+						else:
+							entity.effects.set("Strength",1)

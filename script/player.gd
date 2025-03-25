@@ -71,6 +71,7 @@ func _ready() -> void:
 				await get_tree().create_timer(2.0).timeout
 				var brand_new_tween = create_tween()
 				brand_new_tween.tween_property(title_card,"modulate",Color(1,1,1,0),1)
+				$GPUParticles3D2.emitting = true
 @onready var notification_menu_text = $turn_based_player/notifications/main/sub/VBoxContainer/actualtext
 func display_message(message : String):
 	notification_menu_text.add_text("

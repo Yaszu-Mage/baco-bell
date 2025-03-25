@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://de8w3x5hpj6x"]
+[gd_scene load_steps=69 format=3 uid="uid://de8w3x5hpj6x"]
 
 [ext_resource type="Script" uid="uid://cci7i4x2sxe7d" path="res://script/player.gd" id="1_053sa"]
 [ext_resource type="Texture2D" uid="uid://b0b67538ni2of" path="res://assets/images/arrow.png" id="2_4alws"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://cypaxyt3gh2u7" path="res://assets/images/dust.png" id="16_a8ls1"]
 [ext_resource type="Texture2D" uid="uid://b86utmphdc66e" path="res://assets/images/fadein.png" id="17_qfm1y"]
 [ext_resource type="PackedScene" uid="uid://dm6q0abakck7u" path="res://scenes/joystick.tscn" id="18_fulsm"]
+[ext_resource type="Texture2D" uid="uid://cadu3whhjswx8" path="res://assets/images/rain.png" id="21_i4ail"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qlg0r"]
 size = Vector3(0.972412, 1.60204, 1)
@@ -303,6 +304,23 @@ animations = [{
 "name": &"new_animation",
 "speed": 10.0
 }]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a38lo"]
+emission_shape = 3
+emission_box_extents = Vector3(30, 1, 25)
+collision_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7iypk"]
+transparency = 1
+albedo_texture = ExtResource("21_i4ail")
+texture_filter = 0
+texture_repeat = false
+billboard_mode = 1
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4ni07"]
+material = SubResource("StandardMaterial3D_7iypk")
+size = Vector2(0.25, 0.25)
+orientation = 2
 
 [node name="player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_053sa")
@@ -911,6 +929,14 @@ offset_left = 1095.0
 offset_right = 1148.0
 offset_bottom = 31.0
 text = "Menu"
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.475085, 0, 0, 0, 0.334615, 0, 0, 0, 0.586586, 0, 11.4662, 0)
+amount = 2056
+lifetime = 4.0
+visibility_aabb = AABB(-30.2436, -80.2694, -25.2233, 60.4771, 81.5127, 50.4504)
+process_material = SubResource("ParticleProcessMaterial_a38lo")
+draw_pass_1 = SubResource("PlaneMesh_4ni07")
 
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Party" to="." method="_on_party_pressed"]
 [connection signal="pressed" from="Menu/Buttons/GridContainer/Options" to="." method="_on_options_pressed"]
