@@ -65,7 +65,7 @@ func add_player_character(peer_id):
 	var player_character = preload("res://scenes/player.tscn").instantiate()
 	instances.set(connected_peer_ids[0],player_character)
 	player_character.set_multiplayer_authority(peer_id)
-	add_child(player_character)
+	get_node("world").add_child(player_character)
 	if player_character.is_multiplayer_authority():
 		player_character.username = username
 	GlobalLists.username = username

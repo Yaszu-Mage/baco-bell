@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://de8w3x5hpj6x"]
+[gd_scene load_steps=74 format=3 uid="uid://de8w3x5hpj6x"]
 
 [ext_resource type="Script" uid="uid://cci7i4x2sxe7d" path="res://script/player.gd" id="1_053sa"]
 [ext_resource type="Texture2D" uid="uid://b0b67538ni2of" path="res://assets/images/arrow.png" id="2_4alws"]
@@ -115,6 +115,30 @@ _data = {
 &"RESET": SubResource("Animation_qhqgy"),
 &"notification_on": SubResource("Animation_dqkch")
 }
+
+[sub_resource type="Curve" id="Curve_ebyua"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_1mc37"]
+curve = SubResource("Curve_ebyua")
+
+[sub_resource type="Curve" id="Curve_ew7q7"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 2.93258), 0.0, 0.0, 0, 0, Vector2(0.808823, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2nnpf"]
+curve = SubResource("Curve_ew7q7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i4ail"]
+lifetime_randomness = 0.1
+particle_flag_damping_as_friction = true
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, -1, 0)
+scale_min = 0.0
+scale_curve = SubResource("CurveTexture_1mc37")
+scale_over_velocity_curve = SubResource("CurveTexture_2nnpf")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1ej7"]
 bg_color = Color(0.180005, 0.180005, 0.180005, 1)
@@ -551,6 +575,8 @@ show_percentage = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.874651, 0)
 emitting = false
 amount = 2
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_i4ail")
 
 [node name="cam_pivot" type="Node3D" parent="."]
 top_level = true

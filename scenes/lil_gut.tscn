@@ -6,16 +6,22 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lrq17"]
 resource_name = "face.001"
-cull_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+disable_fog = true
 albedo_texture = ExtResource("2_jn585")
-roughness = 0.5
+metallic_specular = 0.0
 texture_filter = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pky5m"]
 resource_name = "side_face.001"
-cull_mode = 2
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+disable_fog = true
 albedo_texture = ExtResource("3_m2t2s")
-roughness = 0.5
+metallic_specular = 0.0
+roughness_texture_channel = 2
 texture_filter = 2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_1n3v0"]
@@ -673,3 +679,10 @@ skin = SubResource("Skin_ij4tv")
 libraries = {
 &"": SubResource("AnimationLibrary_jn585")
 }
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4.15909, 0)
+light_energy = 16.0
+light_bake_mode = 1
+spot_angle = 14.6371
+spot_angle_attenuation = 247.28

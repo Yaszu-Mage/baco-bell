@@ -61,7 +61,7 @@ func _ready() -> void:
 			username = name
 		tween.tween_property(fade,"color",Color(0,0,0,0),1)
 		await get_tree().create_timer(0.5).timeout
-		world = get_parent().get_node("world")
+		world = get_parent()
 		var world_enum = world.world
 		match world_enum:
 			world_type.the_void:
@@ -635,7 +635,7 @@ func show_test():
 		print(entity)
 		var node = get_parent().get_node(entity)
 		if node == null:
-			var world = get_parent().get_node("world")
+			var world = get_parent()
 			node = world.get_node(entity)
 			if node == null:
 				node = fight_instance.get_node(entity)
