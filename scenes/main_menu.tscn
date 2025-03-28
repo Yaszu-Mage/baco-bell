@@ -1,10 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://dybqsipj6abjl"]
+[gd_scene load_steps=19 format=3 uid="uid://dybqsipj6abjl"]
 
 [ext_resource type="Script" uid="uid://dej0o8snmo2n8" path="res://script/main_menu.gd" id="1_8ln24"]
 [ext_resource type="Material" uid="uid://llijeg5j4yf3" path="res://assets/materials/checker2.tres" id="1_l6cm7"]
 [ext_resource type="Texture2D" uid="uid://c78q7jrmwx1h7" path="res://assets/images/border.png" id="2_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://4fnbdp8g8e3q" path="res://assets/images/viper.png" id="3_wu84c"]
 [ext_resource type="FontFile" uid="uid://b8y8r00o4leu1" path="res://assets/fonts/Starborn.ttf" id="4_8ln24"]
+[ext_resource type="Texture2D" uid="uid://iemged2ns72i" path="res://assets/images/options_button.svg" id="6_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://b7tuo2kqvwnw" path="res://assets/images/delve_button.svg" id="7_tbmy8"]
+[ext_resource type="Texture2D" uid="uid://0nboqjhk0unl" path="res://assets/images/quit_button.svg" id="8_jk1qb"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ekxnf"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -76,6 +79,42 @@ tracks/3/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../RichTextLabel:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../menu1/options:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../menu1:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_8ln24"]
 resource_name = "flash"
@@ -118,6 +157,42 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../RichTextLabel:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../menu1/options:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../menu1:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_rtw2f"]
@@ -170,6 +245,30 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../RichTextLabel:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(5.4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../menu1:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tbmy8"]
@@ -349,3 +448,42 @@ Mr. Cheung
 Mr. Cheverie
 
 We wouldn't be here without you!"
+
+[node name="menu1" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 75.0
+offset_top = 137.0
+offset_right = 115.0
+offset_bottom = 177.0
+scale = Vector2(0.75, 0.75)
+
+[node name="delve" type="TextureButton" parent="menu1"]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 167.0
+offset_right = 604.0
+offset_bottom = 449.0
+texture_normal = ExtResource("7_tbmy8")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="options" type="TextureButton" parent="menu1"]
+layout_mode = 0
+offset_left = 117.0
+offset_top = 422.0
+offset_right = 605.0
+offset_bottom = 704.0
+texture_normal = ExtResource("6_rtw2f")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="quit" type="TextureButton" parent="menu1"]
+layout_mode = 0
+offset_left = 117.0
+offset_top = 672.0
+offset_right = 605.0
+offset_bottom = 954.0
+texture_normal = ExtResource("8_jk1qb")
+ignore_texture_size = true
+stretch_mode = 4
