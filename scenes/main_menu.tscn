@@ -1,12 +1,15 @@
-[gd_scene load_steps=19 format=3 uid="uid://dybqsipj6abjl"]
+[gd_scene load_steps=25 format=3 uid="uid://dybqsipj6abjl"]
 
 [ext_resource type="Script" uid="uid://dej0o8snmo2n8" path="res://script/main_menu.gd" id="1_8ln24"]
 [ext_resource type="Material" uid="uid://llijeg5j4yf3" path="res://assets/materials/checker2.tres" id="1_l6cm7"]
 [ext_resource type="Texture2D" uid="uid://c78q7jrmwx1h7" path="res://assets/images/border.png" id="2_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://4fnbdp8g8e3q" path="res://assets/images/viper.png" id="3_wu84c"]
 [ext_resource type="FontFile" uid="uid://b8y8r00o4leu1" path="res://assets/fonts/Starborn.ttf" id="4_8ln24"]
+[ext_resource type="Texture2D" uid="uid://cbamu22edd6hf" path="res://assets/images/arrow.svg" id="6_jk1qb"]
 [ext_resource type="Texture2D" uid="uid://iemged2ns72i" path="res://assets/images/options_button.svg" id="6_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://bpipg1q6jlu0g" path="res://assets/images/solo_button.svg" id="7_lgwnu"]
 [ext_resource type="Texture2D" uid="uid://b7tuo2kqvwnw" path="res://assets/images/delve_button.svg" id="7_tbmy8"]
+[ext_resource type="Texture2D" uid="uid://dbjd8tojakw2f" path="res://assets/images/multi_button.svg" id="8_flqon"]
 [ext_resource type="Texture2D" uid="uid://0nboqjhk0unl" path="res://assets/images/quit_button.svg" id="8_jk1qb"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ekxnf"]
@@ -279,6 +282,67 @@ _data = {
 &"start": SubResource("Animation_rtw2f")
 }
 
+[sub_resource type="Animation" id="Animation_5dd4i"]
+resource_name = "show_multi"
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(454, 126)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 2,
+"values": [Vector2(248, 304), Vector2(675, 304), Vector2(508, 304)]
+}
+
+[sub_resource type="Animation" id="Animation_jk1qb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(454, 126)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(248, 304)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lgwnu"]
+_data = {
+&"RESET": SubResource("Animation_jk1qb"),
+&"show_multi": SubResource("Animation_5dd4i")
+}
+
 [node name="Main Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -448,6 +512,53 @@ Mr. Cheung
 Mr. Cheverie
 
 We wouldn't be here without you!"
+
+[node name="menu2" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="menu2"]
+libraries = {
+&"": SubResource("AnimationLibrary_lgwnu")
+}
+
+[node name="ItemList" type="ItemList" parent="menu2"]
+layout_mode = 0
+offset_left = 365.0
+offset_top = 344.0
+offset_right = 405.0
+offset_bottom = 384.0
+
+[node name="TextureRect" type="TextureRect" parent="menu2"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 304.0
+offset_right = 702.0
+offset_bottom = 430.0
+texture = ExtResource("6_jk1qb")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="solo" type="TextureButton" parent="menu2"]
+offset_left = 738.0
+offset_top = 259.0
+offset_right = 1226.0
+offset_bottom = 541.0
+scale = Vector2(0.75, 0.75)
+texture_normal = ExtResource("7_lgwnu")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="multi" type="TextureButton" parent="menu2"]
+offset_left = 1101.0
+offset_top = 259.0
+offset_right = 1589.0
+offset_bottom = 541.0
+scale = Vector2(0.75, 0.75)
+texture_normal = ExtResource("8_flqon")
+ignore_texture_size = true
+stretch_mode = 4
 
 [node name="menu1" type="Control" parent="."]
 visible = false
