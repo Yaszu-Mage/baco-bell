@@ -589,7 +589,6 @@ spring_length = 5.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18599, 0.97099, 3.81363)
 
 [node name="turn_based_player" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 23.0

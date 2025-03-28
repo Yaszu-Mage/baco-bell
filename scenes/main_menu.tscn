@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dybqsipj6abjl"]
+[gd_scene load_steps=43 format=3 uid="uid://dybqsipj6abjl"]
 
 [ext_resource type="Script" uid="uid://dej0o8snmo2n8" path="res://script/main_menu.gd" id="1_8ln24"]
 [ext_resource type="Material" uid="uid://llijeg5j4yf3" path="res://assets/materials/checker2.tres" id="1_l6cm7"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://0nboqjhk0unl" path="res://assets/images/quit_button.svg" id="8_jk1qb"]
 [ext_resource type="Texture2D" uid="uid://cy0kdpn2nutkw" path="res://assets/images/host_button.svg" id="9_rcqid"]
 [ext_resource type="Texture2D" uid="uid://h50tb5tk3g86" path="res://assets/images/join_button.svg" id="10_1ajci"]
+[ext_resource type="Texture2D" uid="uid://bgk1qf3drxwvk" path="res://assets/images/scan_button.svg" id="11_7b55j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ekxnf"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -277,40 +278,16 @@ tracks/5/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_1ajci"]
+resource_name = "delve-1"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tbmy8"]
 _data = {
 &"RESET": SubResource("Animation_oa1go"),
+&"delve-1": SubResource("Animation_1ajci"),
 &"flash": SubResource("Animation_8ln24"),
 &"show_buttons": SubResource("Animation_tbmy8"),
 &"start": SubResource("Animation_rtw2f")
-}
-
-[sub_resource type="Animation" id="Animation_5dd4i"]
-resource_name = "show_multi"
-capture_included = true
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(454, 126)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TextureRect:position")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.75),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 2,
-"values": [Vector2(248, 304), Vector2(675, 304), Vector2(508, 304)]
 }
 
 [sub_resource type="Animation" id="Animation_jk1qb"]
@@ -339,24 +316,101 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(248, 304)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("multi2:size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(40, 40)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("multi2:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("multi2:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5dd4i"]
+resource_name = "show_multi"
+length = 1.25
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(454, 126)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 2,
+"values": [Vector2(248, 304), Vector2(675, 304), Vector2(508, 304)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("multi2:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.266667, 1.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1e-05, 1e-05), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("multi2:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.78),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(248, 304), Vector2(923, 373), Vector2(703, 368)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lgwnu"]
 _data = {
 &"RESET": SubResource("Animation_jk1qb"),
 &"show_multi": SubResource("Animation_5dd4i")
 }
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7b55j"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-
-[sub_resource type="Theme" id="Theme_5pajh"]
-ItemList/colors/font_color = Color(1, 1, 1, 1)
-ItemList/fonts/font = ExtResource("4_8ln24")
-ItemList/styles/panel = SubResource("StyleBoxFlat_7b55j")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j7ex8"]
 bg_color = Color(0, 0, 0, 1)
@@ -371,6 +425,72 @@ border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
 
+[sub_resource type="Image" id="Image_1ajci"]
+data = {
+"data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 175, 175, 19, 175, 175, 175, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 175, 175, 19, 180, 180, 180, 64, 180, 180, 180, 64, 175, 175, 175, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 175, 175, 19, 180, 180, 180, 64, 180, 180, 180, 64, 175, 175, 175, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 175, 175, 19, 175, 175, 175, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"format": "RGBA8",
+"height": 8,
+"mipmaps": false,
+"width": 8
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_7b55j"]
+image = SubResource("Image_1ajci")
+
+[sub_resource type="Image" id="Image_5pajh"]
+data = {
+"data": PackedByteArray(179, 179, 179, 47, 179, 179, 179, 50, 170, 170, 170, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 177, 177, 177, 49, 180, 180, 180, 64, 175, 175, 175, 54, 170, 170, 170, 6, 0, 0, 0, 0, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 153, 153, 153, 5, 177, 177, 177, 52, 180, 180, 180, 64, 175, 175, 175, 54, 170, 170, 170, 6, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 0, 0, 0, 0, 153, 153, 153, 5, 177, 177, 177, 52, 180, 180, 180, 64, 179, 179, 179, 50, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 0, 0, 0, 0, 170, 170, 170, 6, 178, 178, 178, 53, 180, 180, 180, 64, 177, 177, 177, 49, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 170, 170, 170, 6, 178, 178, 178, 53, 180, 180, 180, 64, 178, 178, 178, 53, 204, 204, 204, 5, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 181, 181, 181, 48, 180, 180, 180, 64, 178, 178, 178, 53, 204, 204, 204, 5, 0, 0, 0, 0, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 181, 181, 181, 41, 181, 181, 181, 48, 204, 204, 204, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64),
+"format": "RGBA8",
+"height": 8,
+"mipmaps": false,
+"width": 8
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_j7ex8"]
+image = SubResource("Image_5pajh")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8egab"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gw5y6"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svtp6"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.3)
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 0.3)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [sub_resource type="Theme" id="Theme_8egab"]
 RichTextLabel/colors/default_color = Color(0.851769, 0.851769, 0.851769, 1)
 RichTextLabel/colors/font_outline_color = Color(1, 1, 1, 1)
@@ -380,6 +500,39 @@ RichTextLabel/fonts/normal_font = ExtResource("4_8ln24")
 RichTextLabel/styles/background = SubResource("StyleBoxFlat_j7ex8")
 RichTextLabel/styles/fill = SubResource("StyleBoxFlat_a8gd2")
 RichTextLabel/styles/normal = SubResource("StyleBoxFlat_hstxw")
+TextEdit/colors/caret_background_color = Color(0, 0, 0, 1)
+TextEdit/colors/current_line_color = Color(0.25, 0.25, 0.26, 0.8)
+TextEdit/colors/font_color = Color(1, 1, 1, 1)
+TextEdit/colors/font_outline_color = Color(0, 0, 0, 1)
+TextEdit/colors/font_placeholder_color = Color(1, 1, 1, 0.6)
+TextEdit/colors/font_readonly_color = Color(0.875, 0.875, 0.875, 0.5)
+TextEdit/colors/font_selected_color = Color(0, 0, 0, 0)
+TextEdit/colors/search_result_border_color = Color(0.3, 0.3, 0.3, 0.4)
+TextEdit/colors/search_result_color = Color(0.3, 0.3, 0.3, 1)
+TextEdit/colors/selection_color = Color(0.5, 0.5, 0.5, 1)
+TextEdit/colors/word_highlighted_color = Color(0.5, 0.5, 0.5, 0.25)
+TextEdit/constants/caret_width = 1
+TextEdit/constants/line_spacing = 4
+TextEdit/constants/outline_size = 0
+TextEdit/font_sizes/font_size = 32
+TextEdit/fonts/font = ExtResource("4_8ln24")
+TextEdit/icons/space = SubResource("ImageTexture_7b55j")
+TextEdit/icons/tab = SubResource("ImageTexture_j7ex8")
+TextEdit/styles/focus = SubResource("StyleBoxFlat_8egab")
+TextEdit/styles/normal = SubResource("StyleBoxFlat_gw5y6")
+TextEdit/styles/read_only = SubResource("StyleBoxFlat_svtp6")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7b55j"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+
+[sub_resource type="Theme" id="Theme_5pajh"]
+ItemList/colors/font_color = Color(1, 1, 1, 1)
+ItemList/fonts/font = ExtResource("4_8ln24")
+ItemList/styles/panel = SubResource("StyleBoxFlat_7b55j")
 
 [node name="Main Menu" type="Control"]
 layout_mode = 3
@@ -561,18 +714,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_lgwnu")
 }
 
-[node name="server_list" type="ItemList" parent="menu2"]
-layout_mode = 0
-offset_left = 526.0
-offset_top = 583.0
-offset_right = 952.0
-offset_bottom = 838.0
-theme = SubResource("Theme_5pajh")
-item_count = 1
-fixed_icon_size = Vector2i(32, 32)
-item_0/text = "192.168.1.1"
-item_0/icon = ExtResource("6_1ajci")
-
 [node name="TextureRect" type="TextureRect" parent="menu2"]
 layout_mode = 0
 offset_left = 248.0
@@ -583,66 +724,98 @@ texture = ExtResource("6_jk1qb")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="solo" type="TextureButton" parent="menu2"]
-offset_left = 738.0
-offset_top = 259.0
-offset_right = 1226.0
-offset_bottom = 541.0
+[node name="multi2" type="Control" parent="menu2"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="solo" type="TextureButton" parent="menu2/multi2"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = -117.0
+offset_right = 561.0
+offset_bottom = 165.0
 scale = Vector2(0.75, 0.75)
 texture_normal = ExtResource("7_lgwnu")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="multi" type="TextureButton" parent="menu2"]
-offset_left = 1101.0
-offset_top = 259.0
-offset_right = 1589.0
-offset_bottom = 541.0
+[node name="multi" type="TextureButton" parent="menu2/multi2"]
+layout_mode = 0
+offset_left = 436.0
+offset_top = -117.0
+offset_right = 924.0
+offset_bottom = 165.0
 scale = Vector2(0.75, 0.75)
 texture_normal = ExtResource("8_flqon")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="menu2/multi"]
+[node name="VBoxContainer" type="VBoxContainer" parent="menu2/multi2/multi"]
 layout_mode = 0
 offset_left = -166.667
 offset_top = 262.667
 offset_right = 645.333
 offset_bottom = 614.667
+theme_override_constants/separation = -116
 
-[node name="HBoxContainer" type="HBoxContainer" parent="menu2/multi/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="menu2/multi2/multi/VBoxContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 
-[node name="host" type="TextureButton" parent="menu2/multi/VBoxContainer/HBoxContainer"]
+[node name="host" type="TextureButton" parent="menu2/multi2/multi/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(404, 352)
 layout_mode = 2
 texture_normal = ExtResource("9_rcqid")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="join" type="TextureButton" parent="menu2/multi/VBoxContainer/HBoxContainer"]
+[node name="join" type="TextureButton" parent="menu2/multi2/multi/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(404, 352)
 layout_mode = 2
 texture_normal = ExtResource("10_1ajci")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="RichTextLabel" type="RichTextLabel" parent="menu2"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="menu2/multi2/multi/VBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="scan" type="TextureButton" parent="menu2/multi2/multi/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(404, 200)
+layout_mode = 2
+texture_normal = ExtResource("11_7b55j")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="TextEdit" type="TextEdit" parent="menu2/multi2/multi/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme = SubResource("Theme_8egab")
+placeholder_text = "IP Address"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="menu2/multi2"]
 layout_mode = 0
-offset_left = 571.0
-offset_top = 510.0
-offset_right = 922.0
-offset_bottom = 573.0
+offset_left = -94.0
+offset_top = 134.0
+offset_right = 257.0
+offset_bottom = 197.0
 theme = SubResource("Theme_8egab")
 text = "Found Servers"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="sub2" type="Control" parent="menu2"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="server_list" type="ItemList" parent="menu2/multi2"]
+layout_mode = 0
+offset_left = -139.0
+offset_top = 207.0
+offset_right = 287.0
+offset_bottom = 462.0
+theme = SubResource("Theme_5pajh")
+item_count = 1
+fixed_icon_size = Vector2i(32, 32)
+item_0/text = "192.168.1.1"
+item_0/icon = ExtResource("6_1ajci")
 
 [node name="menu1" type="Control" parent="."]
 visible = false
@@ -682,3 +855,10 @@ offset_bottom = 954.0
 texture_normal = ExtResource("8_jk1qb")
 ignore_texture_size = true
 stretch_mode = 4
+
+[connection signal="pressed" from="menu2/multi2/solo" to="." method="_on_solo_pressed"]
+[connection signal="pressed" from="menu2/multi2/multi" to="." method="_on_multi_pressed"]
+[connection signal="pressed" from="menu2/multi2/multi/VBoxContainer/HBoxContainer/host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="menu2/multi2/multi/VBoxContainer/HBoxContainer/join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="menu2/multi2/multi/VBoxContainer/HBoxContainer2/scan" to="." method="_on_scan_pressed"]
+[connection signal="item_selected" from="menu2/multi2/server_list" to="." method="_on_server_list_item_selected"]

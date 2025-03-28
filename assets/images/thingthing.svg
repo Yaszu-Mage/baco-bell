@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   sodipodi:docname="thingthing.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.68862935"
+     inkscape:cx="396.43968"
+     inkscape:cy="561.25984"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#000000;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.07028;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.5;paint-order:markers fill stroke"
+       d="m 72.150653,109.60614 27.468628,-2.41324 19.340149,15.55198 -47.089069,8.04413 z"
+       id="path2" />
+    <path
+       style="fill:#000000;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.07028;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.5;paint-order:markers fill stroke"
+       d="m 57.855756,136.68803 -28.870085,13.13874 7.848178,-26.00934 15.416065,-5.09461 z"
+       id="path3" />
+    <path
+       style="fill:#000000;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.07028;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.5;paint-order:markers fill stroke"
+       d="m 34.591512,172.61846 34.195635,-10.7255 47.369363,-15.82012 21.0219,16.89267 -67.550386,49.33731 z"
+       id="path4" />
+    <path
+       style="fill:#000000;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.07028;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.5;paint-order:markers fill stroke"
+       d="m 131.57258,126.23067 14.0146,33.78533 28.3095,3.21764 10.93139,-14.21128 6.72702,-25.47307 -25.78688,-21.71914 -10.93139,-13.675012 -10.93139,10.189227 8.12847,19.842175 -23.54454,-12.60246 z"
+       id="path5" />
+  </g>
+</svg>
