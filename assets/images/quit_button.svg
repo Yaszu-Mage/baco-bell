@@ -26,7 +26,7 @@
      inkscape:document-units="mm"
      inkscape:zoom="0.68862935"
      inkscape:cx="216.37184"
-     inkscape:cy="584.4944"
+     inkscape:cy="583.04224"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="-9"
@@ -151,9 +151,10 @@
        xml:space="preserve"
        transform="matrix(0.24855077,0,0,0.36877055,10.613756,-64.050116)"
        id="text1"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:133.333px;font-family:Starborn;-inkscape-font-specification:Starborn;text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect2);shape-padding:30.4954;display:inline;fill:#969696;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:5.66929;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4.5;stroke-opacity:1;paint-order:fill markers stroke"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:133.333px;font-family:Starborn;-inkscape-font-specification:Starborn;text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect2);shape-padding:30.4954;display:inline;fill:#969696;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:5.66929;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4.5;stroke-opacity:1;paint-order:fill markers stroke"
+       inkscape:label="quit"><tspan
          x="172.71289"
          y="600.03083"
-         id="tspan1">Quit</tspan></text>
+         id="tspan2">Quit</tspan></text>
   </g>
 </svg>

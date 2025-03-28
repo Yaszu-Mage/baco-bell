@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://rrln3opi1nu3"]
 
-[ext_resource type="Script" uid="uid://upt2ot0hveh1" path="res://script/fight_logic.gd" id="1_vv44o"]
+[ext_resource type="Script" uid="uid://cak88fhcuvv08" path="res://script/turn_based.gd" id="1_p8b18"]
 
 [node name="Node3D" type="Node3D"]
-script = ExtResource("1_vv44o")
+script = ExtResource("1_p8b18")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3

@@ -136,3 +136,93 @@ func run_action(entity,action,target = null, _type = ""):
 							entity.effects.set("Strength",entity.effects.get("Strength")+1)
 						else:
 							entity.effects.set("Strength",1)
+				else:
+					for entries in intiative:
+						var local_entity = get_parent().get_node(entries[0])
+						if local_entity.is_in_group("player"):
+							local_entity.display_message(str(entity.username + " landed tails."))
+					entity.logger("Tails")
+					if entity.effects.has("Weakness"):
+						entity.effects.set("Weakness",entity.effects.get("Weakness")+1)
+					else:
+						entity.effects.set("Weakness",1)
+			"Pass":
+				pass
+			"Punch":
+				var enemy = get_parent().get_node(target)
+				for entries in intiative:
+					if entity.is_in_group("player"):
+						entity.display_message(entity.username + " has punched " + enemy.username)
+				if entity.is_in_group("enemies"):
+					enemy.take_attack(2,target,[0,2,4])
+				if entity.is_in_group("player"):
+					enemy.damage(4)
+	await get_tree().create_timer(0.2).timeout
+	action_chose.emit()
+
+func _process(delta):
+	find_invalid()
+				
+
+func find_invalid():
+	await get_tree().create_timer(0.1).timeout
+	for entries in intiative:
+		var entity = get_parent().get_node(entries[0])
+		if is_instance_valid(entity):
+			pass
+		else:
+			print("We have pruned instance at" + str(entries))
+			intiative.remove_at(intiative.find(entries))
+
+
+@rpc("any_peer")
+func join_fight(fight):
+	print("Has reached fight scene!")
+	if !not_local:
+		var player = get_parent().get_node(str(fight[3]))
+		print(player.name)
+		var initiative_roll = randi_range(0,20)
+		intiative.append([player,initiative_roll])
+		
+		players.append(player)
+		player.can_move = false
+		player.turnbased_menu.visible = true
+		#Why not just players.size()? Because of how the nodes are arranged
+		# We want player, player2,player3,player4 so with array sizes
+		# players.size() + 1 = [0,1,1,2] etc but we don't have to get none since its declared at start
+		print(players.size() + 1)
+		print(players)
+		player.global_position = get_node("player" + str(players.size() + 1)).global_position
+		player.rpc("sync_turn_based_actions",player.global_position,str(name),str(player.name))
+		rpc("sync_variables",intiative,combatants_list,combatants)
+		for enemy in enemies:
+			if enemy is String:
+				pass
+			else:
+				player.rpc("show_enemy",str(enemy.name),str(player.name))
+		for play in players:
+			player.rpc("show_player",str(player.name),str(play.name))
+		print("finished!")
+
+func kill_me(ref):
+	if !not_local:
+		print(str(intiative) + " is start")
+		print(ref)
+		var enemy = get_parent().get_node(ref)
+		print("enemy ", enemy)
+		var index = 0
+		for entry in intiative:
+			index += 1
+			print(entry, enemy)
+			if entry[0] == enemy:
+				intiative.remove_at(index)
+		print(index)
+		intiative.remove_at(index)
+		index = 0
+		for entry in intiative:
+			index += 1
+			if entry[0] == enemy:
+				intiative.remove_at(index)
+		intiative.remove_at(index)
+		print(str(intiative) + " should be right")
+		combatants_list.remove_at(combatants_list.find(str(enemy.name)))
