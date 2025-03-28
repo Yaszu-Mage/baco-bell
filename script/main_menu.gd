@@ -4,7 +4,7 @@ var multiplayer_peer = ENetMultiplayerPeer.new()
 const PORT = 9999
 const ADDRESS = "127.0.0.1"
 @export var username_sync = {}
-@onready var server_list := $menu2/server_list
+@onready var server_list := $menu2/multi2/server_list
 @onready var item = preload("res://assets/images/crazy.png")
 var client_discovery := preload("res://addons/lan_server_discovery/client_discovery.gd").new()
 var server_discovery := preload("res://addons/lan_server_discovery/server_discovery.gd").new()
@@ -13,7 +13,7 @@ var local_player_character
 @export var instances = {}
 var world = preload("res://scenes/world.tscn")
 var selected_button = 0
-@onready var buttons = [$Delve]
+@onready var menu_2_anim = $menu2/AnimationPlayer
 @onready var anim = $anim
 var menu = false
 # starting at zero 
@@ -44,14 +44,14 @@ func _on_server_found(server_ip):
 
 func add_player_character(peer_id):
 	connected_peer_ids.append(peer_id)
-	var username = $Menu/GridContainer/TextEdit.text
+	var username = $menu2/multi2/username.text
 	if username != "":
 		username_sync.set(connected_peer_ids[0],username)
 		print(username_sync.get(connected_peer_ids[0]))
 	var player_character = preload("res://scenes/player.tscn").instantiate()
 	instances.set(connected_peer_ids[0],player_character)
 	player_character.set_multiplayer_authority(peer_id)
-	get_node("world").add_child(player_character)
+	get_parent().get_node("world").add_child(player_character)
 	if player_character.is_multiplayer_authority():
 		player_character.username = username
 	GlobalLists.username = username
@@ -83,12 +83,16 @@ func _on_multi_pressed() -> void:
 
 
 func _on_host_pressed() -> void:
+	$WorldEnvironment.queue_free()
+	$DirectionalLight3D.queue_free()
+	$Camera2D.queue_free()
+	$SubViewport.queue_free()
 	var world_instance = world.instantiate()
-	add_child(world_instance,true)
+	get_parent().add_child(world_instance,true)
 	multiplayer_peer.close()
 	#Instead of using show() hide()
 	#Nodename.property = value
-	$Menu.visible = false
+	$".".visible = false
 	multiplayer_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
 	add_child(server_discovery)
@@ -104,11 +108,20 @@ func _on_host_pressed() -> void:
 
 
 func _on_join_pressed() -> void:
+	$WorldEnvironment.queue_free()
+	$DirectionalLight3D.queue_free()
+	$Camera2D.queue_free()
+	$SubViewport.queue_free()
 	print("joining local")
-	$Menu.visible = false
+	$".".visible = false
 	var world_instance = world.instantiate()
-	add_child(world_instance,true)
-	multiplayer_peer.create_client("localhost", PORT)
+	get_parent().add_child(world_instance,true)
+	var ip = ""
+	if $menu2/multi2/multi/VBoxContainer/HBoxContainer2/ip.text == "":
+		ip = "localhost"
+	else:
+		ip = $menu2/multi2/multi/VBoxContainer/HBoxContainer2/ip.text
+	multiplayer_peer.create_client(ip, PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
 	await get_tree().create_timer(1.0).timeout
 	if is_instance_valid(get_node("world2")):
@@ -124,10 +137,17 @@ func _on_scan_pressed() -> void:
 func _on_server_list_item_selected(index: int) -> void:
 	var server_ip = server_list.get_item_text(index)
 	print("Connecting to:", server_ip)
-	
-	$Menu.visible = false
+	$WorldEnvironment.queue_free()
+	$DirectionalLight3D.queue_free()
+	$Camera2D.queue_free()
+	$SubViewport.queue_free()
+	$".".visible = false
 	var world_instance = world.instantiate()
-	add_child(world_instance,true)
+	get_parent().add_child(world_instance,true)
 	
 	multiplayer_peer.create_client(server_ip, PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
+
+
+func _on_delve_pressed() -> void:
+	menu_2_anim.play("show_multi")

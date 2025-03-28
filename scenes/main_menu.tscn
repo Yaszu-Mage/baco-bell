@@ -122,6 +122,33 @@ tracks/6/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../menu2:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_1ajci"]
+resource_name = "delve-1"
 
 [sub_resource type="Animation" id="Animation_8ln24"]
 resource_name = "flash"
@@ -145,6 +172,18 @@ tracks/1/path = NodePath("../black:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -277,9 +316,18 @@ tracks/5/keys = {
 "update": 1,
 "values": [false]
 }
-
-[sub_resource type="Animation" id="Animation_1ajci"]
-resource_name = "delve-1"
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tbmy8"]
 _data = {
@@ -352,6 +400,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [Vector2(0, 0)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_5dd4i"]
 resource_name = "show_multi"
@@ -405,6 +465,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [Vector2(248, 304), Vector2(923, 373), Vector2(703, 368)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lgwnu"]
 _data = {
@@ -425,7 +497,7 @@ border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
 
-[sub_resource type="Image" id="Image_1ajci"]
+[sub_resource type="Image" id="Image_7b55j"]
 data = {
 "data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 175, 175, 19, 175, 175, 175, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 175, 175, 19, 180, 180, 180, 64, 180, 180, 180, 64, 175, 175, 175, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 175, 175, 19, 180, 180, 180, 64, 180, 180, 180, 64, 175, 175, 175, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 175, 175, 19, 175, 175, 175, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": "RGBA8",
@@ -435,7 +507,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_7b55j"]
-image = SubResource("Image_1ajci")
+image = SubResource("Image_7b55j")
 
 [sub_resource type="Image" id="Image_5pajh"]
 data = {
@@ -658,6 +730,7 @@ libraries = {
 speed_scale = 0.5
 
 [node name="TextureRect2" type="TextureRect" parent="."]
+visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 658.0
@@ -705,6 +778,7 @@ Mr. Cheverie
 We wouldn't be here without you!"
 
 [node name="menu2" type="Control" parent="."]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -788,11 +862,21 @@ texture_normal = ExtResource("11_7b55j")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="TextEdit" type="TextEdit" parent="menu2/multi2/multi/VBoxContainer/HBoxContainer2"]
+[node name="ip" type="TextEdit" parent="menu2/multi2/multi/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 theme = SubResource("Theme_8egab")
 placeholder_text = "IP Address"
+
+[node name="username" type="TextEdit" parent="menu2/multi2"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+offset_left = 395.0
+offset_top = 422.0
+offset_right = 795.0
+offset_bottom = 489.0
+theme = SubResource("Theme_8egab")
+placeholder_text = "username"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="menu2/multi2"]
 layout_mode = 0
@@ -862,3 +946,4 @@ stretch_mode = 4
 [connection signal="pressed" from="menu2/multi2/multi/VBoxContainer/HBoxContainer/join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="menu2/multi2/multi/VBoxContainer/HBoxContainer2/scan" to="." method="_on_scan_pressed"]
 [connection signal="item_selected" from="menu2/multi2/server_list" to="." method="_on_server_list_item_selected"]
+[connection signal="pressed" from="menu1/delve" to="." method="_on_delve_pressed"]
