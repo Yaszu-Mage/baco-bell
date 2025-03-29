@@ -86,16 +86,19 @@ func pos(pos):
 func sync_vars(move):
 	can_move = move
 func turn():
-	var random = randi_range(0,0)
-	match random:
-		0:
-			var combatants = fight_instance.get_combatants(self)
-			var size = combatants.size()
-			var random_key = combatants.keys()[randi() % size]
-			var amount = combatants[random_key]
-			print(amount)
-			await get_tree().create_timer(1.0)
-			fight_instance.run_action(str(get_parent().name),"Punch",amount)
+	if health > 0:
+		var random = randi_range(0,0)
+		match random:
+			0:
+				var combatants = fight_instance.get_combatants(self)
+				var size = combatants.size()
+				var random_key = combatants.keys()[randi() % size]
+				var amount = combatants[random_key]
+				print(amount)
+				await get_tree().create_timer(1.0)
+				fight_instance.run_action(str(self.name),"Punch",amount)
+	else:
+		fight_instance.run_action(str(self.name),"Pass")
 
 func walk_up(target_pos : Vector3):
 	var tween = create_tween()
@@ -131,10 +134,12 @@ func _on_start_fight_body_entered(body: Node3D) -> void:
 		body.start_fight(self)
 
 func death():
-	fight_instance.enemies.remove_at(fight_instance.enemies_mommys.find(str(get_parent().name)))
+	fight_instance.enemies.remove_at(fight_instance.enemies.find(str(get_parent().name)))
 	fight_instance.kill_me(str(get_parent().name))
 	rpc("death_rpc")
-	self.queue_free()
+	await get_tree().create_timer(1.0).timeout
+	
+	get_parent().queue_free()
 
 
 @rpc("any_peer")

@@ -21,6 +21,7 @@ var world
 var combatants_list = []
 #[Instance,initiative order]
 @export var intiative = []
+var show_test = []
 @onready var spawner = $MultiplayerSpawner
 signal action_chose
 @export var turn = 0
@@ -67,22 +68,25 @@ func _ready() -> void:
 	else:
 		for entity in combatants_list:
 			var initial = entity
-			entity = get_parent().get_node(initial)
+			if entity is String:
+				entity = get_parent().get_node(initial)
+				print(entity)
 			if entity.is_in_group("player"):
 				#Run player things
 				combatants.get("Players").set(entity.username,entity)
 				var initiative_roll = randi_range(0,20)
-				intiative.append([entity,initiative_roll])
+				intiative.append([initial,initiative_roll])
 				players.append(initial)
 				entity.can_move = false
 				entity.turnbased_menu.visible = true
 			if entity.is_in_group("enemies"):
 				#Run enemies things
+				show_test.append(str(entity.name))
 				combatants.get("Enemies").set(entity.enemy_type,entity)
 				enemies.append(str(initial))
 				var initiative_roll = randi_range(0,20)
 				intiative.append([initial,initiative_roll])
-				entity.can_move = false
+				entity.get_main().can_move = false
 		print("intiative order has been decidied!" + str(intiative))
 		rpc("sync_variables",intiative,combatants_list,combatants)
 		run_turn()
@@ -91,6 +95,7 @@ func run_turn():
 	print(intiative)
 	if !not_local:
 		for entries in intiative:
+			print(intiative)
 			var entity = get_parent().get_node(entries[0])
 			entity.turn()
 			await action_chose
@@ -104,10 +109,16 @@ func run_turn():
 					entity.not_turn()
 			for entry in intiative:
 				var entity2 = get_parent().get_node(entry[0])
-				entity2.turn()
-				if is_instance_valid(entity2):
-					if entity2.health <= 0:
-						entity2.death()
+				if entity2.is_in_group("player"):
+					entity2.turn()
+					if is_instance_valid(entity2):
+						if entity2.health <= 0:
+							entity2.death()
+				else:
+					entity2.get_main().turn()
+					if is_instance_valid(entity2):
+						if entity2.get_main().health <= 0:
+							entity2.get_main().death()
 			if enemies == []:
 				for play in players:
 					var player = get_parent().get_node(play)
@@ -152,11 +163,37 @@ func run_action(entity,action,target = null, _type = ""):
 				var enemy = get_parent().get_node(target)
 				for entries in intiative:
 					if entity.is_in_group("player"):
-						entity.display_message(entity.username + " has punched " + enemy.username)
+						entity.display_message(entity.username + " has punched " + enemy.get_main().username)
 				if entity.is_in_group("enemies"):
 					enemy.take_attack(2,target,[0,2,4])
 				if entity.is_in_group("player"):
-					enemy.damage(4)
+					enemy.get_main().damage(4)
+			"Rush_Hour":
+				for entries in intiative:
+					if entity.is_in_group("player"):
+						#TODO change the amount of healing depend on the level
+						entity.health += randi_range(0,5)
+			"Minimum_Effort":
+				for entries in intiative:
+					if entity.is_in_group("player"):
+						entity.health += 4
+			"Company_Investment":
+				var enemy = get_parent().get_node(target)
+				for entries in intiative:
+					if entity.is_in_group("players"):
+						entity.display_message(entity.username + " has invested into " + enemy.get_main().username)
+						enemy.get_main().damage(1)
+			"Aftermath":
+				var enemy = get_parent().get_node(target)
+				for entries in intiative:
+					if entity.is_in_group("player"):
+						entity.display_message(entity.username + " has force feed " + enemy.get_main().username + "bacos," + enemy.get_main().username + "is now constipated!")	
+						enemy.get.main().effects.append("Constipated")
+			"Fake_Identity":
+				entity.effects.clear()
+			
+
+						
 	await get_tree().create_timer(0.2).timeout
 	action_chose.emit()
 
@@ -213,16 +250,32 @@ func kill_me(ref):
 		var index = 0
 		for entry in intiative:
 			index += 1
-			print(entry, enemy)
-			if entry[0] == enemy:
+			var entity = get_parent().get_node(entry[0])
+			if entity == enemy:
 				intiative.remove_at(index)
 		print(index)
 		intiative.remove_at(index)
 		index = 0
 		for entry in intiative:
 			index += 1
-			if entry[0] == enemy:
+			var entity = get_parent().get_node(entry[0])
+			if entity == enemy:
 				intiative.remove_at(index)
 		intiative.remove_at(index)
 		print(str(intiative) + " should be right")
 		combatants_list.remove_at(combatants_list.find(str(enemy.name)))
+
+
+
+func end_fight():
+	rpc("end_fight_remote")
+	for entry in enemies:
+		entry = get_node(entry)
+		if entry == null:
+			get_parent().get_node("world").get_node(entry).get_main()
+		entry.can_move = true
+	self.queue_free()
+
+@rpc("call_remote")
+func end_fight_remote():
+	self.queue_free()

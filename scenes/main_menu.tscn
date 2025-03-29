@@ -790,9 +790,9 @@ libraries = {
 
 [node name="TextureRect" type="TextureRect" parent="menu2"]
 layout_mode = 0
-offset_left = 248.0
+offset_left = 508.0
 offset_top = 304.0
-offset_right = 702.0
+offset_right = 962.0
 offset_bottom = 430.0
 texture = ExtResource("6_jk1qb")
 expand_mode = 2
@@ -800,8 +800,10 @@ stretch_mode = 4
 
 [node name="multi2" type="Control" parent="menu2"]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 703.0
+offset_top = 368.0
+offset_right = 743.0
+offset_bottom = 408.0
 
 [node name="solo" type="TextureButton" parent="menu2/multi2"]
 layout_mode = 0

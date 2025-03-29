@@ -7,7 +7,7 @@ properties/0/path = NodePath(".:name")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[node name="enemy_base" type="Node3D"]
+[node name="enemy_base" type="Node3D" groups=["enemies"]]
 script = ExtResource("1_fr7lv")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

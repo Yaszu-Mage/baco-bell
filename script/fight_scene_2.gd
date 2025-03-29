@@ -166,7 +166,6 @@ func run_action(entity,action,target = null,_type = ""):
 						entries[0].display_message(entries[0].username + " has punched " + enemy.username)
 				if entity.is_in_group("enemies"):
 					enemy.take_attack(2,target,[0,2,4])
-
 				if entity.is_in_group("player"):
 					if target is Object:
 						target.damage(2)
@@ -228,15 +227,13 @@ func kill_me(ref):
 func find_invalid():
 	await get_tree().create_timer(0.1).timeout
 	for entries in enemies_mommys:
-		var entity = get_node(entries)
+		var entity = get_parent().get_node(entries)
 		if entries == null:
 			entity = get_parent().get_node(entries)
 		if is_instance_valid(entity):
 			pass
 		else:
 			print("We have pruned instance at" + str(entries))
-			intiative.remove_at(enemies_mommys.find(entries) + players.size())
-
 @rpc("any_peer")
 func join_fight(fight):
 	print("Has reached fight scene!")

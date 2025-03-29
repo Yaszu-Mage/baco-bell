@@ -45,6 +45,7 @@ var gravity
 var initial_gravity
 @onready var title_card = $ColorRect/TextureRect
 @onready var fade = $ColorRect
+#returns void
 func _ready() -> void:
 	initial_gravity = get_gravity()
 	gravity = initial_gravity 
@@ -75,7 +76,7 @@ func _ready() -> void:
 @onready var notification_menu_text = $turn_based_player/notifications/main/sub/VBoxContainer/actualtext
 func display_message(message : String):
 	notification_menu_text.add_text("
-	" + message)
+" + message)
 
 func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
@@ -478,10 +479,10 @@ func start_fight(enemy : Node):
 		$turn_based_player.visible = true
 		can_move = false
 		rpc("sync_fight",self.global_position,enemy)
-		rpc("start_fight_remote",self,str(enemy.name))
+		rpc("start_fight_remote",self,str(enemy.get_parent().name))
 		var instance = load("res://scenes/fight_redo.tscn").instantiate()
-		instance.combatants_list.append(self)
-		instance.combatants_list.append(enemy)
+		instance.combatants_list.append(str(self.name))
+		instance.combatants_list.append(str(enemy.get_parent().name))
 		fight_instance = instance
 		instance.world = world.world
 		rpc("add_close")
@@ -619,7 +620,7 @@ func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_i
 		"Punch":
 			show_test()
 	if second_menu:
-		fight_instance.run_action(str(self.name),"Punch",fight_instance.enemies_mommys[index])
+		fight_instance.run_action(str(self.name),"Punch",fight_instance.enemies[index])
 		second_menu = false
 
 func _on_item_list_2_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
@@ -631,14 +632,17 @@ var second_menu = false
 func show_test():
 	list_one.clear()
 	list_two.clear()
-	for entity in fight_instance.enemies_mommys:
-		print(entity)
+	print(fight_instance.show_test)
+	for entity in fight_instance.show_test:
+		print("here", entity)
 		var node = get_parent().get_node(entity)
 		if node == null:
 			var world = get_parent()
 			node = world.get_node(entity)
 			if node == null:
 				node = fight_instance.get_node(entity)
+		if is_instance_valid(node):
+			fight_instance.show_test.remove_at(fight_instance.show_test.find(entity))
 		list_one.add_item("",node.get_main().sub_tex)
 	await get_tree().create_timer(0.1).timeout
 	second_menu = true
@@ -749,3 +753,12 @@ func take_attack(time : float,enemy_name : String, damage_scale : Array):
 		damage(damage_scale[1])
 	else:
 		damage(damage_scale[2])
+
+@onready var item_scene = preload("res://scenes/item.tscn")
+# 1 arg, item name
+func drop_item(item_name):
+	var instance = item_scene.instantiate()
+	
+	instance.item_name = item_name 
+	get_parent().add_child(instance)
+	
