@@ -398,6 +398,7 @@ theme_override_constants/h_separation = 146
 columns = 8
 
 [node name="Menu" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1160.0
