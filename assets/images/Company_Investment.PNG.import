@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dapapsaxrsil1"
-path="res://.godot/imported/Company_Investment.PNG-3c123940af3dd835c316ec2de53b4523.ctex"
+uid="uid://djbnqgcegqits"
+path="res://.godot/imported/Company_Investment.png-babcc7db4a304e1667e1878719006529.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/Company_Investment.PNG"
-dest_files=["res://.godot/imported/Company_Investment.PNG-3c123940af3dd835c316ec2de53b4523.ctex"]
+source_file="res://assets/images/Company_Investment.png"
+dest_files=["res://.godot/imported/Company_Investment.png-babcc7db4a304e1667e1878719006529.ctex"]
 
 [params]
 

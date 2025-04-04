@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdat74igxyy2i"
-path="res://.godot/imported/Count-up.png-a4e2390fe442b98eccf80c1ef92dbdc1.ctex"
+uid="uid://ca2lsn2apfhh8"
+path="res://.godot/imported/Constipated.png-7dc3ea110e91d9dad8b173525c8b3c9c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/Count-up.png"
-dest_files=["res://.godot/imported/Count-up.png-a4e2390fe442b98eccf80c1ef92dbdc1.ctex"]
+source_file="res://assets/images/Constipated.png"
+dest_files=["res://.godot/imported/Constipated.png-7dc3ea110e91d9dad8b173525c8b3c9c.ctex"]
 
 [params]
 

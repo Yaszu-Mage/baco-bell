@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdat74igxyy2i"
-path="res://.godot/imported/Count-up.png-a4e2390fe442b98eccf80c1ef92dbdc1.ctex"
+uid="uid://bi6omc6kfh3bw"
+path="res://.godot/imported/cuber.png-d1916ef267bd476a9d4739bd05f214b8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/Count-up.png"
-dest_files=["res://.godot/imported/Count-up.png-a4e2390fe442b98eccf80c1ef92dbdc1.ctex"]
+source_file="res://assets/images/cuber.png"
+dest_files=["res://.godot/imported/cuber.png-d1916ef267bd476a9d4739bd05f214b8.ctex"]
 
 [params]
 

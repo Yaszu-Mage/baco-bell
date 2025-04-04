@@ -67,9 +67,12 @@ var players = []
 var username = ""
 var usernames = {}
 var instances = {}
+var load : ResourcePreloader
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	var preloader = load("res://scenes/preloader.tscn").instantiate()
+	add_child(preloader)
+	load = preloader
 
 
 @rpc("any_peer")
