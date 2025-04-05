@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://cmxp08v0o48gc"]
+[gd_scene load_steps=79 format=3 uid="uid://cmxp08v0o48gc"]
 
 [ext_resource type="Shader" uid="uid://cfr1gd4hgyqae" path="res://scenes/fight_prototype/pixel.gdshader" id="1_aq0uc"]
 [ext_resource type="Script" uid="uid://b3rwoaxcxw3w" path="res://scenes/fight_prototype/player.gd" id="1_m6l8t"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://cijcbyil75fwo" path="res://assets/materials/checker_albedo.png" id="11_5tjjc"]
 [ext_resource type="Texture2D" uid="uid://sfwd7qo5nakr" path="res://assets/images/mike_image.PNG" id="12_nqunl"]
 [ext_resource type="Texture2D" uid="uid://3ekptwl03qql" path="res://assets/images/gambling.png" id="13_5gw86"]
+[ext_resource type="Texture2D" uid="uid://b0b67538ni2of" path="res://assets/images/arrow.png" id="15_xb2pc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u8prd"]
 shader = ExtResource("1_aq0uc")
@@ -78,6 +79,10 @@ region = Rect2(6500, 0, 500, 500)
 [sub_resource type="AtlasTexture" id="AtlasTexture_cfjtd"]
 atlas = ExtResource("2_m6l8t")
 region = Rect2(7000, 0, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6l8t"]
+atlas = ExtResource("2_m6l8t")
+region = Rect2(0, 0, 500, 500)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i10o2"]
 atlas = ExtResource("3_xb2pc")
@@ -207,9 +212,17 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cfjtd")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6l8t")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -303,7 +316,7 @@ bg_color = Color(0.190762, 0.190762, 0.190762, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s7i5i"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3v2ag"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m6l8t"]
 texture = ExtResource("5_ooec1")
 expand_margin_left = 5.0
 expand_margin_top = 30.0
@@ -311,16 +324,16 @@ expand_margin_right = 5.0
 expand_margin_bottom = 5.0
 
 [sub_resource type="Theme" id="Theme_xiv20"]
-PanelContainer/styles/panel = SubResource("StyleBoxTexture_3v2ag")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_m6l8t")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_atftw"]
 bg_color = Color(0.883271, 0.680063, 1.15514e-06, 1)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qfm1y"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xb2pc"]
 load_path = "res://.godot/imported/windows.jpg-36cbd64c0cc75d51ccdbfbda0d15b450.ctex"
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7dl8x"]
-texture = SubResource("CompressedTexture2D_qfm1y")
+texture = SubResource("CompressedTexture2D_xb2pc")
 expand_margin_left = 5.0
 expand_margin_top = 10.0
 expand_margin_right = 5.0
@@ -360,23 +373,87 @@ RichTextLabel/font_sizes/normal_font_size = 17
 RichTextLabel/constants/outline_size = 10
 RichTextLabel/font_sizes/normal_font_size = 17
 
+[sub_resource type="Animation" id="Animation_xb2pc"]
+resource_name = "active"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("top:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(586.667, 315), Vector2(858.333, 315), Vector2(1093.33, 315), Vector2(858.333, 315), Vector2(586.667, 315)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("bottom:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 1.99),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1133.33, 411.667), Vector2(898.333, 411.667), Vector2(633.333, 411.667), Vector2(898.333, 411.667), Vector2(1133.33, 411.667)]
+}
+
+[sub_resource type="Animation" id="Animation_8gir0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("top:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(586.667, 315)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("bottom:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1133.33, 411.667)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ooec1"]
+_data = {
+&"RESET": SubResource("Animation_8gir0"),
+&"active": SubResource("Animation_xb2pc")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xb2pc"]
+size = Vector2(36.6667, 25)
+
 [node name="Player" type="Marker2D" groups=["player"]]
-position = Vector2(-64, 278)
 script = ExtResource("1_m6l8t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_u8prd")
 sprite_frames = SubResource("SpriteFrames_i10o2")
-animation = &"attack"
-frame_progress = 0.657668
+animation = &"idle"
 
 [node name="turn_based_player" type="Control" parent="."]
+top_level = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = -352.0
-offset_top = -409.0
-offset_right = 1834.0
-offset_bottom = 1602.0
+offset_left = -528.0
+offset_top = -216.0
+offset_right = 1658.0
+offset_bottom = 1795.0
 scale = Vector2(0.6, 0.6)
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -691,6 +768,56 @@ theme_override_font_sizes/normal_font_size = 17
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="turn_based_player"]
+root_node = NodePath("../checker")
+libraries = {
+&"": SubResource("AnimationLibrary_ooec1")
+}
+
+[node name="checker" type="Control" parent="turn_based_player"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ProgressBar" type="ProgressBar" parent="turn_based_player/checker"]
+layout_mode = 0
+offset_left = 591.667
+offset_top = 351.667
+offset_right = 1127.67
+offset_bottom = 378.667
+value = 100.0
+show_percentage = false
+
+[node name="top" type="TextureRect" parent="turn_based_player/checker"]
+layout_mode = 0
+offset_left = 586.667
+offset_top = 315.0
+offset_right = 626.667
+offset_bottom = 355.0
+texture = ExtResource("15_xb2pc")
+
+[node name="RayCast2D" type="RayCast2D" parent="turn_based_player/checker/top"]
+position = Vector2(20, 15)
+target_position = Vector2(0, 66.6667)
+
+[node name="bottom" type="TextureRect" parent="turn_based_player/checker"]
+layout_mode = 0
+offset_left = 1133.33
+offset_top = 411.667
+offset_right = 1173.33
+offset_bottom = 451.667
+rotation = 3.14159
+texture = ExtResource("15_xb2pc")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="turn_based_player/checker/bottom" groups=["goal"]]
+position = Vector2(20, 20)
+rotation = 3.14159
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="turn_based_player/checker/bottom/StaticBody2D"]
+position = Vector2(0, 2.49999)
+shape = SubResource("RectangleShape2D_xb2pc")
 
 [connection signal="item_clicked" from="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList" to="." method="_on_item_list_item_clicked"]
 [connection signal="item_clicked" from="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList2" to="." method="_on_item_list_2_item_clicked"]

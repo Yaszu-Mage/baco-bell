@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dbh0t08rrasks"
-path="res://.godot/imported/Rush_Hour.png-46c8d16904a54cc75a2a84418e3acbe5.ctex"
+path="res://.godot/imported/Rush_Hour.PNG-dd123cd5539b91949ef63408d807ae3d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/Rush_Hour.png"
-dest_files=["res://.godot/imported/Rush_Hour.png-46c8d16904a54cc75a2a84418e3acbe5.ctex"]
+source_file="res://assets/images/Rush_Hour.PNG"
+dest_files=["res://.godot/imported/Rush_Hour.PNG-dd123cd5539b91949ef63408d807ae3d.ctex"]
 
 [params]
 

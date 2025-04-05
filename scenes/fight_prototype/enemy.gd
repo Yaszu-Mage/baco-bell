@@ -6,6 +6,7 @@ var position_in_line
 @onready var sprite = $GPUParticles2D/AnimatedSprite2D
 var enemy_side = []
 var is_in_sprite = true
+var health = 10
 var fight = get_parent()
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -37,3 +38,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func damage(value : int):
+	health -= value

@@ -7,7 +7,7 @@ var position_in_line
 var enemy_side = []
 var is_in_sprite = true
 var fight = get_parent()
-
+signal scored
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	fight = get_parent()
@@ -34,8 +34,15 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+@onready var cast = $turn_based_player/checker/top/RayCast2D
+var is_valid = false
 func _process(delta: float) -> void:
-	pass
+	if cast.is_colliding():
+		var collide = cast.get_collider().get_parent()
+		if collide.is_in_group("goal"):
+			is_valid = true
+	else:
+		is_valid = false
 
 
 @onready var turnbased_menu = $turn_based_player/main_menu
@@ -164,6 +171,8 @@ func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_i
 			show_test()
 	if second_menu:
 		if side_tag == "left":
+			fight_instance.run_action(str(self.name),"Punch",fight_instance.right_fighters[index])
+		if side_tag == "right":
 			fight_instance.run_action(str(self.name),"Punch",fight_instance.left_fighters[index])
 		second_menu = false
 
@@ -203,3 +212,43 @@ func _on_item_list_2_item_clicked(index: int, at_position: Vector2, mouse_button
 	if second_menu:
 		fight_instance.run_action(str(self.name),"Punch",fight_instance.enemies[index])
 		second_menu = false
+
+
+@onready var notification_menu_text = $turn_based_player/notifications/main/sub/VBoxContainer/actualtext
+func display_message(message : String):
+	notification_menu_text.add_text("
+" + message)
+
+@onready var checker = $turn_based_player/checker
+@onready var minigame_player = $turn_based_player/AnimationPlayer
+func animate(attack : String, enemy_position : Vector2):
+	match attack:
+		"Punch":
+			var old_pos = global_position
+			var tween = create_tween()
+			sprite.play("walk")
+			tween.tween_property(self,"global_position",enemy_position,1)
+			await tween.finished
+			sprite.stop()
+			await get_tree().create_timer(0.1).timeout
+			#Insert minigame
+			checker.visible = true
+			minigame_player.play("active")
+			await pressed
+			if is_valid:
+				#send signal back to fight scene for damage
+				pass
+			sprite.play("attack")
+			await sprite.animation_finished
+			sprite.play_backwards("walk")
+			print("walking backwards")
+			var tween2 = create_tween()
+			sprite.play_backwards("walk")
+			tween2.tween_property(self,"global_position",old_pos,1)
+			await tween2.finished
+			sprite.play("idle")
+
+signal pressed
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept"):
+		pressed.emit()

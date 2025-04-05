@@ -141,13 +141,15 @@ func run_action(entity_name, action, target_name = null, _type = ""):
 			pass
 
 		"Punch":
-			var target = get_node(target_name)
+			var target = get_node(target_name[0])
 			if entity.side_tag == "left":
 				entity.display_message(entity.name + " has punched " + target.name)
 			if entity.side_tag == "right":
 				target.take_attack(2, target_name, [0, 2, 4])
 			if entity.side_tag == "left":
 				target.damage(4)
+			#now we play the actual animation
+			entity.animate("Punch", target.position)
 
 		"Rush_Hour":
 			if entity.side_tag == "left":
