@@ -23,6 +23,7 @@ var combatants_list = []
 @export var intiative = []
 var show_test = []
 @onready var spawner = $MultiplayerSpawner
+var initiative_passed = false
 signal action_chose
 @export var turn = 0
 @export var jumped = 0
@@ -90,6 +91,7 @@ func _ready() -> void:
 		print("intiative order has been decidied!" + str(intiative))
 		rpc("sync_variables",intiative,combatants_list,combatants)
 		run_turn()
+		initiative_passed = true
 
 func run_turn():
 	print(intiative)
@@ -97,6 +99,8 @@ func run_turn():
 		for entries in intiative:
 			print(intiative)
 			var entity = get_parent().get_node(entries[0])
+			if str(entity.name).contains("enemy_base"):
+				entity = entity.get_main()
 			entity.turn()
 			await action_chose
 			print("passed!")
@@ -199,6 +203,8 @@ func run_action(entity,action,target = null, _type = ""):
 
 func _process(delta):
 	find_invalid()
+	if players.is_empty() and initiative_passed or enemies.is_empty() and initiative_passed:
+		end_fight()
 				
 
 func find_invalid():
@@ -255,13 +261,6 @@ func kill_me(ref):
 				intiative.remove_at(index)
 		print(index)
 		intiative.remove_at(index)
-		index = 0
-		for entry in intiative:
-			index += 1
-			var entity = get_parent().get_node(entry[0])
-			if entity == enemy:
-				intiative.remove_at(index)
-		intiative.remove_at(index)
 		print(str(intiative) + " should be right")
 		combatants_list.remove_at(combatants_list.find(str(enemy.name)))
 
@@ -274,8 +273,20 @@ func end_fight():
 		if entry == null:
 			get_parent().get_node("world").get_node(entry).get_main()
 		entry.can_move = true
+	for entry in players:
+		get_parent().get_node(entry).death()
+	await get_tree().create_timer(1.0)
 	self.queue_free()
 
 @rpc("call_remote")
 func end_fight_remote():
 	self.queue_free()
+
+
+func get_combatants(source):
+	var initial = source
+	source = get_parent().get_node(initial)
+	if source.is_in_group("player"):
+		return combatants.get("Enemies")
+	elif source.is_in_group("enemies"):
+		return combatants.get("Players")

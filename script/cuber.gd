@@ -16,6 +16,7 @@ var username = "Cuber"
 @onready var sub_cam = $SubViewport/Camera3D
 @onready var health_bar = $SubViewport2/ProgressBar
 var health = 2
+var did_die = false
 @export var movement_speed: float = 4.0
 func _ready() -> void:
 	player = null
@@ -28,8 +29,9 @@ func _process(delta):
 	rpc("pos",global_position)
 	sub_cam.global_position = self.global_position + Vector3(0,0,1.689)
 	health_bar.value = health
-	if health <= 0:
+	if health <= 0 and !did_die:
 		death()
+		did_die = true
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 			velocity += get_gravity() * delta
@@ -90,13 +92,13 @@ func turn():
 		var random = randi_range(0,0)
 		match random:
 			0:
-				var combatants = fight_instance.get_combatants(self)
+				var combatants = fight_instance.get_combatants(str(get_parent().name))
 				var size = combatants.size()
 				var random_key = combatants.keys()[randi() % size]
 				var amount = combatants[random_key]
 				print(amount)
 				await get_tree().create_timer(1.0)
-				fight_instance.run_action(str(self.name),"Punch",amount)
+				fight_instance.run_action(str(self.name),"Punch",str(amount.name))
 	else:
 		fight_instance.run_action(str(self.name),"Pass")
 

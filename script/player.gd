@@ -559,10 +559,11 @@ func join_fight(fight):
 func start_fight_remote(player,enemy):
 	self.visible = false
 	self.set_collision_layer_value(1,false)
-	var enemy_instance = get_parent().get_node("world").get_node("enemy_base").get_node(enemy)
-	var instance = load("res://scenes/fight_rphyedo.tscn").instantiate()
-	instance.combatants_list.append(self)
+	var enemy_instance = get_parent().get_node(enemy)
+	var instance = load("res://scenes/fight_redo.tscn").instantiate()
+	instance.combatants_list.append(str(self.name))
 	instance.combatants_list.append(enemy)
+	enemy_instance = enemy_instance.get_main()
 	enemy_instance.local_fight = false
 	instance.not_local = true
 	GlobalLists.active_fights.append([instance,self])
@@ -595,10 +596,8 @@ func death():
 	if health >= 0:
 		$turn_based_player.visible = false
 		can_move = true
-		fight_instance.players.remove_at(fight_instance.players.find(self))
-		if fight_instance.players == []:
-			fight_instance.end_fight()
 		world.get_node("all_things").visible = true
+		get_parent().get_node("all_things").visible = true
 		camera.current = true
 		self.global_position = Vector3(0,100,0)
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
