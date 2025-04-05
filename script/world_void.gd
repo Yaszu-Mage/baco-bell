@@ -9,6 +9,7 @@ enum spawn_reason {
 enum spawn_location {
 	the_void
 }
+@onready var resources = $ResourcePreloader
 var world = world_types.the_void
 var enemy = preload("res://scenes/enemy_base.tscn")
 func _ready() -> void:

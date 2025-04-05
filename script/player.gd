@@ -508,6 +508,38 @@ func start_fight(enemy : Node):
 func play_animation(anim):
 	pass
 
+@onready var fight_scene = preload("res://scenes/fight_redo.tscn")
+
+func start_fight_2(enemy : Node):
+	if is_multiplayer_authority():
+		#play animations
+		#make everything visible
+		$turn_based_player.visible = true
+		can_move = false
+		#run rpcs
+		#load fight scene
+		var fight = fight_scene.instantiate()
+		#set fight scene variables aswell as get links
+		var enemy_link = str(enemy.get_parent().name)
+		fight.world = world.world
+		var player_link = str(self.name)
+		fight.fighters = [player_link,enemy_link]
+		#set current vars
+		fight_instance = fight
+		#set postions + other stuff
+		self.global_position = fight.get_node("player").global_position
+		enemy.global_position = fight.get_node("enemy").global_position
+		enemy.rpc("pos",fight.get_node("enemy").global_position)
+		enemy.rpc("sync_vars",false)
+		world.get_node("all_things").visible = false
+		little_guy.rotation.y = 0
+		little_guy.rotation.y = 120
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		camera.current = false
+		fight.camera.current = true
+		#add fight scene
+		get_parent().add_child(fight_scene)
+
 # We will store all active fights in array
 # It will be stored like [Instance,StarterPlayer]
 func join_fight(fight):
