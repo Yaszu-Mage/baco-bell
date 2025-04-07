@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://cijcbyil75fwo" path="res://assets/materials/checker_albedo.png" id="11_5tjjc"]
 [ext_resource type="Texture2D" uid="uid://sfwd7qo5nakr" path="res://assets/images/mike_image.PNG" id="12_nqunl"]
 [ext_resource type="Texture2D" uid="uid://3ekptwl03qql" path="res://assets/images/gambling.png" id="13_5gw86"]
-[ext_resource type="AudioStream" uid="uid://bvy1uo43uabh" path="res://assets/sfx/YEOUCH.mp3" id="16_hswjt"]
+[ext_resource type="AudioStream" uid="uid://cgkj83d2psbyf" path="res://assets/sfx/YEOUCH.mp3" id="16_hswjt"]
 
 [sub_resource type="Gradient" id="Gradient_xtd84"]
 offsets = PackedFloat32Array(0.518182, 1)
@@ -176,10 +176,10 @@ tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.49, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.49, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(672, 241), Vector2(294, -35), Vector2(86, 229)]
+"values": [Vector2(0, 0), Vector2(294, -35), Vector2(-233, -178), Vector2(0, -14)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -200,21 +200,6 @@ _data = {
 &"walk": SubResource("Animation_kj5q3")
 }
 
-[sub_resource type="Animation" id="Animation_sqwf2"]
-resource_name = "damage"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("RichTextLabel:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.266667, 0.8, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(-78, -27), Vector2(23, -144), Vector2(23, -144), Vector2(-85, -20)]
-}
-
 [sub_resource type="Animation" id="Animation_hswjt"]
 length = 0.001
 tracks/0/type = "value"
@@ -228,6 +213,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-78, -27)]
+}
+
+[sub_resource type="Animation" id="Animation_sqwf2"]
+resource_name = "damage"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RichTextLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-78, -27), Vector2(23, -144), Vector2(23, -144), Vector2(-85, -20)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nlhl3"]

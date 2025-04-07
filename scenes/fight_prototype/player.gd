@@ -8,6 +8,8 @@ var enemy_side = []
 var is_in_sprite = true
 var fight = get_parent()
 signal scored
+var health = 10
+var sp = 10
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	fight = get_parent()
@@ -224,7 +226,7 @@ func display_message(message : String):
 
 @onready var checker = $turn_based_player/checker
 @onready var minigame_player = $turn_based_player/AnimationPlayer
-func animate(attack : String, enemy_position : Vector2):
+func animate(attack : String, enemy_position : Vector2, enemy : String):
 	fight_instance = get_parent()
 	match attack:
 		"Punch":
@@ -264,3 +266,23 @@ signal pressed
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		pressed.emit()
+
+func dodge(length : float, dmg_scale : Array):
+	var timer = get_tree().create_timer(length)
+	var correct_time = length / 2
+	var bad_time = length / 3
+	var okay_time = length / 1.5
+	var stopped_time
+	await pressed
+	stopped_time = timer.time_left
+	if stopped_time >= correct_time and stopped_time > bad_time:
+		damage(dmg_scale[0]) # scale 0
+	elif stopped_time < bad_time:
+		damage(dmg_scale[1]) # scale 1
+	else:
+		damage(dmg_scale[2]) # scale 2
+	fight = get_parent()
+	fight.damage_calculated.emit()
+
+func damage(amount):
+	health -= amount

@@ -86,6 +86,9 @@ func _ready():
 		rpc("sync_variables",intiative,combatants_list,combatants)
 		run_turn()
 
+
+
+
 func run_turn():
 	print(intiative)
 	if !not_local:

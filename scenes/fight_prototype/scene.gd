@@ -76,7 +76,7 @@ func _ready() -> void:
 	print("Initiative order has been decided! ", initiative)
 	if !not_local:
 		rpc("sync_variables",initiative,all_fighters,left_fighters,right_fighters)
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.5).timeout
 	turn_cycle()
 	
 @rpc("call_remote")
@@ -107,7 +107,11 @@ func sort_ascending(a, b):
 	return false
 	
 
-
+func get_side(side):
+	if side == "left":
+		return left_fighters
+	if side == "right":
+		return right_fighters
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -150,10 +154,10 @@ func run_action(entity_name, action, target_name = null, _type = ""):
 			var target = get_node(target_name[0])
 			if entity.side_tag == "left":
 				entity.display_message(entity.name + " has punched " + target.name)
-			if entity.is_in_group("player"):
-				entity.animate("Punch", target.position)
-				await damage_calculated
-				target.damage(damage)
+			target = get_node(target_name[0])
+			entity.animate("Punch", target.position, str(target.name))
+			await damage_calculated
+			target.damage(damage)
 
 			#now we play the actual animation
 
@@ -179,4 +183,5 @@ func run_action(entity_name, action, target_name = null, _type = ""):
 
 		"Fake_Identity":
 			entity.effects.clear()
+	await get_tree().create_timer(1.0).timeout
 	move_on.emit()
