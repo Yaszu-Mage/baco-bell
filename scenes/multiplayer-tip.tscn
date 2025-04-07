@@ -56,7 +56,7 @@ replication_config = SubResource("SceneReplicationConfig_3lg42")
 spawn_path = NodePath("..")
 
 [connection signal="pressed" from="Menu/GridContainer/Scan" to="." method="_on_scan_pressed"]
-[connection signal="pressed" from="Menu/GridContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Menu/GridContainer/Host" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Menu/GridContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="item_selected" from="Menu/GridContainer/ItemList" to="." method="_on_item_list_item_selected"]
 [connection signal="pressed" from="Menu/GridContainer/Button" to="." method="_on_button_pressed"]

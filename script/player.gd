@@ -47,7 +47,6 @@ var initial_gravity
 @onready var fade = $ColorRect
 #returns void
 func _ready() -> void:
-	$moosic.playing = true
 	initial_gravity = get_gravity()
 	gravity = initial_gravity 
 	$turn_based_player.visible = false
@@ -74,6 +73,7 @@ func _ready() -> void:
 				var brand_new_tween = create_tween()
 				brand_new_tween.tween_property(title_card,"modulate",Color(1,1,1,0),1)
 				$GPUParticles3D2.emitting = true
+		$ColorRect/Camera2D.enabled = false
 @onready var notification_menu_text = $turn_based_player/notifications/main/sub/VBoxContainer/actualtext
 func display_message(message : String):
 	notification_menu_text.add_text("
@@ -477,18 +477,16 @@ var fight_instance
 var effects = {}
 func start_fight(enemy : Node):
 	if is_multiplayer_authority():
-		$turn_based_player.visible = true
 		can_move = false
 		rpc("sync_fight",self.global_position,enemy)
-		rpc("start_fight_remote",self,str(enemy.get_parent().name))
-		var instance = load("res://scenes/fight_redo.tscn").instantiate()
-		instance.combatants_list.append(str(self.name))
-		instance.combatants_list.append(str(enemy.get_parent().name))
+		rpc("start_fight_remote",self,str(enemy.name),str(enemy.get_parent().name))
+		var instance = load("res://scenes/fight_prototype/scene.tscn").instantiate()
+		instance.left_fighters.append([str(self.name),"player"])
+		instance.right_fighters.append([str(enemy.name),"enemy"])
 		fight_instance = instance
 		instance.world = world.world
 		rpc("add_close")
 		#Play Animations
-		GlobalLists.active_fights.append([instance,self])
 		get_parent().add_child(instance)
 		await get_tree().create_timer(0.1).timeout
 		enemy.in_fight = true
@@ -496,50 +494,15 @@ func start_fight(enemy : Node):
 		enemy.local_fight = true
 		enemy.set_collision_layer_value(1,false)
 		enemy.fight_instance = instance
-		self.global_position = instance.get_node("player").global_position
-		enemy.global_position = instance.get_node("enemy").global_position
-		enemy.rpc("pos",instance.get_node("enemy").global_position)
 		enemy.rpc("sync_vars",false)
 		world.get_node("all_things").visible = false
 		little_guy.rotation.y = 0
 		little_guy.rotation.y = 120
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		camera.current = false
-		instance.camera.current = true
+		instance.camera.enabled = true
 func play_animation(anim):
 	pass
-
-@onready var fight_scene = preload("res://scenes/fight_redo.tscn")
-
-func start_fight_2(enemy : Node):
-	if is_multiplayer_authority():
-		#play animations
-		#make everything visible
-		$turn_based_player.visible = true
-		can_move = false
-		#run rpcs
-		#load fight scene
-		var fight = fight_scene.instantiate()
-		#set fight scene variables aswell as get links
-		var enemy_link = str(enemy.get_parent().name)
-		fight.world = world.world
-		var player_link = str(self.name)
-		fight.fighters = [player_link,enemy_link]
-		#set current vars
-		fight_instance = fight
-		#set postions + other stuff
-		self.global_position = fight.get_node("player").global_position
-		enemy.global_position = fight.get_node("enemy").global_position
-		enemy.rpc("pos",fight.get_node("enemy").global_position)
-		enemy.rpc("sync_vars",false)
-		world.get_node("all_things").visible = false
-		little_guy.rotation.y = 0
-		little_guy.rotation.y = 120
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		camera.current = false
-		fight.camera.current = true
-		#add fight scene
-		get_parent().add_child(fight_scene)
 
 # We will store all active fights in array
 # It will be stored like [Instance,StarterPlayer]
@@ -548,7 +511,6 @@ func join_fight(fight):
 	# think of a way to do that with how it is structured
 	var scene = get_parent().get_node(str(fight[0]))
 	waiting = true
-	turnbased_menu.visible = true
 	can_move = false
 	fight[3] = str(name)
 	scene.not_local = false
@@ -557,23 +519,20 @@ func join_fight(fight):
 	#should we have the functions for the fight scene run client side or server side
 
 @rpc("call_remote")
-func start_fight_remote(player,enemy):
+func start_fight_remote(player,enemy,enemy_parent):
 	self.visible = false
 	self.set_collision_layer_value(1,false)
-	var enemy_instance = get_parent().get_node(enemy)
-	var instance = load("res://scenes/fight_redo.tscn").instantiate()
-	instance.combatants_list.append(str(self.name))
-	instance.combatants_list.append(enemy)
+	var enemy_instance = get_parent().get_node(enemy_parent)
+	var instance = load("res://scenes/fight_prototype/scene.tscn").instantiate()
+	instance.left_fighters.append(str(self.name))
+	instance.right_fighters.append(enemy)
 	enemy_instance = enemy_instance.get_main()
 	enemy_instance.local_fight = false
 	instance.not_local = true
-	GlobalLists.active_fights.append([instance,self])
 	fight_instance = instance
 	#Play Animations
 	get_parent().add_child(instance)
 	await get_tree().create_timer(0.1).timeout
-	self.global_position = instance.get_node("player").global_position
-	enemy_instance.global_position = instance.get_node("enemy").global_position
 
 @rpc("any_peer")
 func add_close():

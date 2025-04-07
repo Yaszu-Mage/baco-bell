@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://dybqsipj6abjl"]
+[gd_scene load_steps=47 format=3 uid="uid://dybqsipj6abjl"]
 
 [ext_resource type="Script" uid="uid://dej0o8snmo2n8" path="res://script/main_menu.gd" id="1_8ln24"]
 [ext_resource type="Material" uid="uid://llijeg5j4yf3" path="res://assets/materials/checker2.tres" id="1_l6cm7"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://byjlmcontvu8t" path="res://assets/images/delve.png" id="13_a8gd2"]
 [ext_resource type="Texture2D" uid="uid://dl5pbfsumb003" path="res://assets/images/Options.png" id="14_hstxw"]
 [ext_resource type="Texture2D" uid="uid://b4dtpu1rbhco0" path="res://assets/images/Quit.png" id="15_8egab"]
+[ext_resource type="Texture2D" uid="uid://b1f7jis4pxh5s" path="res://assets/images/baco-logo.png" id="16_5pajh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ekxnf"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -145,6 +146,28 @@ tracks/8/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/9/type = "animation"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../AnimationPlayer")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"clips": PackedStringArray("bop"),
+"times": PackedFloat32Array(0)
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../SubViewport/TextureRect3:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.1, 0.1)]
 }
 
 [sub_resource type="Animation" id="Animation_1ajci"]
@@ -328,6 +351,28 @@ tracks/6/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/7/type = "animation"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../AnimationPlayer")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"clips": PackedStringArray("bop", "bop"),
+"times": PackedFloat32Array(4.4, 5.4)
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../SubViewport/TextureRect3:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(4.6, 4.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.1, 0.1), Vector2(1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tbmy8"]
 _data = {
@@ -412,6 +457,30 @@ tracks/5/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../SubViewport/TextureRect3:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(637, 217)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../SubViewport/TextureRect3:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
 
 [sub_resource type="Animation" id="Animation_5dd4i"]
 resource_name = "show_multi"
@@ -477,6 +546,30 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../SubViewport/TextureRect3:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(637, 217), Vector2(1400, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../SubViewport/TextureRect3:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.5, 0.5)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lgwnu"]
 _data = {
@@ -497,7 +590,7 @@ border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
 
-[sub_resource type="Image" id="Image_7b55j"]
+[sub_resource type="Image" id="Image_5pajh"]
 data = {
 "data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 175, 175, 19, 175, 175, 175, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 175, 175, 19, 180, 180, 180, 64, 180, 180, 180, 64, 175, 175, 175, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 175, 175, 19, 180, 180, 180, 64, 180, 180, 180, 64, 175, 175, 175, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 175, 175, 175, 19, 175, 175, 175, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 "format": "RGBA8",
@@ -507,9 +600,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_7b55j"]
-image = SubResource("Image_7b55j")
+image = SubResource("Image_5pajh")
 
-[sub_resource type="Image" id="Image_5pajh"]
+[sub_resource type="Image" id="Image_j7ex8"]
 data = {
 "data": PackedByteArray(179, 179, 179, 47, 179, 179, 179, 50, 170, 170, 170, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 177, 177, 177, 49, 180, 180, 180, 64, 175, 175, 175, 54, 170, 170, 170, 6, 0, 0, 0, 0, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 153, 153, 153, 5, 177, 177, 177, 52, 180, 180, 180, 64, 175, 175, 175, 54, 170, 170, 170, 6, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 0, 0, 0, 0, 153, 153, 153, 5, 177, 177, 177, 52, 180, 180, 180, 64, 179, 179, 179, 50, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 0, 0, 0, 0, 170, 170, 170, 6, 178, 178, 178, 53, 180, 180, 180, 64, 177, 177, 177, 49, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 170, 170, 170, 6, 178, 178, 178, 53, 180, 180, 180, 64, 178, 178, 178, 53, 204, 204, 204, 5, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 181, 181, 181, 48, 180, 180, 180, 64, 178, 178, 178, 53, 204, 204, 204, 5, 0, 0, 0, 0, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64, 181, 181, 181, 41, 181, 181, 181, 48, 204, 204, 204, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 180, 180, 180, 64, 180, 180, 180, 64),
 "format": "RGBA8",
@@ -519,7 +612,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_j7ex8"]
-image = SubResource("Image_5pajh")
+image = SubResource("Image_j7ex8")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8egab"]
 content_margin_left = 4.0
@@ -606,6 +699,68 @@ ItemList/colors/font_color = Color(1, 1, 1, 1)
 ItemList/fonts/font = ExtResource("4_8ln24")
 ItemList/styles/panel = SubResource("StyleBoxFlat_7b55j")
 
+[sub_resource type="Animation" id="Animation_j7ex8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/TextureRect3:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("16_5pajh")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/TextureRect3:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_5pajh"]
+resource_name = "bop"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/TextureRect3:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("16_5pajh")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/TextureRect3:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.0872665, 0.0, 0.0872665, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a8gd2"]
+_data = {
+&"RESET": SubResource("Animation_j7ex8"),
+&"bop": SubResource("Animation_5pajh")
+}
+
 [node name="Main Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -633,6 +788,25 @@ fov = 49.107
 transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, 1, 1, 4.37114e-08, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("PlaneMesh_ekxnf")
 skeleton = NodePath("../..")
+
+[node name="TextureRect3" type="TextureRect" parent="SubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -323.0
+offset_top = -323.0
+offset_right = 323.0
+offset_bottom = 323.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(323, 323)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("16_5pajh")
+expand_mode = 4
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -790,9 +964,9 @@ libraries = {
 
 [node name="TextureRect" type="TextureRect" parent="menu2"]
 layout_mode = 0
-offset_left = 508.0
+offset_left = 248.0
 offset_top = 304.0
-offset_right = 962.0
+offset_right = 702.0
 offset_bottom = 430.0
 texture = ExtResource("6_jk1qb")
 expand_mode = 2
@@ -800,10 +974,8 @@ stretch_mode = 4
 
 [node name="multi2" type="Control" parent="menu2"]
 anchors_preset = 0
-offset_left = 703.0
-offset_top = 368.0
-offset_right = 743.0
-offset_bottom = 408.0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="solo" type="TextureButton" parent="menu2/multi2"]
 layout_mode = 0
@@ -941,6 +1113,11 @@ offset_bottom = 954.0
 texture_normal = ExtResource("15_8egab")
 ignore_texture_size = true
 stretch_mode = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_a8gd2")
+}
 
 [connection signal="pressed" from="menu2/multi2/solo" to="." method="_on_solo_pressed"]
 [connection signal="pressed" from="menu2/multi2/multi" to="." method="_on_multi_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dtw2d7t2ty3pq"]
+[gd_scene load_steps=30 format=3 uid="uid://dtw2d7t2ty3pq"]
 
 [ext_resource type="PackedScene" uid="uid://ckbgovq51fluy" path="res://scenes/button.tscn" id="1_3a236"]
 [ext_resource type="PackedScene" uid="uid://drgvoaufs322i" path="res://scenes/cuber.tscn" id="2_tpvwh"]
@@ -19,6 +19,7 @@
 [ext_resource type="Shader" uid="uid://cfr1gd4hgyqae" path="res://scenes/fight_prototype/pixel.gdshader" id="17_wi4t6"]
 [ext_resource type="PackedScene" uid="uid://de8w3x5hpj6x" path="res://scenes/player.tscn" id="18_6lhs3"]
 [ext_resource type="PackedScene" uid="uid://cmxp08v0o48gc" path="res://scenes/fight_prototype/player.tscn" id="19_x04s2"]
+[ext_resource type="Script" uid="uid://b3rwoaxcxw3w" path="res://scenes/fight_prototype/player.gd" id="20_tpvwh"]
 [ext_resource type="PackedScene" uid="uid://doposct80yq8f" path="res://scenes/player_party.tscn" id="20_uixnm"]
 [ext_resource type="PackedScene" uid="uid://c32wf6x2j5ngi" path="res://scenes/player_turnbased.tscn" id="21_t5t1d"]
 [ext_resource type="PackedScene" uid="uid://basdylifwg2g2" path="res://scenes/running_particles.tscn" id="22_aryll"]
@@ -30,4 +31,4 @@
 [ext_resource type="PackedScene" uid="uid://dqk6mmmvet2yy" path="res://scenes/world_turnbased.tscn" id="28_ahl38"]
 
 [node name="ResourcePreloader" type="ResourcePreloader"]
-resources = [PackedStringArray("button", "cuber", "enemy", "enemy 2", "enemy_base", "enemy_turn_base", "enter_fight", "fight_redo", "fight_scene", "item", "joystick", "lil_gut", "main_menu", "map3", "multiplayer-tip", "option_button", "pixel", "player", "player 2", "player_party", "player_turnbased", "running_particles", "scene", "scene 2", "turn_pos", "void_town", "world", "world_turnbased"), [ExtResource("1_3a236"), ExtResource("2_tpvwh"), ExtResource("3_rua6b"), ExtResource("4_nug38"), ExtResource("5_imwkv"), ExtResource("6_efqeo"), ExtResource("7_ungan"), ExtResource("8_12i2d"), ExtResource("9_ui0cq"), ExtResource("10_r1bbx"), ExtResource("11_qm7it"), ExtResource("12_t2hv6"), ExtResource("13_3e3wj"), ExtResource("14_56kbl"), ExtResource("15_syl43"), ExtResource("16_u8b0w"), ExtResource("17_wi4t6"), ExtResource("18_6lhs3"), ExtResource("19_x04s2"), ExtResource("20_uixnm"), ExtResource("21_t5t1d"), ExtResource("22_aryll"), ExtResource("23_jldv7"), ExtResource("24_o4e2y"), ExtResource("25_swbhf"), ExtResource("26_g0xhp"), ExtResource("27_62jeo"), ExtResource("28_ahl38")]]
+resources = [PackedStringArray("button", "cuber", "enemy", "enemy 2", "enemy 3", "enemy 4", "enemy_base", "enemy_turn_base", "enter_fight", "fight_redo", "fight_scene", "item", "joystick", "lil_gut", "main_menu", "map3", "multiplayer-tip", "option_button", "pixel", "pixel 2", "player", "player 2", "player 3", "player 4", "player_party", "player_turnbased", "running_particles", "scene", "scene 2", "scene 3", "scene 4", "turn_pos", "void_town", "world", "world_turnbased"), [ExtResource("1_3a236"), ExtResource("2_tpvwh"), ExtResource("3_rua6b"), ExtResource("4_nug38"), ExtResource("3_rua6b"), ExtResource("4_nug38"), ExtResource("5_imwkv"), ExtResource("6_efqeo"), ExtResource("7_ungan"), ExtResource("8_12i2d"), ExtResource("9_ui0cq"), ExtResource("10_r1bbx"), ExtResource("11_qm7it"), ExtResource("12_t2hv6"), ExtResource("13_3e3wj"), ExtResource("14_56kbl"), ExtResource("15_syl43"), ExtResource("16_u8b0w"), ExtResource("17_wi4t6"), ExtResource("17_wi4t6"), ExtResource("18_6lhs3"), ExtResource("19_x04s2"), ExtResource("20_tpvwh"), ExtResource("19_x04s2"), ExtResource("20_uixnm"), ExtResource("21_t5t1d"), ExtResource("22_aryll"), ExtResource("23_jldv7"), ExtResource("24_o4e2y"), ExtResource("23_jldv7"), ExtResource("24_o4e2y"), ExtResource("25_swbhf"), ExtResource("26_g0xhp"), ExtResource("27_62jeo"), ExtResource("28_ahl38")]]

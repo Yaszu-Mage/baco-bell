@@ -10,6 +10,7 @@ var fight = get_parent()
 signal scored
 var health = 10
 var sp = 10
+var local
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	fight = get_parent()
@@ -39,6 +40,8 @@ func _ready() -> void:
 var is_valid = 0
 # 0 = no collisions, 1 = one of the side collisions, 2 = middle collision
 func _process(delta: float) -> void:
+	if local:$turn_based_player.visible = true 
+	else: $turn_based_player.visible = false
 	if centercast.is_colliding():
 		is_valid = 2
 	if rightcast.is_colliding() and !centercast.is_colliding() or leftcast.is_colliding() and !centercast.is_colliding():

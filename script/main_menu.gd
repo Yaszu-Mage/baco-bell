@@ -71,6 +71,8 @@ func _process(delta: float) -> void:
 	GlobalLists.players = connected_peer_ids
 	GlobalLists.usernames = username_sync
 	GlobalLists.instances = instances
+	if !$AnimationPlayer.is_playing():
+		$AnimationPlayer.play("bop")
 
 
 func _on_solo_pressed() -> void:

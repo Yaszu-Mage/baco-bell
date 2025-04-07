@@ -48,10 +48,13 @@ position = Vector2(-501, 200)
 position = Vector2(632, 0)
 
 [node name="Right" type="Marker2D" parent="Right_Marks"]
-position = Vector2(-171, 200)
+position = Vector2(-501, 200)
 
 [node name="Right2" type="Marker2D" parent="Right_Marks"]
 position = Vector2(-350, 200)
 
 [node name="Right3" type="Marker2D" parent="Right_Marks"]
-position = Vector2(-501, 200)
+position = Vector2(-171, 200)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")

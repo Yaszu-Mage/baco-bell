@@ -6,14 +6,14 @@ enum world_type {
 var world = world_type.the_void
 @onready var view = $world
 #idea for storage, [player_name,type,turn based scene name]
-var left_fighters = [["Yaszu","player"]]
-var right_fighters = [["cuber","enemy"]]
+var left_fighters = []
+var right_fighters = []
 var all_fighters = []
 var initiative = []
-
+@onready var camera = $Camera2D
 signal move_on
 #local player will be index
-var localplayer = 0
+var localplayer = ["left",0]
 # Called when the node enters the scene tree for the first time.
 #new max is 3 on each side
 @onready var line_left_instances = [$Left_Marks/Left,$Left_Marks/Left2,$Left_Marks/Left3]
@@ -28,57 +28,63 @@ func _ready() -> void:
 				var instance = GlobalLists.load.get_resource("void_town").instantiate()
 				instance.position = Vector3(0,-2,5.782)
 				view.add_child(instance)
-	for fighters in left_fighters:
-		var entity_name = fighters[0]
-		var entity_type = fighters[1]
-		var instance
-		match entity_type:
-			"player":
-				instance = load("res://scenes/fight_prototype/player.tscn").instantiate()
-				instance.side_tag = "left"
-				instance.side = left_fighters
-			"enemy":
-				match entity_name:
-					"cuber":
-						instance = load("res://scenes/fight_prototype/enemy.tscn").instantiate()
-						instance.type = entity_name
-						instance.side = left_fighters
-						instance.side_tag = "left"
-		instance.position_in_line = left_fighters.find(fighters)
-		instance.name = entity_name
-		add_child(instance)
-		all_fighters.append(fighters)
-	for fighters in right_fighters:
-		var entity_name = fighters[0]
-		var entity_type = fighters[1]
-		var instance
-		match entity_type:
-			"player":
-				instance = load("res://scenes/fight_prototype/player.tscn").instantiate()
-				instance.side_tag = "right"
-				instance.side = right_fighters
-			"enemy":
-				match entity_name:
-					"cuber":
-						instance = load("res://scenes/fight_prototype/enemy.tscn").instantiate()
-						instance.type = entity_name
-						instance.side = right_fighters
-						instance.side_tag = "right"
-		instance.position_in_line = right_fighters.find(fighters)
-		instance.name = entity_name
-		add_child(instance)
-		all_fighters.append(fighters)
-	for entry in all_fighters:
-		var initiative_roll = randi_range(0,20)
-		initiative.append([entry,initiative_roll])
-		print(entry[0]," rolled a ",initiative_roll)
-	initiative.sort_custom(sort_ascending)
-	print("Initiative order has been decided! ", initiative)
-	if !not_local:
-		rpc("sync_variables",initiative,all_fighters,left_fighters,right_fighters)
-	await get_tree().create_timer(0.5).timeout
-	turn_cycle()
-	
+		for fighters in left_fighters:
+			var entity_name = fighters[0]
+			var entity_type = fighters[1]
+			var instance
+			match entity_type:
+				"player":
+					instance = load("res://scenes/fight_prototype/player.tscn").instantiate()
+					instance.side_tag = "left"
+					instance.side = left_fighters
+				"enemy":
+					match entity_name:
+						"cuber":
+							instance = load("res://scenes/fight_prototype/enemy.tscn").instantiate()
+							instance.type = entity_name
+							instance.side = left_fighters
+							instance.side_tag = "left"
+			rpc("create",entity_type,entity_name,"left")
+			await get_tree().create_timer(0.5).timeout
+			instance.position_in_line = left_fighters.find(fighters)
+			instance.name = entity_name
+			add_child(instance)
+			all_fighters.append(fighters)
+		for fighters in right_fighters:
+			var entity_name = fighters[0]
+			var entity_type = fighters[1]
+			var instance
+			match entity_type:
+				"player":
+					instance = load("res://scenes/fight_prototype/player.tscn").instantiate()
+					instance.side_tag = "right"
+					instance.side = right_fighters
+				"enemy":
+					match entity_name:
+						"cuber":
+							instance = load("res://scenes/fight_prototype/enemy.tscn").instantiate()
+							instance.type = entity_name
+							instance.side = right_fighters
+							instance.side_tag = "right"
+			rpc("create",entity_type,entity_name,"right")
+			await get_tree().create_timer(0.5).timeout
+			instance.position_in_line = right_fighters.find(fighters)
+			instance.name = entity_name
+			add_child(instance)
+			all_fighters.append(fighters)
+			if localplayer[0] == "left":
+				get_node(left_fighters[0][0]).local = true
+		for entry in all_fighters:
+			var initiative_roll = randi_range(0,20)
+			initiative.append([entry,initiative_roll])
+			print(entry[0]," rolled a ",initiative_roll)
+		initiative.sort_custom(sort_ascending)
+		print("Initiative order has been decided! ", initiative)
+		if !not_local:
+			rpc("sync_variables",initiative,all_fighters,left_fighters,right_fighters)
+		await get_tree().create_timer(0.5).timeout
+		turn_cycle()
+		
 @rpc("call_remote")
 func sync_variables(init,all,left,right):
 	print("syncing variables")
@@ -86,7 +92,6 @@ func sync_variables(init,all,left,right):
 	all_fighters = all
 	left_fighters = left
 	right_fighters = right
-
 func turn_cycle():
 	for turn in initiative:
 		var taker = get_node(turn[0][0])
@@ -157,7 +162,7 @@ func run_action(entity_name, action, target_name = null, _type = ""):
 			if entity.side_tag == "left":
 				entity.display_message(entity.name + " has punched " + target.name)
 			target = get_node(target_name[0])
-			entity.animate("Punch", target.position, str(target.name))
+			entity.animate("Punch", target.global_position, str(target.name))
 			await damage_calculated
 			target.damage(damage)
 
@@ -187,3 +192,7 @@ func run_action(entity_name, action, target_name = null, _type = ""):
 			entity.effects.clear()
 	await get_tree().create_timer(1.0).timeout
 	move_on.emit()
+
+@rpc("any_peer")
+func join_fight(fight):
+	print(fight)
