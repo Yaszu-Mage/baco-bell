@@ -15,19 +15,16 @@ func _ready() -> void:
 	fight = get_parent()
 	match position_in_line:
 		0:
-			print("match 0")
 			if side_tag == "left":
 				self.global_position = fight.line_left_instances[0].global_position
 			if side_tag == "right":
 				self.global_position = fight.line_right_instances[0].global_position
 		1:
-			print("match 1")
 			if side_tag == "left":
 				self.global_position = fight.line_left_instances[1].global_position
 			if side_tag == "right":
 				self.global_position = fight.line_right_instances[1].global_position
 		2:
-			print("match 2")
 			if side_tag == "left":
 				self.global_position = fight.line_left_instances[2].global_position
 			if side_tag == "right":
@@ -94,7 +91,6 @@ func reset_actions():
 
 func get_actions(path : Array):
 	var size = path.size()
-	print(size)
 	knower.clear()
 	logger("Moving Buttons to: " + str(path))
 	var zero_path = path[0]
@@ -111,10 +107,8 @@ func get_actions(path : Array):
 	list_two.clear()
 	for value in type_root.values():
 		var ability_name = type_root.find_key(value)
-		print(ability_name)
 		if list_one_amount < 4:
 			list_one_amount += 1
-			print(uses.find(ability_name))
 			if uses.find(ability_name) == -1:
 				uses.append(ability_name)
 				uses.append(20)
@@ -122,9 +116,7 @@ func get_actions(path : Array):
 			list_one.add_item("",buttons.get(ability_name),false)
 			continue
 		if list_one_amount == 4 and list_two_amount < 4:
-			print("list two ", ability_name)
 			list_two_amount += 1
-			print(uses.find(ability_name))
 			if uses.find(ability_name) == -1:
 				uses.append(ability_name)
 				uses.append(20)
@@ -139,27 +131,20 @@ func turn():
 	list_two.clear()
 	reset_actions()
 	for item in list_one.item_count:
-		print(item)
 		list_one.set_item_selectable(item,false)
 		list_one.set_item_disabled(item,false)
-		print(list_one.is_item_disabled(item))
 	for item in list_two.item_count:
-		print(item)
 		list_two.set_item_selectable(item,false)
 		list_two.set_item_disabled(item,false)
 func not_turn():
-	print("not turn")
 	for item in list_one.item_count:
 		list_one.set_item_selectable(item,false)
 		list_one.set_item_disabled(item,true)
-		print(list_one.is_item_disabled(item))
 	for item in list_two.item_count:
 		list_two.set_item_selectable(item,false)
 		list_two.set_item_disabled(item,true)
-		print(list_two.is_item_disabled(item))
 var fight_instance = fight
 func _on_item_list_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
-	print(index)
 	var clicked = buttons.find_key(list_one.get_item_icon(index))
 	match clicked:
 		"fight":
@@ -199,7 +184,6 @@ func show_test():
 
 
 func _on_item_list_2_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
-	print(index)
 	var clicked = buttons.find_key(list_two.get_item_icon(index))
 	match clicked:
 		"fight":
@@ -282,7 +266,12 @@ func dodge(length : float, dmg_scale : Array):
 	else:
 		damage(dmg_scale[2]) # scale 2
 	fight = get_parent()
-	fight.damage_calculated.emit()
 
+@onready var damage_animation = $thing
+@onready var damage_text = $RichTextLabel
 func damage(amount):
 	health -= amount
+	# play animation
+	damage_text.text = str(amount)
+	damage_animation.play("damage")
+	

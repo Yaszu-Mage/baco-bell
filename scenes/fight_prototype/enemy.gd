@@ -68,8 +68,12 @@ func animate(attack : String, target_position : Vector2, enemy : String):
 					time = sprite.get_current_animation_length()
 				else:
 					animation.play(attack)
-					animation.get_current_animation_length()
-				enemy_scene.dodge(time)
+					time = animation.get_current_animation_length()
+				enemy_scene.dodge(time, [0,1,2])
+				await get_tree().create_timer(time).timeout
+				fight.damage_calculated.emit()
+			tween = create_tween()
+			tween.tween_property(self,"global_position",old_pos,1)
 
 func damage(value : int):
 	health -= value

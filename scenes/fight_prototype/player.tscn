@@ -1,7 +1,8 @@
-[gd_scene load_steps=81 format=3 uid="uid://cmxp08v0o48gc"]
+[gd_scene load_steps=85 format=3 uid="uid://cmxp08v0o48gc"]
 
 [ext_resource type="Shader" uid="uid://cfr1gd4hgyqae" path="res://scenes/fight_prototype/pixel.gdshader" id="1_aq0uc"]
 [ext_resource type="Script" uid="uid://b3rwoaxcxw3w" path="res://scenes/fight_prototype/player.gd" id="1_m6l8t"]
+[ext_resource type="FontFile" uid="uid://b8y8r00o4leu1" path="res://assets/fonts/Starborn.ttf" id="2_alo4a"]
 [ext_resource type="Texture2D" uid="uid://dr444g73wq5yt" path="res://assets/images/spritesheets/attack.png" id="2_m6l8t"]
 [ext_resource type="Texture2D" uid="uid://bvks8oo1kxfbd" path="res://assets/images/spritesheets/walk.png" id="3_xb2pc"]
 [ext_resource type="FontFile" uid="uid://dci4cxvysgqif" path="res://assets/fonts/easvhs.ttf" id="4_8gir0"]
@@ -440,8 +441,59 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xb2pc"]
 size = Vector2(83.3333, 25)
 
+[sub_resource type="Animation" id="Animation_hswjt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RichTextLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-78, -27)]
+}
+
+[sub_resource type="Animation" id="Animation_sqwf2"]
+resource_name = "damage"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RichTextLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-78, -27), Vector2(23, -144), Vector2(23, -144), Vector2(-85, -20)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nlhl3"]
+_data = {
+&"RESET": SubResource("Animation_hswjt"),
+&"damage": SubResource("Animation_sqwf2")
+}
+
 [node name="Player" type="Marker2D" groups=["player"]]
 script = ExtResource("1_m6l8t")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -85.0
+offset_top = -20.0
+offset_right = 253.0
+offset_bottom = 110.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 0, 1)
+theme_override_constants/outline_size = 50
+theme_override_fonts/normal_font = ExtResource("2_alo4a")
+theme_override_font_sizes/normal_font_size = 100
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_u8prd")
@@ -838,6 +890,11 @@ volume_db = 24.0
 stream = ExtResource("17_ooec1")
 volume_db = -7.924
 autoplay = true
+
+[node name="thing" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_nlhl3")
+}
 
 [connection signal="item_clicked" from="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList" to="." method="_on_item_list_item_clicked"]
 [connection signal="item_clicked" from="turn_based_player/main_menu/main_menu/PanelContainer/HBoxContainer/ItemList2" to="." method="_on_item_list_2_item_clicked"]

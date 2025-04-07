@@ -96,10 +96,12 @@ func turn_cycle():
 			taker.turn()
 			await move_on
 			taker.reset_actions()
+			taker.not_turn()
 		else:
 			print("Enemy Turn")
 			taker.turn()
 			await move_on
+	turn_cycle()
 
 func sort_ascending(a, b):
 	if a[1] > b[1]:

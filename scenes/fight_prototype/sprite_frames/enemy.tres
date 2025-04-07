@@ -17,7 +17,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_rfxfv")
 }],
 "loop": true,
-"name": &"attack",
+"name": &"Punch",
 "speed": 5.0
 }, {
 "frames": [{
