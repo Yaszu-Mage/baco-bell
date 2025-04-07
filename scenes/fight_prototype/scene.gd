@@ -95,6 +95,11 @@ func turn_cycle():
 			print("Player's Turn")
 			taker.turn()
 			await move_on
+			taker.reset_actions()
+		else:
+			print("Enemy Turn")
+			taker.turn()
+			await move_on
 
 func sort_ascending(a, b):
 	if a[1] > b[1]:
@@ -110,7 +115,8 @@ func _process(delta: float) -> void:
 	pass
 
 #TODO recode this
-
+signal damage_calculated
+var damage = 0
 func run_action(entity_name, action, target_name = null, _type = ""):
 	var entity = get_node(entity_name)
 	if not_local:
@@ -144,12 +150,12 @@ func run_action(entity_name, action, target_name = null, _type = ""):
 			var target = get_node(target_name[0])
 			if entity.side_tag == "left":
 				entity.display_message(entity.name + " has punched " + target.name)
-			if entity.side_tag == "right":
-				target.take_attack(2, target_name, [0, 2, 4])
-			if entity.side_tag == "left":
-				target.damage(4)
+			if entity.is_in_group("player"):
+				entity.animate("Punch", target.position)
+				await damage_calculated
+				target.damage(damage)
+
 			#now we play the actual animation
-			entity.animate("Punch", target.position)
 
 		"Rush_Hour":
 			if entity.side_tag == "left":
@@ -173,3 +179,4 @@ func run_action(entity_name, action, target_name = null, _type = ""):
 
 		"Fake_Identity":
 			entity.effects.clear()
+	move_on.emit()
