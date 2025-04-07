@@ -7,14 +7,14 @@
 [ext_resource type="FontFile" uid="uid://b8y8r00o4leu1" path="res://assets/fonts/Starborn.ttf" id="4_8ln24"]
 [ext_resource type="Texture2D" uid="uid://lq6x7s45fxb" path="res://assets/images/crazy.png" id="6_1ajci"]
 [ext_resource type="Texture2D" uid="uid://cbamu22edd6hf" path="res://assets/images/arrow.svg" id="6_jk1qb"]
-[ext_resource type="Texture2D" uid="uid://iemged2ns72i" path="res://assets/images/options_button.svg" id="6_rtw2f"]
-[ext_resource type="Texture2D" uid="uid://bpipg1q6jlu0g" path="res://assets/images/solo_button.svg" id="7_lgwnu"]
-[ext_resource type="Texture2D" uid="uid://b7tuo2kqvwnw" path="res://assets/images/delve_button.svg" id="7_tbmy8"]
-[ext_resource type="Texture2D" uid="uid://dbjd8tojakw2f" path="res://assets/images/multi_button.svg" id="8_flqon"]
-[ext_resource type="Texture2D" uid="uid://0nboqjhk0unl" path="res://assets/images/quit_button.svg" id="8_jk1qb"]
-[ext_resource type="Texture2D" uid="uid://cy0kdpn2nutkw" path="res://assets/images/host_button.svg" id="9_rcqid"]
-[ext_resource type="Texture2D" uid="uid://h50tb5tk3g86" path="res://assets/images/join_button.svg" id="10_1ajci"]
-[ext_resource type="Texture2D" uid="uid://bgk1qf3drxwvk" path="res://assets/images/scan_button.svg" id="11_7b55j"]
+[ext_resource type="Texture2D" uid="uid://kymbbvggjx1i" path="res://assets/images/Solo.png" id="7_7b55j"]
+[ext_resource type="Texture2D" uid="uid://bn0fh4eion52o" path="res://assets/images/With_friends.png" id="8_7b55j"]
+[ext_resource type="Texture2D" uid="uid://bglx4tc8sapxk" path="res://assets/images/Host.png" id="9_5pajh"]
+[ext_resource type="Texture2D" uid="uid://clcjj74bqugi7" path="res://assets/images/Join.png" id="10_j7ex8"]
+[ext_resource type="Texture2D" uid="uid://bt8khe7cwsulc" path="res://assets/images/Scan.png" id="11_5pajh"]
+[ext_resource type="Texture2D" uid="uid://byjlmcontvu8t" path="res://assets/images/delve.png" id="13_a8gd2"]
+[ext_resource type="Texture2D" uid="uid://dl5pbfsumb003" path="res://assets/images/Options.png" id="14_hstxw"]
+[ext_resource type="Texture2D" uid="uid://b4dtpu1rbhco0" path="res://assets/images/Quit.png" id="15_8egab"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ekxnf"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -812,7 +812,7 @@ offset_top = -117.0
 offset_right = 561.0
 offset_bottom = 165.0
 scale = Vector2(0.75, 0.75)
-texture_normal = ExtResource("7_lgwnu")
+texture_normal = ExtResource("7_7b55j")
 ignore_texture_size = true
 stretch_mode = 4
 
@@ -823,7 +823,7 @@ offset_top = -117.0
 offset_right = 924.0
 offset_bottom = 165.0
 scale = Vector2(0.75, 0.75)
-texture_normal = ExtResource("8_flqon")
+texture_normal = ExtResource("8_7b55j")
 ignore_texture_size = true
 stretch_mode = 4
 
@@ -842,14 +842,14 @@ layout_mode = 2
 [node name="host" type="TextureButton" parent="menu2/multi2/multi/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(404, 352)
 layout_mode = 2
-texture_normal = ExtResource("9_rcqid")
+texture_normal = ExtResource("9_5pajh")
 ignore_texture_size = true
 stretch_mode = 4
 
 [node name="join" type="TextureButton" parent="menu2/multi2/multi/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(404, 352)
 layout_mode = 2
-texture_normal = ExtResource("10_1ajci")
+texture_normal = ExtResource("10_j7ex8")
 ignore_texture_size = true
 stretch_mode = 4
 
@@ -860,7 +860,7 @@ layout_mode = 2
 [node name="scan" type="TextureButton" parent="menu2/multi2/multi/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(404, 200)
 layout_mode = 2
-texture_normal = ExtResource("11_7b55j")
+texture_normal = ExtResource("11_5pajh")
 ignore_texture_size = true
 stretch_mode = 4
 
@@ -918,7 +918,7 @@ offset_left = 116.0
 offset_top = 167.0
 offset_right = 604.0
 offset_bottom = 449.0
-texture_normal = ExtResource("7_tbmy8")
+texture_normal = ExtResource("13_a8gd2")
 ignore_texture_size = true
 stretch_mode = 4
 
@@ -928,7 +928,7 @@ offset_left = 117.0
 offset_top = 422.0
 offset_right = 605.0
 offset_bottom = 704.0
-texture_normal = ExtResource("6_rtw2f")
+texture_normal = ExtResource("14_hstxw")
 ignore_texture_size = true
 stretch_mode = 4
 
@@ -938,7 +938,7 @@ offset_left = 117.0
 offset_top = 672.0
 offset_right = 605.0
 offset_bottom = 954.0
-texture_normal = ExtResource("8_jk1qb")
+texture_normal = ExtResource("15_8egab")
 ignore_texture_size = true
 stretch_mode = 4
 

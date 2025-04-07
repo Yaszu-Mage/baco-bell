@@ -250,22 +250,49 @@ signal pressed
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		pressed.emit()
-
+		recent_pressed = true
+		await get_tree().create_timer(1.0).timeout
+var recent_pressed = false
+func no_press(timer, _stop_time,length):
+	await timer.timeout
+	if !recent_pressed:
+		pressed.emit()
+		stopped_time = length / 2.5
+		print("stopped_time ", stopped_time)
+var stopped_time
 func dodge(length : float, dmg_scale : Array):
 	var timer = get_tree().create_timer(length)
 	var correct_time = length / 2
-	var bad_time = length / 3
+	var bad_time = length / 2.5
 	var okay_time = length / 1.5
-	var stopped_time
+	stopped_time = 2
+	no_press(timer,stopped_time,length)
 	await pressed
-	stopped_time = timer.time_left
-	var damage_amt
-	if stopped_time >= correct_time and stopped_time > bad_time:
-		damage_amt = dmg_scale[0] # scale 0
-	elif stopped_time < bad_time:
-		damage_amt =dmg_scale[1] # scale 1
+	print(stopped_time)
+	sprite.play("dodge")
+	stopped_time = length - timer.time_left
+	print("stopped time in func: ", stopped_time, " timeleft: ", timer.time_left)
+	if stopped_time <= bad_time:
+		print("Bad")
+		stopped_time = bad_time
 	else:
-		damage_amt =dmg_scale[0] # scale 2
+		stopped_time = 1 - timer.time_left
+	print(length, " ", correct_time," ", bad_time," ", stopped_time)
+	var damage_amt
+	print(stopped_time)
+	if stopped_time == bad_time:
+		damage_amt =dmg_scale[2]
+		$thing2.play("dodge_constipated")
+	else:
+		if stopped_time >= correct_time and !(stopped_time <= bad_time):
+			damage_amt = dmg_scale[0]
+			$thing2.play("dodge_good") # scale 0
+		elif stopped_time < bad_time:
+			damage_amt =dmg_scale[1]
+			$thing2.play("dodge_okay") # scale 1
+		else:
+			damage_amt =dmg_scale[2]
+			$thing2.play("dodge_constipated") # scale 2
 	fight = get_parent()
 	fight.damage = damage_amt
 
