@@ -259,13 +259,15 @@ func dodge(length : float, dmg_scale : Array):
 	var stopped_time
 	await pressed
 	stopped_time = timer.time_left
+	var damage_amt
 	if stopped_time >= correct_time and stopped_time > bad_time:
-		damage(dmg_scale[0]) # scale 0
+		damage_amt = dmg_scale[0] # scale 0
 	elif stopped_time < bad_time:
-		damage(dmg_scale[1]) # scale 1
+		damage_amt =dmg_scale[1] # scale 1
 	else:
-		damage(dmg_scale[2]) # scale 2
+		damage_amt =dmg_scale[0] # scale 2
 	fight = get_parent()
+	fight.damage = damage_amt
 
 @onready var damage_animation = $thing
 @onready var damage_text = $RichTextLabel
