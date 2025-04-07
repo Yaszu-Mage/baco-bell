@@ -47,6 +47,7 @@ var initial_gravity
 @onready var fade = $ColorRect
 #returns void
 func _ready() -> void:
+	$moosic.playing = true
 	initial_gravity = get_gravity()
 	gravity = initial_gravity 
 	$turn_based_player.visible = false

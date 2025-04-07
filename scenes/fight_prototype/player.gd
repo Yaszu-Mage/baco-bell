@@ -34,15 +34,18 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-@onready var cast = $turn_based_player/checker/top/RayCast2D
-var is_valid = false
+@onready var centercast = $turn_based_player/checker/top/center
+@onready var leftcast = $turn_based_player/checker/top/center
+@onready var rightcast = $turn_based_player/checker/top/center
+var is_valid = 0
+# 0 = no collisions, 1 = one of the side collisions, 2 = middle collision
 func _process(delta: float) -> void:
-	if cast.is_colliding():
-		var collide = cast.get_collider().get_parent()
-		if collide.is_in_group("goal"):
-			is_valid = true
-	else:
-		is_valid = false
+	if centercast.is_colliding():
+		is_valid = 2
+	if rightcast.is_colliding() and !centercast.is_colliding() or leftcast.is_colliding() and !centercast.is_colliding():
+		is_valid = 1
+	if !centercast.is_colliding() and !rightcast.is_colliding() and !leftcast.is_colliding():
+		is_valid = 0
 
 
 @onready var turnbased_menu = $turn_based_player/main_menu
@@ -222,6 +225,7 @@ func display_message(message : String):
 @onready var checker = $turn_based_player/checker
 @onready var minigame_player = $turn_based_player/AnimationPlayer
 func animate(attack : String, enemy_position : Vector2):
+	fight_instance = get_parent()
 	match attack:
 		"Punch":
 			var old_pos = global_position
@@ -235,9 +239,16 @@ func animate(attack : String, enemy_position : Vector2):
 			checker.visible = true
 			minigame_player.play("active")
 			await pressed
-			if is_valid:
+			if is_valid == 2:
+				fight.damage = 2
 				#send signal back to fight scene for damage
-				pass
+			elif is_valid == 1:
+				fight.damage = 1
+			else:
+				fight.damage = 0
+			fight.damage_calculated.emit()
+			checker.visible = false
+			$shmack.play()
 			sprite.play("attack")
 			await sprite.animation_finished
 			sprite.play_backwards("walk")
@@ -247,6 +258,7 @@ func animate(attack : String, enemy_position : Vector2):
 			tween2.tween_property(self,"global_position",old_pos,1)
 			await tween2.finished
 			sprite.play("idle")
+			reset_actions()
 
 signal pressed
 func _input(event: InputEvent) -> void:

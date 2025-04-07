@@ -39,6 +39,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-
+func turn():
+	pass
 func damage(value : int):
 	health -= value
+	$RichTextLabel.text = str(value)
+	$thing.play("damage")
+	$ouch.play()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://cyow0fr1qv1i5"]
+[gd_scene load_steps=50 format=3 uid="uid://cyow0fr1qv1i5"]
 
 [ext_resource type="Script" uid="uid://k5tr3hmwpko1" path="res://scenes/fight_prototype/enemy.gd" id="1_0a21x"]
 [ext_resource type="Shader" uid="uid://cfr1gd4hgyqae" path="res://scenes/fight_prototype/pixel.gdshader" id="1_aq0uc"]
@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://dci4cxvysgqif" path="res://assets/fonts/easvhs.ttf" id="4_8gir0"]
 [ext_resource type="SpriteFrames" uid="uid://ctaim75caoanm" path="res://scenes/fight_prototype/sprite_frames/enemy.tres" id="4_xtd84"]
 [ext_resource type="Texture2D" uid="uid://vb7gr2n3sfbs" path="res://assets/images/windows.jpg" id="5_ooec1"]
+[ext_resource type="FontFile" uid="uid://b8y8r00o4leu1" path="res://assets/fonts/Starborn.ttf" id="5_sqwf2"]
 [ext_resource type="Texture2D" uid="uid://cm2g2j2n2jln3" path="res://assets/images/fight.PNG" id="6_alo4a"]
 [ext_resource type="Texture2D" uid="uid://bdk7cmv1w6od5" path="res://assets/images/act.PNG" id="7_eqpkn"]
 [ext_resource type="Texture2D" uid="uid://wnwwubfjpt16" path="res://assets/images/team.PNG" id="8_wvpyc"]
@@ -14,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://cijcbyil75fwo" path="res://assets/materials/checker_albedo.png" id="11_5tjjc"]
 [ext_resource type="Texture2D" uid="uid://sfwd7qo5nakr" path="res://assets/images/mike_image.PNG" id="12_nqunl"]
 [ext_resource type="Texture2D" uid="uid://3ekptwl03qql" path="res://assets/images/gambling.png" id="13_5gw86"]
+[ext_resource type="AudioStream" uid="uid://bvy1uo43uabh" path="res://assets/sfx/YEOUCH.mp3" id="16_hswjt"]
 
 [sub_resource type="Gradient" id="Gradient_xtd84"]
 offsets = PackedFloat32Array(0.518182, 1)
@@ -198,9 +200,60 @@ _data = {
 &"walk": SubResource("Animation_kj5q3")
 }
 
+[sub_resource type="Animation" id="Animation_sqwf2"]
+resource_name = "damage"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RichTextLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-78, -27), Vector2(23, -144), Vector2(23, -144), Vector2(-85, -20)]
+}
+
+[sub_resource type="Animation" id="Animation_hswjt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RichTextLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-78, -27)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nlhl3"]
+_data = {
+&"RESET": SubResource("Animation_hswjt"),
+&"damage": SubResource("Animation_sqwf2")
+}
+
 [node name="enemy" type="Marker2D" groups=["enemies"]]
 position = Vector2(132, 230)
 script = ExtResource("1_0a21x")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -78.0
+offset_top = -27.0
+offset_right = 260.0
+offset_bottom = 103.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 0, 1)
+theme_override_constants/outline_size = 50
+theme_override_fonts/normal_font = ExtResource("5_sqwf2")
+theme_override_font_sizes/normal_font_size = 100
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 scale = Vector2(10, 10)
@@ -540,3 +593,14 @@ vertical_alignment = 1
 libraries = {
 &"": SubResource("AnimationLibrary_64ybx")
 }
+
+[node name="thing" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_nlhl3")
+}
+
+[node name="shmack" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_hswjt")
+
+[node name="ouch" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_hswjt")
