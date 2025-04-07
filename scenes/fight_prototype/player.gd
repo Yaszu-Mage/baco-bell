@@ -251,7 +251,8 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		pressed.emit()
 		recent_pressed = true
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(1).timeout
+		recent_pressed = false
 var recent_pressed = false
 func no_press(timer, _stop_time,length):
 	await timer.timeout
@@ -262,9 +263,8 @@ func no_press(timer, _stop_time,length):
 var stopped_time
 func dodge(length : float, dmg_scale : Array):
 	var timer = get_tree().create_timer(length)
-	var correct_time = length / 2
-	var bad_time = length / 2.5
-	var okay_time = length / 1.5
+	var correct_time = (1 - length) / 2
+	var bad_time = (1 - length) / 2.5
 	stopped_time = 2
 	no_press(timer,stopped_time,length)
 	await pressed
@@ -284,7 +284,7 @@ func dodge(length : float, dmg_scale : Array):
 		damage_amt =dmg_scale[2]
 		$thing2.play("dodge_constipated")
 	else:
-		if stopped_time >= correct_time and !(stopped_time <= bad_time):
+		if stopped_time <= correct_time and !(stopped_time <= bad_time):
 			damage_amt = dmg_scale[0]
 			$thing2.play("dodge_good") # scale 0
 		elif stopped_time < bad_time:
