@@ -12,6 +12,7 @@ var slide_duration = 10
 var request
 @export var username = ""
 @onready var menu = $Menu
+var is_in_building = false
 @onready var cam_cam = $SubViewport/Camera3D
 var accepted = false
 var party_marker : Node = null
@@ -84,7 +85,10 @@ func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority():
 		$Sprite3D.visible = true
 		# Add the gravity.
-		
+		if is_in_building:
+			$GPUParticles3D2.emitting = false
+		else:
+			$GPUParticles3D2.emitting = true
 		if is_on_floor():
 			can_wall_jump = true
 			can_double_jump = true
