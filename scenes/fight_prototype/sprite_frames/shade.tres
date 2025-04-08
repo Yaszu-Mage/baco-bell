@@ -1,0 +1,73 @@
+[gd_resource type="SpriteFrames" load_steps=11 format=3 uid="uid://dn1k56v7ba446"]
+
+[ext_resource type="Texture2D" uid="uid://cdrm27if47awd" path="res://assets/images/spritesheets/shade/attack.png" id="1_cuni4"]
+[ext_resource type="Texture2D" uid="uid://kjwavblcweqn" path="res://assets/images/spritesheets/shade/idle.png" id="2_k8umb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idnei"]
+atlas = ExtResource("1_cuni4")
+region = Rect2(0, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejy4e"]
+atlas = ExtResource("1_cuni4")
+region = Rect2(1920, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wxmq"]
+atlas = ExtResource("1_cuni4")
+region = Rect2(3840, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qs42v"]
+atlas = ExtResource("1_cuni4")
+region = Rect2(5760, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rv631"]
+atlas = ExtResource("2_k8umb")
+region = Rect2(0, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hsgyn"]
+atlas = ExtResource("2_k8umb")
+region = Rect2(1920, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rjlv"]
+atlas = ExtResource("2_k8umb")
+region = Rect2(3840, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1a7c1"]
+atlas = ExtResource("2_k8umb")
+region = Rect2(5760, 0, 1920, 1920)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idnei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejy4e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8wxmq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qs42v")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rv631")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hsgyn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rjlv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1a7c1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]

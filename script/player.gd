@@ -55,6 +55,7 @@ func _ready() -> void:
 	$ColorRect.visible = false
 	var tween = create_tween()
 	if is_multiplayer_authority():
+		$ColorRect/Camera2D.enabled = true
 		$ColorRect.visible = true
 		camera.current = true
 		fade.visible = true
@@ -510,12 +511,16 @@ func join_fight(fight):
 	# we need to check and find the instance and then compute all of the information
 	# think of a way to do that with how it is structured
 	var scene = get_parent().get_node(str(fight[0]))
+	scene.left_fighters.append([str(self.name),"player"])
 	waiting = true
 	can_move = false
 	fight[3] = str(name)
 	scene.not_local = false
 	print("player has tried to join a fight!")
-	scene.rpc("join_fight",fight)
+	#stored index will do rest in scene
+	scene.visible = true
+	scene.localplayer = ["left",scene.left_fighters.find([str(self.name),"player"])]
+	scene.rpc("join_fight",[str(self.name),"player"],scene.left_fighters.find([str(self.name),"player"]))
 	#should we have the functions for the fight scene run client side or server side
 
 @rpc("call_remote")

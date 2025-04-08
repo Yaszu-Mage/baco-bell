@@ -1,10 +1,10 @@
-[gd_scene load_steps=56 format=3 uid="uid://cyow0fr1qv1i5"]
+[gd_scene load_steps=65 format=3 uid="uid://cyow0fr1qv1i5"]
 
 [ext_resource type="Script" uid="uid://k5tr3hmwpko1" path="res://scenes/fight_prototype/enemy.gd" id="1_0a21x"]
 [ext_resource type="Shader" uid="uid://cfr1gd4hgyqae" path="res://scenes/fight_prototype/pixel.gdshader" id="1_aq0uc"]
 [ext_resource type="Texture2D" uid="uid://bi6omc6kfh3bw" path="res://assets/images/cuber.png" id="2_0a21x"]
 [ext_resource type="FontFile" uid="uid://dci4cxvysgqif" path="res://assets/fonts/easvhs.ttf" id="4_8gir0"]
-[ext_resource type="SpriteFrames" uid="uid://ctaim75caoanm" path="res://scenes/fight_prototype/sprite_frames/enemy.tres" id="4_xtd84"]
+[ext_resource type="SpriteFrames" uid="uid://dn1k56v7ba446" path="res://scenes/fight_prototype/sprite_frames/shade.tres" id="5_ocatv"]
 [ext_resource type="Texture2D" uid="uid://vb7gr2n3sfbs" path="res://assets/images/windows.jpg" id="5_ooec1"]
 [ext_resource type="FontFile" uid="uid://b8y8r00o4leu1" path="res://assets/fonts/Starborn.ttf" id="5_sqwf2"]
 [ext_resource type="Texture2D" uid="uid://cm2g2j2n2jln3" path="res://assets/images/fight.PNG" id="6_alo4a"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://ca2lsn2apfhh8" path="res://assets/images/Constipated.png" id="16_ocatv"]
 [ext_resource type="Texture2D" uid="uid://8vivhwwf1l3v" path="res://assets/images/Great.png" id="17_kj5q3"]
 [ext_resource type="Texture2D" uid="uid://cnyj6y3y4py2i" path="res://assets/images/Okay.png" id="18_64ybx"]
+[ext_resource type="Texture2D" uid="uid://d1h3b1eysdn6i" path="res://assets/images/spritesheets/shade/attack_bulb.png" id="20_kj5q3"]
 
 [sub_resource type="Gradient" id="Gradient_xtd84"]
 offsets = PackedFloat32Array(0.518182, 1)
@@ -158,6 +159,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-78, -27), Vector2(209, -67), Vector2(-311, -208), Vector2(-84, -37), Vector2(74, -25), Vector2(-85, -25)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_5np7h"]
 length = 0.001
@@ -185,11 +198,167 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(-78, -27)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D/AnimatedSprite2D:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("projectile:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("projectile:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("projectile:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1192, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("GPUParticles2D:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_64ybx"]
 _data = {
 &"Punch": SubResource("Animation_kj5q3"),
 &"RESET": SubResource("Animation_5np7h")
+}
+
+[sub_resource type="Animation" id="Animation_idnei"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D/AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_64ybx"]
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D/AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"attack", &"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("projectile:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("projectile:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("projectile:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1, 1.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-110, 3), Vector2(-110, 14), Vector2(-1192, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GPUParticles2D:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ejy4e"]
+_data = {
+&"idle": SubResource("Animation_idnei"),
+&"punch": SubResource("Animation_64ybx")
 }
 
 [sub_resource type="Animation" id="Animation_hswjt"]
@@ -432,6 +601,42 @@ _data = {
 &"dodge_okay": SubResource("Animation_5gw86")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_64ybx"]
+atlas = ExtResource("20_kj5q3")
+region = Rect2(0, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idnei"]
+atlas = ExtResource("20_kj5q3")
+region = Rect2(1920, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejy4e"]
+atlas = ExtResource("20_kj5q3")
+region = Rect2(3840, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wxmq"]
+atlas = ExtResource("20_kj5q3")
+region = Rect2(5760, 0, 1920, 1920)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qs42v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_64ybx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idnei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejy4e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8wxmq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="enemy" type="Marker2D" groups=["enemies"]]
 script = ExtResource("1_0a21x")
 
@@ -452,14 +657,16 @@ vertical_alignment = 1
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 scale = Vector2(10, 10)
+emitting = false
 amount = 128
 texture = ExtResource("2_0a21x")
 process_material = SubResource("ParticleProcessMaterial_myw3f")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GPUParticles2D"]
 material = SubResource("ShaderMaterial_u8prd")
-sprite_frames = ExtResource("4_xtd84")
-animation = &"Punch"
+scale = Vector2(0.02, 0.02)
+sprite_frames = ExtResource("5_ocatv")
+animation = &"attack"
 
 [node name="turn_based_player" type="Control" parent="."]
 visible = false
@@ -786,7 +993,8 @@ vertical_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_64ybx")
+&"": SubResource("AnimationLibrary_64ybx"),
+&"shade": SubResource("AnimationLibrary_ejy4e")
 }
 speed_scale = 3.0
 
@@ -800,3 +1008,14 @@ stream = ExtResource("16_hswjt")
 
 [node name="ouch" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_hswjt")
+
+[node name="projectile" type="Marker2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-1192, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="projectile"]
+position = Vector2(2, 9)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_qs42v")
+frame_progress = 0.142013

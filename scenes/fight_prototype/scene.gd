@@ -123,7 +123,9 @@ func get_side(side):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if localplayer[0] == "left":
+		await get_tree().create_timer(10).timeout
+		get_node(left_fighters[0][localplayer[1]]).local = true
 
 #TODO recode this
 signal damage_calculated
@@ -194,5 +196,18 @@ func run_action(entity_name, action, target_name = null, _type = ""):
 	move_on.emit()
 
 @rpc("any_peer")
-func join_fight(fight):
+func join_fight(fight,index):
 	print(fight)
+	#first we make the scene visible
+	var random_roll = randi_range(0,20)
+	initiative.append([fight,index])
+	initiative.sort_custom(sort_ascending)
+	var instance = load("res://scenes/fight_prototype/player.tscn").instantiate()
+	instance.side_tag = "left"
+	instance.side = left_fighters
+	instance.position_in_line = left_fighters.find(fight)
+	instance.name = fight[0]
+	add_child(instance)
+	all_fighters.append(fight)
+	#then we add the player to the list
+	rpc("sync_variables",initiative,left_fighters,right_fighters)

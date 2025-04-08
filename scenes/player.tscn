@@ -387,6 +387,7 @@ texture = ExtResource("3_qhqgy")
 
 [node name="Camera2D" type="Camera2D" parent="ColorRect"]
 position = Vector2(739, 460)
+enabled = false
 zoom = Vector2(0.95, 0.95)
 
 [node name="VBoxContainer" type="GridContainer" parent="."]

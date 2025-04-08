@@ -368,10 +368,10 @@ tracks/8/path = NodePath("../SubViewport/TextureRect3:scale")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(4.6, 4.8),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 4.6, 4.8),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0.1, 0.1), Vector2(1, 1)]
+"values": [Vector2(1, 1), Vector2(0.1, 0.1), Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tbmy8"]
