@@ -3,19 +3,19 @@
 [ext_resource type="Texture2D" uid="uid://cdrm27if47awd" path="res://assets/images/spritesheets/shade/attack.png" id="1_cuni4"]
 [ext_resource type="Texture2D" uid="uid://kjwavblcweqn" path="res://assets/images/spritesheets/shade/idle.png" id="2_k8umb"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_idnei"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8umb"]
 atlas = ExtResource("1_cuni4")
 region = Rect2(0, 0, 1920, 1920)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ejy4e"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4u8u6"]
 atlas = ExtResource("1_cuni4")
 region = Rect2(1920, 0, 1920, 1920)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8wxmq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_umahe"]
 atlas = ExtResource("1_cuni4")
 region = Rect2(3840, 0, 1920, 1920)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qs42v"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7me5"]
 atlas = ExtResource("1_cuni4")
 region = Rect2(5760, 0, 1920, 1920)
 
@@ -39,16 +39,16 @@ region = Rect2(5760, 0, 1920, 1920)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_idnei")
+"texture": SubResource("AtlasTexture_k8umb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ejy4e")
+"texture": SubResource("AtlasTexture_4u8u6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8wxmq")
+"texture": SubResource("AtlasTexture_umahe")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qs42v")
+"texture": SubResource("AtlasTexture_p7me5")
 }],
 "loop": true,
 "name": &"attack",

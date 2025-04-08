@@ -48,6 +48,7 @@ var initial_gravity
 @onready var fade = $ColorRect
 #returns void
 func _ready() -> void:
+	self.global_position = get_parent().get_node("spawn").global_position
 	initial_gravity = get_gravity()
 	gravity = initial_gravity 
 	$turn_based_player.visible = false

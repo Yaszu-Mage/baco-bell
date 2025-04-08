@@ -152,4 +152,26 @@ func _on_server_list_item_selected(index: int) -> void:
 
 
 func _on_delve_pressed() -> void:
-	menu_2_anim.play("show_multi")
+	# old - pro multiplayer menu_2_anim.play("show_multi")
+	$WorldEnvironment.queue_free()
+	$DirectionalLight3D.queue_free()
+	$Camera2D.queue_free()
+	$SubViewport.queue_free()
+	var world_instance = world.instantiate()
+	get_parent().add_child(world_instance,true)
+	multiplayer_peer.close()
+	#Instead of using show() hide()
+	#Nodename.property = value
+	$".".visible = false
+	multiplayer_peer.create_server(PORT)
+	multiplayer.multiplayer_peer = multiplayer_peer
+	add_child(server_discovery)
+	server_discovery.start_listening()
+	add_player_character(1)
+	multiplayer_peer.peer_connected.connect(
+		func(new_peer_id):
+			await get_tree().create_timer(1).timeout
+			rpc("add_newly_connected_player_character", new_peer_id)
+			rpc_id(new_peer_id, "add_previously_connected_player_characters", connected_peer_ids)
+			add_player_character(new_peer_id)
+	)
