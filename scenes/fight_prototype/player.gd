@@ -182,6 +182,8 @@ func show_test():
 					list_one.add_item("", load("res://assets/images/cuber.png"))
 				"player":
 					print("player")
+				"shade":
+					list_one.add_item("", load("res://assets/images/shadeicon.png"))
 	await get_tree().create_timer(0.1).timeout
 	second_menu = true
 

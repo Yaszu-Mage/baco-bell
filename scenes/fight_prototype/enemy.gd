@@ -13,8 +13,14 @@ var fight = get_parent()
 func _ready() -> void:
 	match type:
 		"cuber":
+			$GPUParticles2D/AnimatedSprite2D.scale = Vector2(1,1)
 			sprite.sprite_frames = load("res://scenes/fight_prototype/sprite_frames/enemy.tres")
 			is_in_sprite = false
+		"shade":
+			$GPUParticles2D/AnimatedSprite2D.scale = Vector2(0.02,0.02)
+			sprite.sprite_frames = load("res://scenes/fight_prototype/sprite_frames/shade.tres")
+			is_in_sprite = false
+			$GPUParticles2D/AnimatedSprite2D.play("idle")
 	fight = get_parent()
 	match position_in_line:
 		0:
@@ -54,12 +60,16 @@ func turn():
 func animate(attack : String, target_position : Vector2, enemy : String):
 	fight = get_parent()
 	var enemy_scene = fight.get_node(enemy)
+	var tween = create_tween()
 	match attack:
 		"Punch":
 			var old_pos = global_position
-			var tween = create_tween()
-			tween.tween_property(self,"global_position",target_position,1)
-			await tween.finished
+			match type:
+				"shade":
+					pass
+				"cuber":
+					tween.tween_property(self,"global_position",target_position,1)
+					await tween.finished
 			await get_tree().create_timer(0.1).timeout
 			if enemy_scene.is_in_group("player"):
 				var time
@@ -67,7 +77,11 @@ func animate(attack : String, target_position : Vector2, enemy : String):
 					sprite.play(attack)
 					time = sprite.get_current_animation_length()
 				else:
-					animation.play(attack)
+					match type:
+						"shade":
+							animation.play("shade/" + str(attack).to_lower())
+						"cuber":
+							animation.play(attack)
 					time = animation.get_current_animation_length()
 				enemy_scene.dodge(time, [0,1,2])
 				await get_tree().create_timer(time).timeout
