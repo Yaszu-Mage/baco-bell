@@ -94,3 +94,6 @@ func damage(value : int):
 	$RichTextLabel.text = str(value)
 	$thing.play("damage")
 	$ouch.play()
+
+func remove_from_fight():
+	self.queue_free()

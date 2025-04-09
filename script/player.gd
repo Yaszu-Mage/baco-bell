@@ -507,6 +507,7 @@ func start_fight(enemy : Node):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		camera.current = false
 		instance.camera.enabled = true
+		
 func play_animation(anim):
 	pass
 

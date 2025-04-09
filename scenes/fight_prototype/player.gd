@@ -318,3 +318,9 @@ func damage(amount):
 	damage_text.text = str(amount)
 	damage_animation.play("damage")
 	
+
+var playername
+func remove_from_fight():
+	fight = get_parent()
+	get_parent().get_parent().get_node(str(self.name)).global_position = get_parent().get_parent().get_node("spawn").global_position
+	fight.queue_free()

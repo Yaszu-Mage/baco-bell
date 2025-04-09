@@ -109,14 +109,18 @@ func turn_cycle():
 			taker.not_turn()
 		else:
 			print("Enemy Turn")
-			taker.turn()
-			await move_on
+			if is_instance_valid(taker):
+				taker.turn()
+				await move_on
 		for turner in initiative:
 			var checker = get_node(turn[0][0])
 			var entry = turn[0]
-			if checker.health < 0:
-				initiative.remove_at(initiative.find(turner))
-				checker.queue_free()
+			if is_instance_valid(checker):
+				if checker.health < 0:
+					initiative.remove_at(initiative.find(turner))
+					checker.remove_from_fight()
+					if left_fighters.is_empty() or right_fighters.is_empty():
+						pass
 		await get_tree().create_timer(0.1).timeout
 	turn_cycle()
 
