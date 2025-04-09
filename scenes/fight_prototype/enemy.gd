@@ -7,7 +7,7 @@ var position_in_line
 @onready var sprite = $GPUParticles2D/AnimatedSprite2D
 var enemy_side = []
 var is_in_sprite = true
-var health = 10
+var health = 4
 var fight = get_parent()
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -85,7 +85,6 @@ func animate(attack : String, target_position : Vector2, enemy : String):
 					time = animation.get_current_animation_length()
 				enemy_scene.dodge(time, [0,1,2])
 				await get_tree().create_timer(time).timeout
-				fight.damage_calculated.emit()
 			tween = create_tween()
 			tween.tween_property(self,"global_position",old_pos,1)
 

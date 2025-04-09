@@ -368,7 +368,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.01132, 0)
 target_position = Vector3(0, -1.5, 0)
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
 offset_left = -163.0
 offset_top = -136.0
 offset_right = 2343.0
@@ -379,11 +378,13 @@ color = Color(0, 0, 0, 1)
 [node name="TextureRect" type="TextureRect" parent="ColorRect"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = 614.0
-offset_top = 340.0
-offset_right = 870.0
-offset_bottom = 596.0
+offset_left = 449.0
+offset_top = 256.0
+offset_right = 1026.0
+offset_bottom = 725.0
 texture = ExtResource("3_qhqgy")
+expand_mode = 2
+stretch_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="ColorRect"]
 position = Vector2(739, 460)

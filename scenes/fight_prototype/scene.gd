@@ -117,10 +117,16 @@ func turn_cycle():
 			var entry = turn[0]
 			if is_instance_valid(checker):
 				if checker.health < 0:
+					print(checker.name)
 					initiative.remove_at(initiative.find(turner))
+					print("found a deadman")
 					checker.remove_from_fight()
-					if left_fighters.is_empty() or right_fighters.is_empty():
-						pass
+					if right_fighters.has(turner):
+						right_fighters.remove_at(right_fighters.find(turner))
+						get_parent().get_node(turner[0]).queue_free()
+					if left_fighters.has(turner):
+						left_fighters.remove_at(left_fighters.find(turner))
+					
 		await get_tree().create_timer(0.1).timeout
 	turn_cycle()
 
@@ -142,6 +148,14 @@ func _process(delta: float) -> void:
 	if localplayer[0] == "left":
 		await get_tree().create_timer(10).timeout
 		get_node(left_fighters[0][localplayer[1]]).local = true
+	if initiative.size() == 1:
+		print(initiative[0][0])
+		get_parent().get_node(initiative[0][0][0]).camera.current = true
+		get_parent().get_node(initiative[0][0][0]).can_move = true
+		get_parent().get_node(initiative[0][0][0]).in_fight = false
+		get_parent().get_node(initiative[0][0][0]).set_collision_layer_value(1,true)
+		print("killing myself!")
+		self.queue_free()
 
 #TODO recode this
 signal damage_calculated

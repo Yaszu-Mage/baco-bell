@@ -668,7 +668,6 @@ material = SubResource("ShaderMaterial_u8prd")
 scale = Vector2(0.02, 0.02)
 sprite_frames = ExtResource("5_ocatv")
 animation = &"attack"
-frame_progress = 0.0693716
 
 [node name="turn_based_player" type="Control" parent="."]
 visible = false

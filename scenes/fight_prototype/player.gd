@@ -228,6 +228,7 @@ func animate(attack : String, enemy_position : Vector2, enemy : String):
 	fight_instance = get_parent()
 	match attack:
 		"Punch":
+			attacking = true
 			var old_pos = global_position
 			var tween = create_tween()
 			sprite.play("walk")
@@ -258,19 +259,22 @@ func animate(attack : String, enemy_position : Vector2, enemy : String):
 			tween2.tween_property(self,"global_position",old_pos,1)
 			await tween2.finished
 			sprite.play("idle")
+			attacking = false
 			reset_actions()
-
+			not_turn()
+var attacking = false
 signal pressed
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		pressed.emit()
 		recent_pressed = true
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(5).timeout
 		recent_pressed = false
 var recent_pressed = false
 func no_press(timer, _stop_time,length):
 	await timer.timeout
-	if !recent_pressed:
+	if !recent_pressed and attacking == false and checker.visible == false:
+		print("too slow bitch")
 		pressed.emit()
 		stopped_time = length / 2.5
 		print("stopped_time ", stopped_time)
@@ -282,18 +286,14 @@ func dodge(length : float, dmg_scale : Array):
 	stopped_time = 2
 	no_press(timer,stopped_time,length)
 	await pressed
-	print(stopped_time)
 	sprite.play("dodge")
 	stopped_time = length - timer.time_left
-	print("stopped time in func: ", stopped_time, " timeleft: ", timer.time_left)
 	if stopped_time <= bad_time:
 		print("Bad")
 		stopped_time = bad_time
 	else:
 		stopped_time = 1 - timer.time_left
-	print(length, " ", correct_time," ", bad_time," ", stopped_time)
 	var damage_amt
-	print(stopped_time)
 	if stopped_time == bad_time:
 		damage_amt =dmg_scale[2]
 		$thing2.play("dodge_constipated")
@@ -309,6 +309,8 @@ func dodge(length : float, dmg_scale : Array):
 			$thing2.play("dodge_constipated") # scale 2
 	fight = get_parent()
 	fight.damage = damage_amt
+	fight.damage_calculated.emit()
+	print("printed damage calculation")
 
 @onready var damage_animation = $thing
 @onready var damage_text = $RichTextLabel
