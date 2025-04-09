@@ -40,6 +40,15 @@ func _ready() -> void:
 var is_valid = 0
 # 0 = no collisions, 1 = one of the side collisions, 2 = middle collision
 func _process(delta: float) -> void:
+	var hundreds = (health / 100) % 10
+	var tens = floor(health / 10) % 10
+	var ones = health % 10
+	health_tells[2].clear()
+	health_tells[0].clear()
+	health_tells[1].clear()
+	health_tells[2].add_text(str(ones))
+	health_tells[1].add_text(str(tens))
+	health_tells[0].add_text(str(hundreds))
 	if local:$turn_based_player.visible = true 
 	else: $turn_based_player.visible = false
 	if centercast.is_colliding():

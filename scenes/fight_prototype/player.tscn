@@ -1,4 +1,4 @@
-[gd_scene load_steps=106 format=3 uid="uid://cmxp08v0o48gc"]
+[gd_scene load_steps=107 format=3 uid="uid://cmxp08v0o48gc"]
 
 [ext_resource type="Shader" uid="uid://cfr1gd4hgyqae" path="res://scenes/fight_prototype/pixel.gdshader" id="1_aq0uc"]
 [ext_resource type="Script" uid="uid://b3rwoaxcxw3w" path="res://scenes/fight_prototype/player.gd" id="1_m6l8t"]
@@ -605,6 +605,106 @@ tracks/3/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("RichTextLabel:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RichTextLabel:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-78, -27)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("RichTextLabel:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("RichTextLabel:size")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(338, 130)]
+}
+
+[sub_resource type="Animation" id="Animation_o26ks"]
+resource_name = "damage"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RichTextLabel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.01, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RichTextLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.01, 1, 1.33333, 1.4, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-78, -27), Vector2(19, -122), Vector2(19, -122), Vector2(-78, -27), Vector2(-78, -27)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RichTextLabel:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.23333, 1.46667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RichTextLabel:size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.732416),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(338, 130)]
+}
 
 [sub_resource type="Animation" id="Animation_wvpyc"]
 resource_name = "dodge_constipated"
@@ -762,6 +862,7 @@ tracks/3/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nlhl3"]
 _data = {
 &"RESET": SubResource("Animation_hswjt"),
+&"damage": SubResource("Animation_o26ks"),
 &"dodge_constipated": SubResource("Animation_wvpyc"),
 &"dodge_good": SubResource("Animation_nqunl"),
 &"dodge_okay": SubResource("Animation_5gw86")
@@ -781,6 +882,7 @@ expand_mode = 2
 stretch_mode = 4
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
+visible = false
 offset_left = -78.0
 offset_top = -27.0
 offset_right = 260.0

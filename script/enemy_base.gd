@@ -20,6 +20,10 @@ func _ready() -> void:
 			enemy_type = "cuber"
 			me = load("res://scenes/cuber.tscn").instantiate()
 			add_child(me)
+		1:
+			enemy_type = "shade"
+			me = load("res://scenes/shade.tscn").instantiate()
+			add_child(me)
 	if reason != "Natural":
 		print("unnatural spawn!")
 		me.in_fight = true

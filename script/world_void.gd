@@ -19,5 +19,15 @@ func _ready() -> void:
 	instance.reason = "Natural"
 	instance.global_position = Vector3(20,0,0)
 	add_child(instance)
+	var shade1 = enemy.instantiate()
+	shade1.reason = "Natural"
+	shade1.global_position = $spawn2.global_position
+	var shade2 = enemy.instantiate()
+	shade2.reason = "Natural"
+	shade2.type = 1
+	shade1.type = 1
+	shade2.global_position = $spawn3.global_position
+	add_child(shade2)
+	add_child(shade1)
 func _process(delta: float) -> void:
 	name = "world"

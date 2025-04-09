@@ -6,8 +6,8 @@ enum world_type {
 var world = world_type.the_void
 @onready var view = $world
 #idea for storage, [player_name,type,turn based scene name]
-var left_fighters = [["Yaszu","player"]]
-var right_fighters = [["shade","enemy"]]
+var left_fighters = []
+var right_fighters = []
 var all_fighters = []
 var initiative = []
 @onready var camera = $Camera2D
@@ -71,7 +71,6 @@ func _ready() -> void:
 							instance.type = entity_name
 							instance.side = right_fighters
 							instance.side_tag = "right"
-			rpc("create",entity_type,entity_name,"right")
 			await get_tree().create_timer(0.5).timeout
 			print(fighters)
 			instance.position_in_line = right_fighters.find(fighters)
@@ -112,7 +111,13 @@ func turn_cycle():
 			print("Enemy Turn")
 			taker.turn()
 			await move_on
-		await get_tree().create_timer(1.0).timeout
+		for turner in initiative:
+			var checker = get_node(turn[0][0])
+			var entry = turn[0]
+			if checker.health < 0:
+				initiative.remove_at(initiative.find(turner))
+				checker.queue_free()
+		await get_tree().create_timer(0.1).timeout
 	turn_cycle()
 
 func sort_ascending(a, b):
