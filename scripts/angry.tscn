@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7pdllapvjkm0"]
+
+[ext_resource type="Script" uid="uid://bm08s4xha5dii" path="res://scripts/angry_jelly.gd" id="1_vvekw"]
+[ext_resource type="Texture2D" uid="uid://dcfxqgecvxmmm" path="res://assets/images/blubblub.png" id="2_ek4j3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vvekw"]
+size = Vector2(27, 32)
+
+[node name="angry_jellyfish" type="Node2D"]
+script = ExtResource("1_vvekw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ek4j3")
+hframes = 2
+vframes = 2
+frame = 1
+
+[node name="left" type="Area2D" parent="."]
+position = Vector2(4, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="left"]
+position = Vector2(-17.4242, 0)
+shape = SubResource("RectangleShape2D_vvekw")
+
+[node name="zap" type="Sprite2D" parent="left"]
+visible = false
+position = Vector2(-17, -16)
+rotation = -0.698132
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_ek4j3")
+hframes = 2
+vframes = 2
+frame = 2
+
+[node name="right" type="Area2D" parent="."]
+position = Vector2(21, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="right"]
+position = Vector2(-7.5, 0)
+shape = SubResource("RectangleShape2D_vvekw")
+
+[node name="zap" type="Sprite2D" parent="right"]
+visible = false
+position = Vector2(-7, -17)
+rotation = 0.698132
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_ek4j3")
+hframes = 2
+vframes = 2
+frame = 2
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+enable_mode = 1
+
+[connection signal="body_entered" from="left" to="." method="_on_left_body_entered"]
+[connection signal="body_entered" from="right" to="." method="_on_right_body_entered"]

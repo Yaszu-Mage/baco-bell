@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dtw2d7t2ty3pq"]
-
-[ext_resource type="PackedScene" uid="uid://b8jgnm2jum2tm" path="res://scenes/void_town.tscn" id="26_g0xhp"]
-
-[node name="ResourcePreloader" type="ResourcePreloader"]
-resources = [PackedStringArray("void_town"), [ExtResource("26_g0xhp")]]
