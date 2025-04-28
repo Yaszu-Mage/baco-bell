@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://ivrm2r1u2ft0"]
+[gd_scene load_steps=8 format=3 uid="uid://ivrm2r1u2ft0"]
 
 [ext_resource type="Texture2D" uid="uid://bhl5g77vdxc6f" path="res://assets/images/grappelpoint.png" id="1_802xd"]
+[ext_resource type="Script" uid="uid://kkxobm64my42" path="res://scripts/grappel_point.gd" id="1_tyrv8"]
 
 [sub_resource type="Animation" id="Animation_xyib7"]
 length = 0.001
@@ -46,6 +47,7 @@ radius = 181.025
 [sub_resource type="CircleShape2D" id="CircleShape2D_tyrv8"]
 
 [node name="grappel point" type="StaticBody2D" groups=["grappel_point"]]
+script = ExtResource("1_tyrv8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_802xd")
@@ -59,9 +61,6 @@ libraries = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_802xd")
-
-[node name="pinpoint" type="PinJoint2D" parent="."]
-node_a = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_tyrv8")
