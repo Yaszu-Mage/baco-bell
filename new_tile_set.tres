@@ -1,7 +1,10 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://bxnxqmhpochhf"]
+[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://bxnxqmhpochhf"]
 
 [ext_resource type="Texture2D" uid="uid://22g2nuo6icg5" path="res://icon.svg" id="1_e3020"]
 [ext_resource type="Texture2D" uid="uid://dcfxqgecvxmmm" path="res://assets/images/blubblub.png" id="1_ujgj0"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ujgj0"]
+bounce = 0.2
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_02c43"]
 texture = ExtResource("1_ujgj0")
@@ -158,6 +161,8 @@ texture = ExtResource("1_e3020")
 7:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -1.79859, -8, 8, 2.87774, 3.23746, 8, -8, -8, -8)
 
 [resource]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 3
+physics_layer_0/collision_mask = 3
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_ujgj0")
 sources/1 = SubResource("TileSetAtlasSource_ujgj0")
 sources/0 = SubResource("TileSetAtlasSource_02c43")

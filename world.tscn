@@ -162,6 +162,9 @@ shape = SubResource("WorldBoundaryShape2D_pkg7o")
 position = Vector2(502, 545)
 
 [node name="grappel point" parent="." instance=ExtResource("8_ioo17")]
-position = Vector2(1699, 147)
+position = Vector2(2374, -6)
+
+[node name="grappel point2" parent="." instance=ExtResource("8_ioo17")]
+position = Vector2(2840, -125)
 
 [connection signal="body_entered" from="boundry" to="boundry" method="_on_body_entered"]

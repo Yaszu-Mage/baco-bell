@@ -28,7 +28,9 @@ enum StateMode {
 	Falling,
 	Jumping,
 	WallClimbing,
-	Grappeling
+	Grappeling,
+	Swapping,
+	Attacking
 }
 var State = StateMode.Walking
 var old_state = State
@@ -42,17 +44,33 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	#Keep camera x
 	if is_multiplayer_authority():
-		if old_state != State:
-			print("old state was ",old_state ," and was changed to ", State)
-			if old_state == StateMode.Grappeling:
-				print("grappel_change")
-		if State == StateMode.Grappeling:
-			self.global_position = rigid_body.global_position
-		else:
-			rigid_body.global_position = self.global_position
-			old_state = State
 		$Camera2D.global_position.x = self.global_position.x
 		$Node2D.global_position = self.global_position
+		if State != StateMode.Aiming:
+			$grappel_throw.visible = false
+		if State == StateMode.Grappeling:
+			sprite.play("swinging")
+			self.global_position = rigid_body.global_position
+			line.visible = true
+			line.clear_points()
+			line.add_point(self.global_position)
+			line.add_point((((self.global_position + grappel_point.global_position) / 2) + (Vector2(rigid_body.linear_velocity.x,0) / 8)))
+			line.add_point(grappel_point.global_position)
+			
+			rpc("sync_line",line.points)
+			if Input.is_action_just_pressed("ui_accept"):
+				State = StateMode.Falling
+				line.clear_points()
+				rpc("sync_line",line.points)
+		elif State == StateMode.Swapping:
+			print("swapping")
+			
+		elif State != StateMode.Grappeling and State != StateMode.Swapping:
+			line.visible = false
+			line.clear_points()
+			rpc("sync_line",line.points)
+			rigid_body.global_position = self.global_position
+		
 		# Add the gravity.
 		if not is_on_floor() and (!is_on_wall_slide) and !dashing and !is_on_wall_slide and $Node2D/CPUParticles2D.emitting == false and !bouncing and !cheatmode and State != StateMode.Grappeling:
 			velocity += get_gravity() * delta
@@ -64,7 +82,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				sprite.flip_h = false
 			sprite.play("wall")
-			velocity += (get_gravity() - Vector2(0,780)) * delta
+			velocity.y = (get_gravity().y - Vector2(0,780).y) * delta
 			State = StateMode.WallClimbing
 		if Input.is_action_just_pressed("cheat"):
 			cheatmode = not cheatmode
@@ -77,7 +95,15 @@ func _physics_process(delta: float) -> void:
 			velocity.y = JUMP_VELOCITY
 			sprite.play("jump")
 			jumps -= 1
-		
+		if grappel_points != [] and State != StateMode.Grappeling:
+			grappel_points.sort_custom(sort_distance)
+			for x in grappel_points:
+				x.farthest()
+			grappel_points[0].closest()
+			pinpoint.global_position = grappel_points[0].global_position
+			grappel_point.global_position = grappel_points[0].global_position
+			pinpoint.top_level = true
+			pinpoint.length = clamp(pinpoint.global_position.distance_to(self.global_position),0,20)
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with custom gameplay actions.
 		var direction := Input.get_axis("ui_left", "ui_right")
@@ -85,10 +111,8 @@ func _physics_process(delta: float) -> void:
 		if State == StateMode.Aiming:
 			grapple_throw.rotate(direction / 10)
 			grapple_throw.rotation_degrees = clampf(grapple_throw.rotation_degrees,-90,90)
-
-
-
-
+		if direction and State == StateMode.Grappeling:
+			rigid_body.linear_velocity.x += direction * 10
 		if is_on_floor() and direction:
 			sprite.flip_v = false
 			if State == StateMode.Walking:
@@ -194,7 +218,9 @@ func dash(direction,direction_y):
 func on_dash_over() -> void:
 	dashing = false
 
-
+@rpc("unreliable")
+func sync_line(values : PackedVector2Array):
+	line.points = values
 
 func _on_cansee_exit(body: Node2D) -> void:
 	if body == $".":
@@ -225,26 +251,41 @@ func bounce_timeout() -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if !body.is_in_group("stage_decorator"):
 		bouncing = false
-
+@onready var line = $grappel
 @onready var pinpoint = $"../PinJoint2D"
 @onready var grapple_throw = $grappel_throw
 @onready var grappel_point = $"../grappel_point"
 var hooked = false
 var is_aiming = false
 func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_left"):
+		sprite.flip_h = true
+	else:
+		sprite.flip_h = false
 	if event.is_action_pressed("grappel"):
-		pass
-		
+		if grappel_points != []:
+			if grappel_points[0].global_position.distance_to(self.global_position) >= 500:
+				print(grappel_points[0].global_position.distance_to(self.global_position))
+			else:
+				State = StateMode.Swapping
+				grapple_throw.visible = false
+				rigid_body.global_position = self.global_position
+				State = StateMode.Grappeling
 	if event.is_action_pressed("toggle_grappel_throw"):
 		if State == StateMode.Aiming:
 			var cast = grapple_throw.cast.is_colliding()
 			var output = cast [0]
 			var collider = cast[1]
 			if output:
+				State = StateMode.Swapping
+				grapple_throw.visible = false
 				pinpoint.global_position = collider.global_position
 				grappel_point.global_position = collider.global_position
 				pinpoint.top_level = true
-				await get_tree().create_timer(0.01).timeout
+				pinpoint.length = clamp(pinpoint.global_position.distance_to(self.global_position),0,20)
+				await get_tree().create_timer(0.1).timeout
+				for x in 20:
+					rigid_body.global_position = self.global_position
 				State = StateMode.Grappeling
 				
 		else:
@@ -264,3 +305,20 @@ func remote_sync(authority_pos,authority_animation,flipv,fliph):
 	$AnimatedSprite2D.flip_h = fliph
 	$AnimatedSprite2D.flip_v = flipv
 	
+var grappel_points = []
+
+func remove_point(who: Node):
+	grappel_points.remove_at(grappel_points.find(who))
+	grappel_points.sort_custom(sort_distance)
+	if grappel_points != []:
+		grappel_points[0].closest()
+func fit(who : Node):
+	grappel_points.append(who)
+	grappel_points.sort_custom(sort_distance)
+	grappel_points[0].closest()
+	for point in grappel_points:
+		point.farthest()
+	grappel_points[0].closest()
+	
+func sort_distance(a : Node, b : Node):
+	return a.global_position.distance_to(self.global_position) < b.global_position.distance_to(self.global_position)
