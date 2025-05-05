@@ -23,6 +23,13 @@ var cheatmode = false
 var bouncing = false
 var is_on_wall_slide = false
 @onready var rigid_body = $"../RigidBody2D"
+enum Player_Type {
+	Cashier,
+	Plumber,
+	Electrician,
+	Officer,
+}
+var Type = Player_Type.Cashier
 enum StateMode {
 	Dashing,
 	Walking,
@@ -40,6 +47,19 @@ enum StateMode {
 var State = StateMode.Walking
 var old_state = State
 var can_time = true
+
+
+func attack(event : Vector2):
+	match Type:
+		Player_Type.Cashier:
+			pass
+		Player_Type.Plumber:
+			pass
+		Player_Type.Electrician:
+			pass
+		Player_Type.Officer:
+			pass
+
 func _ready() -> void:
 	var tween = create_tween()
 	tween.tween_property(self,"stamina",max_stamina,1)
@@ -250,6 +270,10 @@ var is_aiming = false
 func _input(event: InputEvent) -> void:
 	var direction := Input.get_axis("ui_left", "ui_right")
 	var direction_y = Input.get_axis("ui_up","ui_down")
+	var direction_vector = Vector2(direction,direction_y)
+	var attack_vector = Input.get_vector("left_attack","right_attack","up_attack","left_attack")
+	if attack_vector and Input.is_action_pressed("attack_on"):
+		attack(attack_vector)
 	if event.is_action_pressed("ui_left"):
 		sprite.flip_h = true
 	else:
@@ -315,6 +339,33 @@ func remote_sync(authority_pos,authority_animation,flipv,fliph,authority_state):
 	State = authority_state
 	
 var grappel_points = []
+
+
+enum direction {
+	up,
+	down,
+	left,
+	right,
+	up_right,
+	up_left,
+	down_left,
+	down_right
+}
+func get_direction_as_enum(vector : Vector2):
+	match Vector2.ZERO.direction_to(vector):
+		Vector2(-1.0,0):
+			return direction.down
+		Vector2(1.0,0):
+			return direction.up
+		Vector2(0.707107, -0.707107):
+			return direction.down_right
+		Vector2(-0.707107, -0.707107):
+			return direction.up_right
+		Vector2(0,1.0):
+			return direction.left
+		Vector2(0,-1.0):
+			return direction.right
+
 
 func remove_point(who: Node):
 	grappel_points.remove_at(grappel_points.find(who))
