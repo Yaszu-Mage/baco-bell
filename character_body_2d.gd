@@ -47,12 +47,39 @@ enum StateMode {
 var State = StateMode.Walking
 var old_state = State
 var can_time = true
-
+enum direction {
+	up,
+	down,
+	left,
+	right,
+	up_right,
+	up_left,
+	down_left,
+	down_right
+}
 
 func attack(event : Vector2):
 	match Type:
 		Player_Type.Cashier:
-			pass
+			var atk_direction = get_direction_as_enum(event)
+			print(atk_direction)
+			match atk_direction:
+				direction.up:
+					pass
+				direction.down:
+					pass
+				direction.left:
+					pass
+				direction.right:
+					pass
+				direction.up_right:
+					pass
+				direction.up_left:
+					pass
+				direction.down_left:
+					pass
+				direction.down_right:
+					pass
 		Player_Type.Plumber:
 			pass
 		Player_Type.Electrician:
@@ -341,16 +368,7 @@ func remote_sync(authority_pos,authority_animation,flipv,fliph,authority_state):
 var grappel_points = []
 
 
-enum direction {
-	up,
-	down,
-	left,
-	right,
-	up_right,
-	up_left,
-	down_left,
-	down_right
-}
+
 func get_direction_as_enum(vector : Vector2):
 	match Vector2.ZERO.direction_to(vector):
 		Vector2(-1.0,0):

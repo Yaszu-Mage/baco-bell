@@ -133,7 +133,7 @@ custom_minimum_size = Vector2(256, 64)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("6_56a3p")
 theme_override_font_sizes/font_size = 32
-placeholder_text = "Jerald"
+placeholder_text = "Michael"
 
 [node name="Solo" type="VBoxContainer" parent="Menu"]
 layout_mode = 2
