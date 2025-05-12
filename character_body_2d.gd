@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
 ## MOVEMENT VARIABLES ie CHANGE THIS TO CHANGE MOVEMENT INFO##
-const SPEED = 300.0
+var SPEED = 300.0
+var base_speed = 300.0
 var dash_modifier = 0
 const JUMP_VELOCITY = -400.0
 var jumps = 2
@@ -9,6 +10,9 @@ const dash_time = 0.1
 var spawn : Vector2
 var max_stamina = 100
 var grappel_limit = 3
+var max_health = 100
+var base_max_health = 100
+var health = 100
 # Stamina Depletes 1/1s
 
 var stamina = 0
@@ -58,6 +62,50 @@ enum direction {
 	down_right
 }
 
+@onready var atk_graphic = $atk_graphic
+@onready var atk_anim = $atk_player
+var atk_graphic_preload = {
+	"CountUp" : preload("res://assets/images/Count-up.PNG"),
+
+}
+
+
+enum Effects {
+	Slowed,
+	Health_Boost,
+	Speed,
+}
+
+func apply_effect(effect : Effects, time : int):
+	if (effect == Effects.Slowed):
+		SPEED -= 50
+		await get_tree().create_timer(time).timeout
+		SPEED = base_speed
+	if (effect == Effects.Health_Boost):
+		max_health += 69
+		health += 69
+		await get_tree().create_timer(time).timeout
+		max_health = base_max_health
+	if (effect == Effects.Speed):
+		SPEED += 50
+		await get_tree().create_timer(time).timeout
+		SPEED = base_speed
+	
+	
+
+var ability_cooldown = {
+	direction.up:false,
+	direction.down:false,
+	direction.left:false,
+	direction.right:false,
+	direction.up_right:false,
+	direction.up_left:false,
+	direction.down_right:false,
+	direction.down_left:false,
+}	
+	
+
+
 func attack(event : Vector2):
 	match Type:
 		Player_Type.Cashier:
@@ -67,7 +115,22 @@ func attack(event : Vector2):
 				direction.up:
 					pass
 				direction.down:
-					pass
+					if is_on_floor and !ability_cooldown.get(atk_direction):
+						#count up
+						print("used countup")
+						atk_graphic.texture = atk_graphic_preload.get("CountUp")
+						atk_anim.play("CountUp")
+						var coin = randi_range(0,1)
+						if (coin == 0):
+							#Tails
+							apply_effect(Effects.Slowed, 10)
+						elif (coin == 1):
+							#Heads
+							apply_effect(Effects.Health_Boost, 10)
+						ability_cooldown.set(atk_direction, true)
+						await get_tree().create_timer(10).timeout
+						ability_cooldown.set(atk_direction, false)
+							
 				direction.left:
 					pass
 				direction.right:

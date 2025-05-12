@@ -1,4 +1,4 @@
-[gd_scene load_steps=258 format=3 uid="uid://c1jwbjqkeacwy"]
+[gd_scene load_steps=262 format=3 uid="uid://c1jwbjqkeacwy"]
 
 [ext_resource type="Script" uid="uid://botbf1d24c3bj" path="res://character_body_2d.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://cg0v0oh2tx86p" path="res://scripts/player.gd" id="1_u1c27"]
@@ -20,6 +20,7 @@
 [ext_resource type="Shader" uid="uid://deijls8sewolq" path="res://used.tres" id="18_pbfsw"]
 [ext_resource type="Texture2D" uid="uid://by501ov8gqwdi" path="res://assets/images/outer_stamina_bar.png" id="18_pylmc"]
 [ext_resource type="Texture2D" uid="uid://dijvhlvl8bt8t" path="res://assets/images/inner_stamina_bar.png" id="19_pbfsw"]
+[ext_resource type="Texture2D" uid="uid://cdat74igxyy2i" path="res://assets/images/Count-up.PNG" id="21_5tmop"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n7ghd"]
 radius = 11.5109
@@ -1733,6 +1734,67 @@ shader = SubResource("Shader_7ahtn")
 shader_parameter/is_active = true
 shader_parameter/color = Color(0.380777, 0.0684732, 0, 1)
 
+[sub_resource type="Animation" id="Animation_5tmop"]
+resource_name = "CountUp"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-17.5, -11), Vector2(-17.5, -15.5), Vector2(-17.5, -15.5), Vector2(-17.5, -11)]
+}
+
+[sub_resource type="Animation" id="Animation_7ahtn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-17.5, -11)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7lmhl"]
+_data = {
+&"CountUp": SubResource("Animation_5tmop"),
+&"RESET": SubResource("Animation_7ahtn")
+}
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_ivps1"]
 radius = 3.0
 
@@ -1870,6 +1932,18 @@ layout_mode = 2
 value = 100.0
 texture_under = ExtResource("18_pylmc")
 texture_progress = ExtResource("19_pbfsw")
+
+[node name="atk_player" type="AnimationPlayer" parent="player"]
+root_node = NodePath("../atk_graphic")
+libraries = {
+&"": SubResource("AnimationLibrary_7lmhl")
+}
+
+[node name="atk_graphic" type="Sprite2D" parent="player"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-17.5, -11)
+scale = Vector2(0.01, 0.01)
+texture = ExtResource("21_5tmop")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
 collision_layer = 2
