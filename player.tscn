@@ -1971,6 +1971,10 @@ shape = SubResource("CircleShape2D_ivps1")
 
 [node name="line_end" type="Marker2D" parent="grappel_point"]
 
+[node name="container" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
 [connection signal="body_exited" from="player/Camera2D/cansee" to="player" method="_on_cansee_exit"]
 [connection signal="timeout" from="player/dash_timer" to="player" method="on_dash_over"]
 [connection signal="screen_exited" from="player/VisibleOnScreenNotifier2D" to="player" method="_on_visible_on_screen_notifier_2d_screen_exited"]

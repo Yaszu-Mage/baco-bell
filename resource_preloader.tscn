@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://brji2xykbbpr6"]
+
+[ext_resource type="Texture2D" uid="uid://bv10uroqmp4u7" path="res://assets/images/hat.svg" id="1_lejki"]
+
+[node name="ResourcePreloader" type="ResourcePreloader"]
+resources = [PackedStringArray("hat"), [ExtResource("1_lejki")]]

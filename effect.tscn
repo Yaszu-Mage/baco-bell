@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://pf23t7gagqka"]
+
+[ext_resource type="Texture2D" uid="uid://22g2nuo6icg5" path="res://icon.svg" id="1_8k7fc"]
+[ext_resource type="Script" uid="uid://boa37dyghvqp" path="res://effect.gd" id="1_ce50g"]
+[ext_resource type="FontFile" uid="uid://dci4cxvysgqif" path="res://assets/fonts/easvhs.ttf" id="3_lnuxy"]
+
+[sub_resource type="Theme" id="Theme_vb57n"]
+RichTextLabel/font_sizes/normal_font_size = 29
+RichTextLabel/fonts/normal_font = ExtResource("3_lnuxy")
+
+[sub_resource type="Theme" id="Theme_fmdbh"]
+RichTextLabel/font_sizes/normal_font_size = 29
+RichTextLabel/fonts/normal_font = ExtResource("3_lnuxy")
+
+[node name="effect" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -635.0
+offset_bottom = -388.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ce50g")
+
+[node name="main" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="main"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+texture = ExtResource("1_8k7fc")
+stretch_mode = 4
+
+[node name="titleandtime" type="VBoxContainer" parent="main"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+alignment = 1
+
+[node name="title" type="RichTextLabel" parent="main/titleandtime"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+theme = SubResource("Theme_vb57n")
+text = "Strength"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="time" type="RichTextLabel" parent="main/titleandtime"]
+custom_minimum_size = Vector2(128, 96)
+layout_mode = 2
+theme = SubResource("Theme_fmdbh")
+text = "1:30"
+horizontal_alignment = 1
+
+[node name="desc" type="RichTextLabel" parent="main/titleandtime"]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+theme = SubResource("Theme_fmdbh")
+text = "-Atk"
+horizontal_alignment = 1
